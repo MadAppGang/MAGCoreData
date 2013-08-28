@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3596F2F18F646901D0D846A8 /* MAGSimpleFetchedResultsControllerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3596F88659EEC31075C355BD /* MAGSimpleFetchedResultsControllerManager.m */; };
 		BDD82FA717CE409C00F1CD8D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDD82FA617CE409C00F1CD8D /* UIKit.framework */; };
 		BDD82FA917CE409C00F1CD8D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDD82FA817CE409C00F1CD8D /* Foundation.framework */; };
 		BDD82FAB17CE409C00F1CD8D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDD82FAA17CE409C00F1CD8D /* CoreGraphics.framework */; };
@@ -22,6 +23,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3596F88659EEC31075C355BD /* MAGSimpleFetchedResultsControllerManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MAGSimpleFetchedResultsControllerManager.m; path = ../../MagCoreData/MAGSimpleFetchedResultsControllerManager.m; sourceTree = "<group>"; };
+		3596FFF02D25C02DDD7B442E /* MAGSimpleFetchedResultsControllerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MAGSimpleFetchedResultsControllerManager.h; path = ../../MagCoreData/MAGSimpleFetchedResultsControllerManager.h; sourceTree = "<group>"; };
 		BDD82FA317CE409C00F1CD8D /* MAGCoreDataExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MAGCoreDataExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BDD82FA617CE409C00F1CD8D /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		BDD82FA817CE409C00F1CD8D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -117,6 +120,8 @@
 				BDD82FC517CE40D100F1CD8D /* MAGCoreData.m */,
 				BDD82FC717CE410800F1CD8D /* NSManagedObjectContext+MAGCoreData.h */,
 				BDD82FC817CE410800F1CD8D /* NSManagedObjectContext+MAGCoreData.m */,
+				3596F88659EEC31075C355BD /* MAGSimpleFetchedResultsControllerManager.m */,
+				3596FFF02D25C02DDD7B442E /* MAGSimpleFetchedResultsControllerManager.h */,
 			);
 			name = MagCoreData;
 			sourceTree = "<group>";
@@ -191,6 +196,7 @@
 				BDD82FB717CE409C00F1CD8D /* MAGAppDelegate.m in Sources */,
 				BDD82FC617CE40D100F1CD8D /* MAGCoreData.m in Sources */,
 				BDD82FC917CE410800F1CD8D /* NSManagedObjectContext+MAGCoreData.m in Sources */,
+				3596F2F18F646901D0D846A8 /* MAGSimpleFetchedResultsControllerManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
