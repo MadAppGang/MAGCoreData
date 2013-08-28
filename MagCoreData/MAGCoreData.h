@@ -22,8 +22,11 @@
 -(void)close;
 
 #pragma mark - Management Object Context
-+(NSManagedObjectContext *)mainContext;
+//Main Context
++(NSManagedObjectContext *)context;
 +(NSManagedObjectContext *)createPrivateContext;
+//save main context
++(void)save;
 
 
 

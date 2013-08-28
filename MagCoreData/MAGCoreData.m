@@ -102,7 +102,7 @@
     self.persistentStore = nil;
 }
 
-+ (NSManagedObjectContext *)mainContext {
++ (NSManagedObjectContext *)context {
     return [[MAGCoreData instance] mainContext];
 }
 
@@ -112,6 +112,22 @@
     return moc;
 }
 
++ (void)save {
+    NSError *error = nil;
+    MAGCoreData *mag = [MAGCoreData instance];
+
+    if ([mag.mainContext hasChanges] && ![mag.mainContext save:&error]) {
+        NSArray* detailedErrors = [[error userInfo] objectForKey:NSDetailedErrorsKey];
+        if(detailedErrors != nil && [detailedErrors count] > 0) {
+            for(NSError* detailedError in detailedErrors) {
+                NSLog(@"MAGCoreData  DetailedError: %@", [detailedError userInfo]);
+            }
+        }
+        else {
+            NSLog(@"MAGCoreData %@", [error userInfo]);
+        }
+    }
+}
 
 
 
