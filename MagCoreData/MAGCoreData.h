@@ -27,6 +27,9 @@
 +(NSManagedObjectContext *)createPrivateContext;
 //save main context
 +(void)save;
++(void)saveContext:(NSManagedObjectContext*)context;
+//Delete all data from first persistent store in persistent store coordinator
++(void)deleteAll;
 
 
 

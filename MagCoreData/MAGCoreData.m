@@ -113,10 +113,12 @@
 }
 
 + (void)save {
-    NSError *error = nil;
-    MAGCoreData *mag = [MAGCoreData instance];
+    [MAGCoreData saveContext:[MAGCoreData context]];
+}
 
-    if ([mag.mainContext hasChanges] && ![mag.mainContext save:&error]) {
++ (void)saveContext:(NSManagedObjectContext *)context {
+    NSError *error = nil;
+    if ([context hasChanges] && ![context save:&error]) {
         NSArray* detailedErrors = [[error userInfo] objectForKey:NSDetailedErrorsKey];
         if(detailedErrors != nil && [detailedErrors count] > 0) {
             for(NSError* detailedError in detailedErrors) {
@@ -127,8 +129,19 @@
             NSLog(@"MAGCoreData %@", [error userInfo]);
         }
     }
+
 }
 
++ (void)deleteAll {
+    //assume we use only one persistent store
+    NSURL *storeURL = [[[[[MAGCoreData instance] persistentStore] persistentStores] objectAtIndex:0] URL];
+    [[MAGCoreData instance] close];
+    @try {
+        [[NSFileManager defaultManager] removeItemAtPath:storeURL.path error:nil];
+    } @catch (NSException *exception) {
+        // ignore, totally normal
+    }
+}
 
 
 @end
