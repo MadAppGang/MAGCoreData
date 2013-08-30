@@ -34,6 +34,7 @@
     if (self) {
         _autoMergeFromChildContexts = NO;
     }
+    return self;
 }
 
 
@@ -56,17 +57,17 @@
 }
 
 
-+ (NSError *)initCoreData {
++ (NSError *)prepareCoreData {
     NSError *error = nil;
-    [self initCoreDataWithModelName:nil andStorageName:nil error:&error];
+    [self prepareCoreDataWithModelName:nil andStorageName:nil error:&error];
     return error;
 }
 
-+ (BOOL)initCoreDataWithModelNAme:(NSString *)modelName error:(NSError **)error {
-    return [self initCoreDataWithModelName:modelName andStorageName:nil error:error];
++ (BOOL)prepareCoreDataWithModelName:(NSString *)modelName error:(NSError **)error {
+    return [self prepareCoreDataWithModelName:modelName andStorageName:nil error:error];
 }
 
-+ (BOOL)initCoreDataWithModelName:(NSString *)modelName andStorageName:(NSString *)storageName error:(NSError **)error {
++ (BOOL)prepareCoreDataWithModelName:(NSString *)modelName andStorageName:(NSString *)storageName error:(NSError **)error {
     if ([[MAGCoreData instance] mainContext]) return YES;
 
     MAGCoreData *mag = [MAGCoreData instance];
