@@ -28,14 +28,52 @@
 + (NSDictionary *)dateFormats;
 + (void)setDateFormats:(NSDictionary *)datesFormat;
 
+//Object unique of external data format
+//When it found an object in local model, the object edited instead of inserting,
+//if no object found - new object creating
++ (id)primaryKeyName;
++ (void)setPrimaryKeyName:(id)primaryKey;
+
+
 
 
 
 - (void)safeSetValuesForKeysWithDictionary:(NSDictionary *)keyedValues;
+- (void)safeSetValuesForKeysWithDictionary:(NSDictionary *)keyedValues inContext:(NSManagedObjectContext *)context;
+
+//create or update object regarding  primaryKeyName property
++ (instancetype)getOrCreateObjectForPrimaryKey:(id)primaryKey;
++ (instancetype)getOrCreateObjectForPrimaryKey:(id)primaryKey inContext:(NSManagedObjectContext *)context;
+
++ (instancetype)safeCreateOrUpdateWithDictionary:(NSDictionary *)keyedValues;
++ (instancetype)safeCreateOrUpdateWithDictionary:(NSDictionary *)keyedValues inContext:(NSManagedObjectContext *)context;
 
 
 + (instancetype)create ;
 + (instancetype)createInContext:(NSManagedObjectContext*)context;
 + (instancetype)createFromDictionary:(NSDictionary *)dictionary;
 + (instancetype)createFromDictionary:(NSDictionary *)dictionary inContext:(NSManagedObjectContext*)context;
+
+#pragma mark - fetching objects
++ (NSArray *)all;
++ (NSArray *)allForPredicate:(NSPredicate *)predicate;
++ (NSArray *)allForPredicate:(NSPredicate *)predicate orderBy:(NSString *)key ascending:(BOOL)ascending;
++ (NSArray *)allOrderedBy:(NSString *)key ascending:(BOOL)ascending;
++ (NSArray *)allInContext:(NSManagedObjectContext*)context;
++ (NSArray *)allForPredicate:(NSPredicate *)predicate inContext:(NSManagedObjectContext *)context;
++ (NSArray *)allForPredicate:(NSPredicate *)predicate orderBy:(NSString *)key ascending:(BOOL)ascending inContext:(NSManagedObjectContext *)context;
++ (NSArray *)allOrderedBy:(NSString *)key ascending:(BOOL)ascending inContext:(NSManagedObjectContext *)context;
+
++ (id)first;
++ (id)firstWithKey:(NSString *)key value:(id)value;
+
++ (id)firstInContext:(NSManagedObjectContext *)context;
++ (id)firstWithKey:(NSString *)key value:(id)value inContext:(NSManagedObjectContext *)context;
+
+#pragma mark - deleting objects
+
++ (void)deleteAll;
++ (void)deleteAllInContext:(NSManagedObjectContext *)context;
+- (void)delete;
+
 @end

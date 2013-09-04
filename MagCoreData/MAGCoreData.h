@@ -25,12 +25,13 @@
 //Main Context
 +(NSManagedObjectContext *)context;
 +(NSManagedObjectContext *)createPrivateContext;
-//save main context
+#pragma mark -  save main context
 +(void)save;
 +(void)saveContext:(NSManagedObjectContext*)context;
-//Delete all data from first persistent store in persistent store coordinator
+#pragma mark - Delete all data from first persistent store in persistent store coordinator
 +(void)deleteAll;
 
 
+#pragma mark - Fetching managed objects
 
 @end
