@@ -167,9 +167,11 @@ static NSString const * kPrimaryKeyNameKey= @"NSManagedObjectMagCoreDataPrimaryK
 
 + (instancetype)safeCreateOrUpdateWithDictionary:(NSDictionary *)keyedValues inContext:(NSManagedObjectContext *)context {
     //createOrUpdate
-    id primaryKey = keyedValues[[self primaryKeyName]];
+    NSString *mappedKey = [[self keyMapping] objectForKey:@"primaryKey"];
+    id primaryKey = mappedKey?keyedValues[mappedKey]:nil;
     NSManagedObject *selfObject = [self getOrCreateObjectForPrimaryKey:primaryKey inContext:context];
     [selfObject safeSetValuesForKeysWithDictionary:keyedValues inContext:context];
+    return selfObject;
 }
 
 

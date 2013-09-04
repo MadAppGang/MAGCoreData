@@ -13,7 +13,7 @@
 //Key mapping of local names and web service names, key of dictionary is local name and value is web service name
 + (NSDictionary *)keyMapping;
 + (void)setKeyMapping:(NSDictionary*)mapping;
-//Inline relation classes for recursive instantination
+//Inline relation classes for recursive instantiation
 + (NSDictionary *)relationClasses;
 + (void)setRelationClasses:(NSDictionary *)newRelationClasses;
 //DefaultDateFormat
