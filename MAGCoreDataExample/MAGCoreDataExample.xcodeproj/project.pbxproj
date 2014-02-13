@@ -21,6 +21,7 @@
 		FA38F0DF18ACC5F700332A34 /* MAGSimpleFetchedResultsControllerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = FA38F0D918ACC5F700332A34 /* MAGSimpleFetchedResultsControllerManager.m */; };
 		FA38F0E018ACC5F700332A34 /* NSManagedObject+MAGCoreData.m in Sources */ = {isa = PBXBuildFile; fileRef = FA38F0DB18ACC5F700332A34 /* NSManagedObject+MAGCoreData.m */; };
 		FA38F0E118ACC5F700332A34 /* NSManagedObjectContext+MAGCoreData.m in Sources */ = {isa = PBXBuildFile; fileRef = FA38F0DD18ACC5F700332A34 /* NSManagedObjectContext+MAGCoreData.m */; };
+		FAD99EC718ACCB2600896266 /* ISO8601DateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = FAD99EC418ACCB2600896266 /* ISO8601DateFormatter.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,6 +47,8 @@
 		FA38F0DB18ACC5F700332A34 /* NSManagedObject+MAGCoreData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSManagedObject+MAGCoreData.m"; path = "../../MagCoreData/NSManagedObject+MAGCoreData.m"; sourceTree = "<group>"; };
 		FA38F0DC18ACC5F700332A34 /* NSManagedObjectContext+MAGCoreData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSManagedObjectContext+MAGCoreData.h"; path = "../../MagCoreData/NSManagedObjectContext+MAGCoreData.h"; sourceTree = "<group>"; };
 		FA38F0DD18ACC5F700332A34 /* NSManagedObjectContext+MAGCoreData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSManagedObjectContext+MAGCoreData.m"; path = "../../MagCoreData/NSManagedObjectContext+MAGCoreData.m"; sourceTree = "<group>"; };
+		FAD99EC318ACCB2600896266 /* ISO8601DateFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISO8601DateFormatter.h; sourceTree = "<group>"; };
+		FAD99EC418ACCB2600896266 /* ISO8601DateFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISO8601DateFormatter.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,6 +97,7 @@
 		BDD82FAC17CE409C00F1CD8D /* MAGCoreDataExample */ = {
 			isa = PBXGroup;
 			children = (
+				FAD99EC118ACCB0F00896266 /* Vendors */,
 				BDD82FC317CE40B900F1CD8D /* MagCoreData */,
 				BDD82FB517CE409C00F1CD8D /* MAGAppDelegate.h */,
 				BDD82FB617CE409C00F1CD8D /* MAGAppDelegate.m */,
@@ -129,6 +133,23 @@
 				FA38F0DD18ACC5F700332A34 /* NSManagedObjectContext+MAGCoreData.m */,
 			);
 			name = MagCoreData;
+			sourceTree = "<group>";
+		};
+		FAD99EC118ACCB0F00896266 /* Vendors */ = {
+			isa = PBXGroup;
+			children = (
+				FAD99EC218ACCB2600896266 /* ISO8601DateFormatter */,
+			);
+			path = Vendors;
+			sourceTree = "<group>";
+		};
+		FAD99EC218ACCB2600896266 /* ISO8601DateFormatter */ = {
+			isa = PBXGroup;
+			children = (
+				FAD99EC318ACCB2600896266 /* ISO8601DateFormatter.h */,
+				FAD99EC418ACCB2600896266 /* ISO8601DateFormatter.m */,
+			);
+			path = ISO8601DateFormatter;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -203,6 +224,7 @@
 				BDD82FB717CE409C00F1CD8D /* MAGAppDelegate.m in Sources */,
 				FA38F0E018ACC5F700332A34 /* NSManagedObject+MAGCoreData.m in Sources */,
 				FA38F0DE18ACC5F700332A34 /* MAGCoreData.m in Sources */,
+				FAD99EC718ACCB2600896266 /* ISO8601DateFormatter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

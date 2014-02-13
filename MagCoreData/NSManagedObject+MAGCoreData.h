@@ -39,8 +39,6 @@
 
 
 
-
-
 - (void)safeSetValuesForKeysWithDictionary:(NSDictionary *)keyedValues;
 - (void)safeSetValuesForKeysWithDictionary:(NSDictionary *)keyedValues inContext:(NSManagedObjectContext *)context;
 
@@ -74,13 +72,11 @@
 + (id)firstWithKey:(NSString *)key value:(id)value inContext:(NSManagedObjectContext *)context;
 
 #pragma mark - deleting objects
-
 + (void)deleteAll;
 + (void)deleteAllInContext:(NSManagedObjectContext *)context;
 - (void)delete;
 
 #pragma mark - refreshing object
-
 - (void)refreshMerging:(BOOL)merging;
 
 @end

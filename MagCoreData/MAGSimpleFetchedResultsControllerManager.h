@@ -12,9 +12,10 @@
 
 
 @interface MAGSimpleFetchedResultsControllerManager : NSObject
+
 @property (nonatomic, readonly, weak) UITableView *tableView;
 @property (nonatomic, readonly, weak) NSFetchedResultsController *fetchedResultController;
 
--(instancetype)initWithFRC:(NSFetchedResultsController *)frc forTableView:(UITableView *)tableView withUpdateBlock:(void(^)(UITableViewCell *, NSIndexPath *))updateBlock;
+- (instancetype)initWithFRC:(NSFetchedResultsController *)frc forTableView:(UITableView *)tableView withUpdateBlock:(void(^)(UITableViewCell *, NSIndexPath *))updateBlock;
 
 @end

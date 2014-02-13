@@ -76,8 +76,7 @@ static NSString const * kUpdateDateKey= @"NSManagedObjectMagCoreDataUpdateDateKe
 }
 
 
-- (void)safeSetValuesForKeysWithDictionary:(NSDictionary *)keyedValues
-{
+- (void)safeSetValuesForKeysWithDictionary:(NSDictionary *)keyedValues {
     [self safeSetValuesForKeysWithDictionary:keyedValues inContext:[MAGCoreData context]];
 }
 
@@ -136,15 +135,15 @@ static NSString const * kUpdateDateKey= @"NSManagedObjectMagCoreDataUpdateDateKe
                 NSLog(@"MAGCoreData+NSManagedObjectContext: mapping lost for attribute:%@ for class %@",attribute, [self class]);
                 continue;
             }
-            NSAttributeType attributeType = [[attributes objectForKey:attribute] attributeType];
+            NSAttributeType attributeType = [attributes[attribute] attributeType];
             if ([value isKindOfClass:[NSNull class]]) {
                 value = nil;
             } else if ((attributeType == NSStringAttributeType) && ([value isKindOfClass:[NSNumber class]])) {
                 value = [value stringValue];
             } else if (((attributeType == NSInteger16AttributeType) || (attributeType == NSInteger32AttributeType) || (attributeType == NSInteger64AttributeType) || (attributeType == NSBooleanAttributeType)) && ([value isKindOfClass:[NSString class]])) {
-                value = [NSNumber numberWithInteger:[value  integerValue]];
+                value = @([value  integerValue]);
             } else if ((attributeType == NSFloatAttributeType) && ([value isKindOfClass:[NSString class]])) {
-                value = [NSNumber numberWithDouble:[value doubleValue]];
+                value = @([value doubleValue]);
             } else if ((attributeType == NSDateAttributeType) && ([value isKindOfClass:[NSString class]])) {
                 value = [self dateFromObject:value forAttribute:attribute];
             }
@@ -168,11 +167,9 @@ static NSString const * kUpdateDateKey= @"NSManagedObjectMagCoreDataUpdateDateKe
                                           inContext:context];
         }
     }
-
-
 }
 
--(void)createRelationshipToManyForRelationName:(id)relationName
+- (void)createRelationshipToManyForRelationName:(id)relationName
                                    relationKey:(id)relationKey
                                      withValue:(id)value
                                      inContext:(NSManagedObjectContext*)context{
@@ -182,16 +179,15 @@ static NSString const * kUpdateDateKey= @"NSManagedObjectMagCoreDataUpdateDateKe
                                       withValue:oneValue
                                       inContext:context];
     }
-    
 }
 
-- (NSString*)firstLetterCap:(NSString*)string {
+- (NSString *)firstLetterCap:(NSString*)string {
     NSString *firstCapChar = [[string substringToIndex:1] capitalizedString];
     NSString *cappedString = [string stringByReplacingCharactersInRange:NSMakeRange(0,1) withString:firstCapChar];
     return cappedString;
 }
 
--(void)addObject:(NSManagedObject*)obj toRelation:(NSString*)relation {
+- (void)addObject:(NSManagedObject*)obj toRelation:(NSString*)relation {
     NSSet *set = [self valueForKey:relation];
     if ([set isKindOfClass:[NSSet class]] || [set isKindOfClass:[NSOrderedSet class]]) {
         if (![set containsObject:obj]) {
@@ -204,7 +200,7 @@ static NSString const * kUpdateDateKey= @"NSManagedObjectMagCoreDataUpdateDateKe
     }
 }
 
--(void)setObject:(NSManagedObject*)obj forRelation:(NSString*)relation {
+- (void)setObject:(NSManagedObject *)obj forRelation:(NSString*)relation {
     if ([self valueForKey:relation] != obj) {
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
@@ -215,7 +211,7 @@ static NSString const * kUpdateDateKey= @"NSManagedObjectMagCoreDataUpdateDateKe
 }
 
 
--(void)createRelationshipForRelationName:(id)relationName relationKey:(id)relationKey withValue:(id)value inContext:(NSManagedObjectContext*)context{
+- (void)createRelationshipForRelationName:(id)relationName relationKey:(id)relationKey withValue:(id)value inContext:(NSManagedObjectContext*)context {
     NSDictionary *relationsClasses = [[self class] relationClasses];
     NSRelationshipDescription *relationshipDescription = [[self entity] relationshipsByName][relationName];
     if (relationshipDescription) {
@@ -259,7 +255,7 @@ static NSString const * kUpdateDateKey= @"NSManagedObjectMagCoreDataUpdateDateKe
 + (instancetype)safeCreateOrUpdateWithDictionary:(NSDictionary *)keyedValues inContext:(NSManagedObjectContext *)context {
     //createOrUpdate
     id pk = [self primaryKeyName];
-    NSString *mappedPrimaryKey = pk?[[self keyMapping] objectForKey:pk]: nil;
+    NSString *mappedPrimaryKey = pk?[self keyMapping][pk]: nil;
     id primaryKey = mappedPrimaryKey?keyedValues[mappedPrimaryKey]:nil;
     NSManagedObject *selfObject = [self getOrCreateObjectForPrimaryKey:primaryKey inContext:context];
     [selfObject safeSetValuesForKeysWithDictionary:keyedValues inContext:context];
@@ -326,7 +322,7 @@ static NSString const * kUpdateDateKey= @"NSManagedObjectMagCoreDataUpdateDateKe
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:NSStringFromClass([self class])];
     NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:key ascending:ascending];
     [request setPredicate:predicate];
-    [request setSortDescriptors:[NSArray arrayWithObject:sortDescriptor]];
+    [request setSortDescriptors:@[sortDescriptor]];
     __block NSArray *ret = nil;
     ret = [context executeFetchRequest:request error:nil];
     return ret;
@@ -335,7 +331,7 @@ static NSString const * kUpdateDateKey= @"NSManagedObjectMagCoreDataUpdateDateKe
 + (NSArray *)allOrderedBy:(NSString *)key ascending:(BOOL)ascending inContext:(NSManagedObjectContext *)context {
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:NSStringFromClass([self class])];
     NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:key ascending:ascending];
-    [request setSortDescriptors:[NSArray arrayWithObject:sortDescriptor]];
+    [request setSortDescriptors:@[sortDescriptor]];
     __block NSArray *ret = nil;
     ret = [context executeFetchRequest:request error:nil];
     return ret;
@@ -356,7 +352,7 @@ static NSString const * kUpdateDateKey= @"NSManagedObjectMagCoreDataUpdateDateKe
     __block NSArray *values = nil;
     values = [context executeFetchRequest:request error:nil];
     if (values.count > 0) {
-        return (NSManagedObject *)[values objectAtIndex:0];
+        return (NSManagedObject *)values[0];
     }
     return nil;
 }
@@ -368,7 +364,7 @@ static NSString const * kUpdateDateKey= @"NSManagedObjectMagCoreDataUpdateDateKe
     __block NSArray *values = nil;
     values = [context executeFetchRequest:request error:nil];
     if (values.count > 0) {
-        return (NSManagedObject *)[values objectAtIndex:0];
+        return (NSManagedObject *)values[0];
     }
     return nil;
 }
