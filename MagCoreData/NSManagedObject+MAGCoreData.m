@@ -380,8 +380,7 @@ static NSString const * kUpdateDateKey= @"NSManagedObjectMagCoreDataUpdateDateKe
 }
 
 + (void)deleteAllInContext:(NSManagedObjectContext *)context {
-    // get all objects for entity
-    NSArray *objects = [self all];
+    NSArray *objects = [self allInContext:context];
     for (NSManagedObject *object in objects)
         [context deleteObject:object];
 }
