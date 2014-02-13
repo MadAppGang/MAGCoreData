@@ -34,6 +34,9 @@
 + (id)primaryKeyName;
 + (void)setPrimaryKeyName:(id)primaryKey;
 
++ (id)updateDateKeyName;
++ (void)setUpdateDateKeyName:(id)updateKeyName;
+
 
 
 
@@ -75,5 +78,9 @@
 + (void)deleteAll;
 + (void)deleteAllInContext:(NSManagedObjectContext *)context;
 - (void)delete;
+
+#pragma mark - refreshing object
+
+- (void)refreshMerging:(BOOL)merging;
 
 @end

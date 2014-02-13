@@ -12,7 +12,7 @@
 
 +(instancetype)instance;
 
-//default is YES
+//default is NO
 @property (nonatomic) BOOL autoMergeFromChildContexts;
 
 #pragma mark - Initialisation
