@@ -232,6 +232,17 @@ static NSString const * kUpdateDateKey= @"NSManagedObjectMagCoreDataUpdateDateKe
 
 
 #pragma mark - easy object manipulation
++ (instancetype)objectForPrimaryKey:(id)primaryKey inContext:(NSManagedObjectContext *)context {
+    if (primaryKey) {
+        return [self firstWithKey:[self primaryKeyName] value:primaryKey inContext:context];
+    }
+    return nil;
+}
+
++ (instancetype)objectForPrimaryKey:(id)primaryKey {
+    return [self objectForPrimaryKey:primaryKey inContext:[MAGCoreData context]];
+}
+
 + (instancetype)getOrCreateObjectForPrimaryKey:(id)primaryKey {
     return [self getOrCreateObjectForPrimaryKey:primaryKey inContext:[MAGCoreData context]];
 }
@@ -278,7 +289,7 @@ static NSString const * kUpdateDateKey= @"NSManagedObjectMagCoreDataUpdateDateKe
     return [self createFromDictionary:dictionary inContext:[MAGCoreData context]];
 }
 
-+ (instancetype)createFromDictionary:(NSDictionary *)dictionary inContext:(NSManagedObjectContext*)context {
++ (instancetype)createFromDictionary:(NSDictionary *)dictionary inContext:(NSManagedObjectContext *)context {
     NSParameterAssert(context);
     NSManagedObject * object = [self createInContext:context];
     [object safeSetValuesForKeysWithDictionary:dictionary];
