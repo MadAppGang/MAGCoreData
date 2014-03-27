@@ -150,7 +150,7 @@
     }
 }
 
-+ (void)deleteAll {
++ (void)deleteAll __attribute__((deprecated)) {
     //assume we use only one persistent store
     NSURL *storeURL = [[[[MAGCoreData instance] persistentStore] persistentStores][0] URL];
     [[MAGCoreData instance] close];

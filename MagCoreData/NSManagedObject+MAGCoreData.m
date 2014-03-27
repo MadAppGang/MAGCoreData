@@ -132,7 +132,7 @@ static NSString const * kUpdateDateKey= @"NSManagedObjectMagCoreDataUpdateDateKe
             id value = keyedValues[attributeKey];
             if (value == nil) {
                 // Don't attempt to set nil, or you'll overwrite values in self that aren't present in keyedValues
-                NSLog(@"MAGCoreData+NSManagedObjectContext: mapping lost for attribute:%@ for class %@",attribute, [self class]);
+//                NSLog(@"MAGCoreData+NSManagedObjectContext: mapping lost for attribute:%@ for class %@",attribute, [self class]);
                 continue;
             }
             NSAttributeType attributeType = [attributes[attribute] attributeType];
@@ -152,7 +152,7 @@ static NSString const * kUpdateDateKey= @"NSManagedObjectMagCoreDataUpdateDateKe
     }
 
     NSDictionary *relationsClasses = [[self class] relationClasses];
-    for (NSString * relationName in [relationsClasses allKeys]) {
+    for (NSString *relationName in [relationsClasses allKeys]) {
         NSString *relationKey = mapping?mapping[relationName]:relationName;
         id value = keyedValues[relationKey];
         if (value && [value isKindOfClass:[NSDictionary class]]) {
@@ -172,7 +172,10 @@ static NSString const * kUpdateDateKey= @"NSManagedObjectMagCoreDataUpdateDateKe
 - (void)createRelationshipToManyForRelationName:(id)relationName
                                    relationKey:(id)relationKey
                                      withValue:(id)value
-                                     inContext:(NSManagedObjectContext*)context{
+                                     inContext:(NSManagedObjectContext*)context {
+    
+    [self setObject:nil forRelation:relationName];
+    
     for (NSDictionary *oneValue in value) {
         [self createRelationshipForRelationName:relationName
                                     relationKey:relationKey
