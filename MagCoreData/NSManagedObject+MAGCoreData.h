@@ -23,7 +23,7 @@
 //http://www.unicode.org/reports/tr35/tr35-19.html#Date_Format_Patterns for iOS6
 //http://www.unicode.org/reports/tr35/tr35-17.html#Date_Format_Patterns for iOS4.3
 + (NSString*)defaultDateFormat;
-+ (void)setDefaultDateFormat:(NSString*)dateFormat;
++ (void)setDefaultDateFormat:(NSString *)dateFormat;
 //DateFormatForEveryField
 + (NSDictionary *)dateFormats;
 + (void)setDateFormats:(NSDictionary *)datesFormat;
@@ -42,7 +42,10 @@
 - (void)safeSetValuesForKeysWithDictionary:(NSDictionary *)keyedValues;
 - (void)safeSetValuesForKeysWithDictionary:(NSDictionary *)keyedValues inContext:(NSManagedObjectContext *)context;
 
-//create or update object regarding  primaryKeyName property
+
++ (instancetype)objectForPrimaryKey:(id)primaryKey inContext:(NSManagedObjectContext *)context;
++ (instancetype)objectForPrimaryKey:(id)primaryKey;
+
 + (instancetype)getOrCreateObjectForPrimaryKey:(id)primaryKey;
 + (instancetype)getOrCreateObjectForPrimaryKey:(id)primaryKey inContext:(NSManagedObjectContext *)context;
 
@@ -50,10 +53,10 @@
 + (instancetype)safeCreateOrUpdateWithDictionary:(NSDictionary *)keyedValues inContext:(NSManagedObjectContext *)context;
 
 
-+ (instancetype)create ;
-+ (instancetype)createInContext:(NSManagedObjectContext*)context;
++ (instancetype)create;
++ (instancetype)createInContext:(NSManagedObjectContext *)context;
 + (instancetype)createFromDictionary:(NSDictionary *)dictionary;
-+ (instancetype)createFromDictionary:(NSDictionary *)dictionary inContext:(NSManagedObjectContext*)context;
++ (instancetype)createFromDictionary:(NSDictionary *)dictionary inContext:(NSManagedObjectContext *)context;
 
 #pragma mark - fetching objects
 + (NSArray *)all;

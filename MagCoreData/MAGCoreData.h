@@ -12,26 +12,25 @@
 
 + (instancetype)instance;
 
-//default is NO
 @property (nonatomic) BOOL autoMergeFromChildContexts;
 
-#pragma mark - Initialisation
 + (NSError *)prepareCoreData;
 + (BOOL)prepareCoreDataWithModelName:(NSString *)modelName error:(NSError **)error;
-+ (BOOL)prepareCoreDataWithModelName:(NSString *)modelName andStorageName:(NSString*)storageName error:(NSError **)error;
-- (void)close;
++ (BOOL)prepareCoreDataWithModelName:(NSString *)modelName andStorageName:(NSString *)storageName error:(NSError **)error;
 
-#pragma mark - Management Object Context
-//Main Context
 + (NSManagedObjectContext *)context;
 + (NSManagedObjectContext *)createPrivateContext;
 
-#pragma mark -  save main context
 + (void)save;
 + (void)saveContext:(NSManagedObjectContext*)context;
 
+- (void)close;
++ (void)deleteStorage;
++ (void)deleteStorageWithName:(NSString *)storageName;
+
+
 #pragma mark - Delete all data from first persistent store in persistent store coordinator
-+ (void)deleteAll;
++ (void)deleteAll __attribute__((deprecated));
 
 #pragma mark - Fetching managed objects
 
