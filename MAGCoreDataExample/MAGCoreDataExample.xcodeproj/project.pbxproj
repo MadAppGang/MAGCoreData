@@ -1,525 +1,1406 @@
-// !$*UTF8*$!
-{
-	archiveVersion = 1;
-	classes = {
-	};
-	objectVersion = 46;
-	objects = {
-
-/* Begin PBXBuildFile section */
-		829958AD192CCFD8008AACE2 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 829958AC192CCFD8008AACE2 /* XCTest.framework */; };
-		829958AE192CCFD8008AACE2 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDD82FA817CE409C00F1CD8D /* Foundation.framework */; };
-		829958AF192CCFD8008AACE2 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDD82FA617CE409C00F1CD8D /* UIKit.framework */; };
-		829958B5192CCFD8008AACE2 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 829958B3192CCFD8008AACE2 /* InfoPlist.strings */; };
-		829958B7192CCFD8008AACE2 /* MAGCoreDataLogicTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 829958B6192CCFD8008AACE2 /* MAGCoreDataLogicTests.m */; };
-		BDD82FA717CE409C00F1CD8D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDD82FA617CE409C00F1CD8D /* UIKit.framework */; };
-		BDD82FA917CE409C00F1CD8D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDD82FA817CE409C00F1CD8D /* Foundation.framework */; };
-		BDD82FAB17CE409C00F1CD8D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDD82FAA17CE409C00F1CD8D /* CoreGraphics.framework */; };
-		BDD82FB117CE409C00F1CD8D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = BDD82FAF17CE409C00F1CD8D /* InfoPlist.strings */; };
-		BDD82FB317CE409C00F1CD8D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = BDD82FB217CE409C00F1CD8D /* main.m */; };
-		BDD82FB717CE409C00F1CD8D /* MAGAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = BDD82FB617CE409C00F1CD8D /* MAGAppDelegate.m */; };
-		BDD82FB917CE409C00F1CD8D /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = BDD82FB817CE409C00F1CD8D /* Default.png */; };
-		BDD82FBB17CE409C00F1CD8D /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BDD82FBA17CE409C00F1CD8D /* Default@2x.png */; };
-		BDD82FBD17CE409C00F1CD8D /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BDD82FBC17CE409C00F1CD8D /* Default-568h@2x.png */; };
-		BDD82FCB17CE412100F1CD8D /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDD82FCA17CE412100F1CD8D /* CoreData.framework */; };
-		FA38F0DE18ACC5F700332A34 /* MAGCoreData.m in Sources */ = {isa = PBXBuildFile; fileRef = FA38F0D718ACC5F700332A34 /* MAGCoreData.m */; };
-		FA38F0DF18ACC5F700332A34 /* MAGSimpleFetchedResultsControllerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = FA38F0D918ACC5F700332A34 /* MAGSimpleFetchedResultsControllerManager.m */; };
-		FA38F0E018ACC5F700332A34 /* NSManagedObject+MAGCoreData.m in Sources */ = {isa = PBXBuildFile; fileRef = FA38F0DB18ACC5F700332A34 /* NSManagedObject+MAGCoreData.m */; };
-		FA38F0E118ACC5F700332A34 /* NSManagedObjectContext+MAGCoreData.m in Sources */ = {isa = PBXBuildFile; fileRef = FA38F0DD18ACC5F700332A34 /* NSManagedObjectContext+MAGCoreData.m */; };
-		FAD99EC718ACCB2600896266 /* ISO8601DateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = FAD99EC418ACCB2600896266 /* ISO8601DateFormatter.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-/* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		829958B9192CCFD8008AACE2 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = BDD82F9B17CE409C00F1CD8D /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = BDD82FA217CE409C00F1CD8D;
-			remoteInfo = MAGCoreDataExample;
-		};
-/* End PBXContainerItemProxy section */
-
-/* Begin PBXFileReference section */
-		829958AB192CCFD8008AACE2 /* MAGCoreDataLogicTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MAGCoreDataLogicTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		829958AC192CCFD8008AACE2 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
-		829958B2192CCFD8008AACE2 /* MAGCoreDataLogicTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MAGCoreDataLogicTests-Info.plist"; sourceTree = "<group>"; };
-		829958B4192CCFD8008AACE2 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		829958B6192CCFD8008AACE2 /* MAGCoreDataLogicTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MAGCoreDataLogicTests.m; sourceTree = "<group>"; };
-		829958B8192CCFD8008AACE2 /* MAGCoreDataLogicTests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MAGCoreDataLogicTests-Prefix.pch"; sourceTree = "<group>"; };
-		BDD82FA317CE409C00F1CD8D /* MAGCoreDataExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MAGCoreDataExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		BDD82FA617CE409C00F1CD8D /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
-		BDD82FA817CE409C00F1CD8D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		BDD82FAA17CE409C00F1CD8D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		BDD82FAE17CE409C00F1CD8D /* MAGCoreDataExample-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MAGCoreDataExample-Info.plist"; sourceTree = "<group>"; };
-		BDD82FB017CE409C00F1CD8D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		BDD82FB217CE409C00F1CD8D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		BDD82FB417CE409C00F1CD8D /* MAGCoreDataExample-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MAGCoreDataExample-Prefix.pch"; sourceTree = "<group>"; };
-		BDD82FB517CE409C00F1CD8D /* MAGAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MAGAppDelegate.h; sourceTree = "<group>"; };
-		BDD82FB617CE409C00F1CD8D /* MAGAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MAGAppDelegate.m; sourceTree = "<group>"; };
-		BDD82FB817CE409C00F1CD8D /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
-		BDD82FBA17CE409C00F1CD8D /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
-		BDD82FBC17CE409C00F1CD8D /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
-		BDD82FCA17CE412100F1CD8D /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
-		FA38F0D618ACC5F700332A34 /* MAGCoreData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MAGCoreData.h; path = ../../MagCoreData/MAGCoreData.h; sourceTree = "<group>"; };
-		FA38F0D718ACC5F700332A34 /* MAGCoreData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MAGCoreData.m; path = ../../MagCoreData/MAGCoreData.m; sourceTree = "<group>"; };
-		FA38F0D818ACC5F700332A34 /* MAGSimpleFetchedResultsControllerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MAGSimpleFetchedResultsControllerManager.h; path = ../../MagCoreData/MAGSimpleFetchedResultsControllerManager.h; sourceTree = "<group>"; };
-		FA38F0D918ACC5F700332A34 /* MAGSimpleFetchedResultsControllerManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MAGSimpleFetchedResultsControllerManager.m; path = ../../MagCoreData/MAGSimpleFetchedResultsControllerManager.m; sourceTree = "<group>"; };
-		FA38F0DA18ACC5F700332A34 /* NSManagedObject+MAGCoreData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSManagedObject+MAGCoreData.h"; path = "../../MagCoreData/NSManagedObject+MAGCoreData.h"; sourceTree = "<group>"; };
-		FA38F0DB18ACC5F700332A34 /* NSManagedObject+MAGCoreData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSManagedObject+MAGCoreData.m"; path = "../../MagCoreData/NSManagedObject+MAGCoreData.m"; sourceTree = "<group>"; };
-		FA38F0DC18ACC5F700332A34 /* NSManagedObjectContext+MAGCoreData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSManagedObjectContext+MAGCoreData.h"; path = "../../MagCoreData/NSManagedObjectContext+MAGCoreData.h"; sourceTree = "<group>"; };
-		FA38F0DD18ACC5F700332A34 /* NSManagedObjectContext+MAGCoreData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSManagedObjectContext+MAGCoreData.m"; path = "../../MagCoreData/NSManagedObjectContext+MAGCoreData.m"; sourceTree = "<group>"; };
-		FAD99EC318ACCB2600896266 /* ISO8601DateFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISO8601DateFormatter.h; sourceTree = "<group>"; };
-		FAD99EC418ACCB2600896266 /* ISO8601DateFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISO8601DateFormatter.m; sourceTree = "<group>"; };
-/* End PBXFileReference section */
-
-/* Begin PBXFrameworksBuildPhase section */
-		829958A8192CCFD8008AACE2 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				829958AD192CCFD8008AACE2 /* XCTest.framework in Frameworks */,
-				829958AF192CCFD8008AACE2 /* UIKit.framework in Frameworks */,
-				829958AE192CCFD8008AACE2 /* Foundation.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		BDD82FA017CE409C00F1CD8D /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				BDD82FCB17CE412100F1CD8D /* CoreData.framework in Frameworks */,
-				BDD82FA717CE409C00F1CD8D /* UIKit.framework in Frameworks */,
-				BDD82FA917CE409C00F1CD8D /* Foundation.framework in Frameworks */,
-				BDD82FAB17CE409C00F1CD8D /* CoreGraphics.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXFrameworksBuildPhase section */
-
-/* Begin PBXGroup section */
-		829958B0192CCFD8008AACE2 /* MAGCoreDataLogicTests */ = {
-			isa = PBXGroup;
-			children = (
-				829958B6192CCFD8008AACE2 /* MAGCoreDataLogicTests.m */,
-				829958B1192CCFD8008AACE2 /* Supporting Files */,
-			);
-			path = MAGCoreDataLogicTests;
-			sourceTree = "<group>";
-		};
-		829958B1192CCFD8008AACE2 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				829958B2192CCFD8008AACE2 /* MAGCoreDataLogicTests-Info.plist */,
-				829958B3192CCFD8008AACE2 /* InfoPlist.strings */,
-				829958B8192CCFD8008AACE2 /* MAGCoreDataLogicTests-Prefix.pch */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		BDD82F9A17CE409C00F1CD8D = {
-			isa = PBXGroup;
-			children = (
-				BDD82FAC17CE409C00F1CD8D /* MAGCoreDataExample */,
-				829958B0192CCFD8008AACE2 /* MAGCoreDataLogicTests */,
-				BDD82FA517CE409C00F1CD8D /* Frameworks */,
-				BDD82FA417CE409C00F1CD8D /* Products */,
-			);
-			sourceTree = "<group>";
-		};
-		BDD82FA417CE409C00F1CD8D /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				BDD82FA317CE409C00F1CD8D /* MAGCoreDataExample.app */,
-				829958AB192CCFD8008AACE2 /* MAGCoreDataLogicTests.xctest */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		BDD82FA517CE409C00F1CD8D /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				BDD82FCA17CE412100F1CD8D /* CoreData.framework */,
-				BDD82FA617CE409C00F1CD8D /* UIKit.framework */,
-				BDD82FA817CE409C00F1CD8D /* Foundation.framework */,
-				BDD82FAA17CE409C00F1CD8D /* CoreGraphics.framework */,
-				829958AC192CCFD8008AACE2 /* XCTest.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		BDD82FAC17CE409C00F1CD8D /* MAGCoreDataExample */ = {
-			isa = PBXGroup;
-			children = (
-				FAD99EC118ACCB0F00896266 /* Vendors */,
-				BDD82FC317CE40B900F1CD8D /* MagCoreData */,
-				BDD82FB517CE409C00F1CD8D /* MAGAppDelegate.h */,
-				BDD82FB617CE409C00F1CD8D /* MAGAppDelegate.m */,
-				BDD82FAD17CE409C00F1CD8D /* Supporting Files */,
-			);
-			path = MAGCoreDataExample;
-			sourceTree = "<group>";
-		};
-		BDD82FAD17CE409C00F1CD8D /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				BDD82FAE17CE409C00F1CD8D /* MAGCoreDataExample-Info.plist */,
-				BDD82FAF17CE409C00F1CD8D /* InfoPlist.strings */,
-				BDD82FB217CE409C00F1CD8D /* main.m */,
-				BDD82FB417CE409C00F1CD8D /* MAGCoreDataExample-Prefix.pch */,
-				BDD82FB817CE409C00F1CD8D /* Default.png */,
-				BDD82FBA17CE409C00F1CD8D /* Default@2x.png */,
-				BDD82FBC17CE409C00F1CD8D /* Default-568h@2x.png */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		BDD82FC317CE40B900F1CD8D /* MagCoreData */ = {
-			isa = PBXGroup;
-			children = (
-				FA38F0D618ACC5F700332A34 /* MAGCoreData.h */,
-				FA38F0D718ACC5F700332A34 /* MAGCoreData.m */,
-				FA38F0D818ACC5F700332A34 /* MAGSimpleFetchedResultsControllerManager.h */,
-				FA38F0D918ACC5F700332A34 /* MAGSimpleFetchedResultsControllerManager.m */,
-				FA38F0DA18ACC5F700332A34 /* NSManagedObject+MAGCoreData.h */,
-				FA38F0DB18ACC5F700332A34 /* NSManagedObject+MAGCoreData.m */,
-				FA38F0DC18ACC5F700332A34 /* NSManagedObjectContext+MAGCoreData.h */,
-				FA38F0DD18ACC5F700332A34 /* NSManagedObjectContext+MAGCoreData.m */,
-			);
-			name = MagCoreData;
-			sourceTree = "<group>";
-		};
-		FAD99EC118ACCB0F00896266 /* Vendors */ = {
-			isa = PBXGroup;
-			children = (
-				FAD99EC218ACCB2600896266 /* ISO8601DateFormatter */,
-			);
-			path = Vendors;
-			sourceTree = "<group>";
-		};
-		FAD99EC218ACCB2600896266 /* ISO8601DateFormatter */ = {
-			isa = PBXGroup;
-			children = (
-				FAD99EC318ACCB2600896266 /* ISO8601DateFormatter.h */,
-				FAD99EC418ACCB2600896266 /* ISO8601DateFormatter.m */,
-			);
-			path = ISO8601DateFormatter;
-			sourceTree = "<group>";
-		};
-/* End PBXGroup section */
-
-/* Begin PBXNativeTarget section */
-		829958AA192CCFD8008AACE2 /* MAGCoreDataLogicTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 829958BD192CCFD8008AACE2 /* Build configuration list for PBXNativeTarget "MAGCoreDataLogicTests" */;
-			buildPhases = (
-				829958A7192CCFD8008AACE2 /* Sources */,
-				829958A8192CCFD8008AACE2 /* Frameworks */,
-				829958A9192CCFD8008AACE2 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				829958BA192CCFD8008AACE2 /* PBXTargetDependency */,
-			);
-			name = MAGCoreDataLogicTests;
-			productName = MAGCoreDataLogicTests;
-			productReference = 829958AB192CCFD8008AACE2 /* MAGCoreDataLogicTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
-		BDD82FA217CE409C00F1CD8D /* MAGCoreDataExample */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = BDD82FC017CE409C00F1CD8D /* Build configuration list for PBXNativeTarget "MAGCoreDataExample" */;
-			buildPhases = (
-				BDD82F9F17CE409C00F1CD8D /* Sources */,
-				BDD82FA017CE409C00F1CD8D /* Frameworks */,
-				BDD82FA117CE409C00F1CD8D /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = MAGCoreDataExample;
-			productName = MAGCoreDataExample;
-			productReference = BDD82FA317CE409C00F1CD8D /* MAGCoreDataExample.app */;
-			productType = "com.apple.product-type.application";
-		};
-/* End PBXNativeTarget section */
-
-/* Begin PBXProject section */
-		BDD82F9B17CE409C00F1CD8D /* Project object */ = {
-			isa = PBXProject;
-			attributes = {
-				CLASSPREFIX = MAG;
-				LastUpgradeCheck = 0460;
-				ORGANIZATIONNAME = MadAppGang;
-				TargetAttributes = {
-					829958AA192CCFD8008AACE2 = {
-						TestTargetID = BDD82FA217CE409C00F1CD8D;
-					};
-				};
-			};
-			buildConfigurationList = BDD82F9E17CE409C00F1CD8D /* Build configuration list for PBXProject "MAGCoreDataExample" */;
-			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
-			hasScannedForEncodings = 0;
-			knownRegions = (
-				en,
-			);
-			mainGroup = BDD82F9A17CE409C00F1CD8D;
-			productRefGroup = BDD82FA417CE409C00F1CD8D /* Products */;
-			projectDirPath = "";
-			projectRoot = "";
-			targets = (
-				BDD82FA217CE409C00F1CD8D /* MAGCoreDataExample */,
-				829958AA192CCFD8008AACE2 /* MAGCoreDataLogicTests */,
-			);
-		};
-/* End PBXProject section */
-
-/* Begin PBXResourcesBuildPhase section */
-		829958A9192CCFD8008AACE2 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				829958B5192CCFD8008AACE2 /* InfoPlist.strings in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		BDD82FA117CE409C00F1CD8D /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				BDD82FB117CE409C00F1CD8D /* InfoPlist.strings in Resources */,
-				BDD82FB917CE409C00F1CD8D /* Default.png in Resources */,
-				BDD82FBB17CE409C00F1CD8D /* Default@2x.png in Resources */,
-				BDD82FBD17CE409C00F1CD8D /* Default-568h@2x.png in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXResourcesBuildPhase section */
-
-/* Begin PBXSourcesBuildPhase section */
-		829958A7192CCFD8008AACE2 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				829958B7192CCFD8008AACE2 /* MAGCoreDataLogicTests.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		BDD82F9F17CE409C00F1CD8D /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				FA38F0E118ACC5F700332A34 /* NSManagedObjectContext+MAGCoreData.m in Sources */,
-				FA38F0DF18ACC5F700332A34 /* MAGSimpleFetchedResultsControllerManager.m in Sources */,
-				BDD82FB317CE409C00F1CD8D /* main.m in Sources */,
-				BDD82FB717CE409C00F1CD8D /* MAGAppDelegate.m in Sources */,
-				FA38F0E018ACC5F700332A34 /* NSManagedObject+MAGCoreData.m in Sources */,
-				FA38F0DE18ACC5F700332A34 /* MAGCoreData.m in Sources */,
-				FAD99EC718ACCB2600896266 /* ISO8601DateFormatter.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		829958BA192CCFD8008AACE2 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = BDD82FA217CE409C00F1CD8D /* MAGCoreDataExample */;
-			targetProxy = 829958B9192CCFD8008AACE2 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
-
-/* Begin PBXVariantGroup section */
-		829958B3192CCFD8008AACE2 /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				829958B4192CCFD8008AACE2 /* en */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		BDD82FAF17CE409C00F1CD8D /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				BDD82FB017CE409C00F1CD8D /* en */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
-
-/* Begin XCBuildConfiguration section */
-		829958BB192CCFD8008AACE2 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/MAGCoreDataExample.app/MAGCoreDataExample";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-					"$(DEVELOPER_FRAMEWORKS_DIR)",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "MAGCoreDataLogicTests/MAGCoreDataLogicTests-Prefix.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				INFOPLIST_FILE = "MAGCoreDataLogicTests/MAGCoreDataLogicTests-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUNDLE_LOADER)";
-				WRAPPER_EXTENSION = xctest;
-			};
-			name = Debug;
-		};
-		829958BC192CCFD8008AACE2 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/MAGCoreDataExample.app/MAGCoreDataExample";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				ENABLE_NS_ASSERTIONS = NO;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-					"$(DEVELOPER_FRAMEWORKS_DIR)",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "MAGCoreDataLogicTests/MAGCoreDataLogicTests-Prefix.pch";
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				INFOPLIST_FILE = "MAGCoreDataLogicTests/MAGCoreDataLogicTests-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUNDLE_LOADER)";
-				WRAPPER_EXTENSION = xctest;
-			};
-			name = Release;
-		};
-		BDD82FBE17CE409C00F1CD8D /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				COPY_PHASE_STRIP = NO;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
-				ONLY_ACTIVE_ARCH = YES;
-				SDKROOT = iphoneos;
-			};
-			name = Debug;
-		};
-		BDD82FBF17CE409C00F1CD8D /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				COPY_PHASE_STRIP = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
-				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
-				SDKROOT = iphoneos;
-				VALIDATE_PRODUCT = YES;
-			};
-			name = Release;
-		};
-		BDD82FC117CE409C00F1CD8D /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "MAGCoreDataExample/MAGCoreDataExample-Prefix.pch";
-				INFOPLIST_FILE = "MAGCoreDataExample/MAGCoreDataExample-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				WRAPPER_EXTENSION = app;
-			};
-			name = Debug;
-		};
-		BDD82FC217CE409C00F1CD8D /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "MAGCoreDataExample/MAGCoreDataExample-Prefix.pch";
-				INFOPLIST_FILE = "MAGCoreDataExample/MAGCoreDataExample-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				WRAPPER_EXTENSION = app;
-			};
-			name = Release;
-		};
-/* End XCBuildConfiguration section */
-
-/* Begin XCConfigurationList section */
-		829958BD192CCFD8008AACE2 /* Build configuration list for PBXNativeTarget "MAGCoreDataLogicTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				829958BB192CCFD8008AACE2 /* Debug */,
-				829958BC192CCFD8008AACE2 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-		};
-		BDD82F9E17CE409C00F1CD8D /* Build configuration list for PBXProject "MAGCoreDataExample" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				BDD82FBE17CE409C00F1CD8D /* Debug */,
-				BDD82FBF17CE409C00F1CD8D /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		BDD82FC017CE409C00F1CD8D /* Build configuration list for PBXNativeTarget "MAGCoreDataExample" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				BDD82FC117CE409C00F1CD8D /* Debug */,
-				BDD82FC217CE409C00F1CD8D /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-/* End XCConfigurationList section */
-	};
-	rootObject = BDD82F9B17CE409C00F1CD8D /* Project object */;
-}
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>archiveVersion</key>
+	<string>1</string>
+	<key>classes</key>
+	<dict/>
+	<key>objectVersion</key>
+	<string>46</string>
+	<key>objects</key>
+	<dict>
+		<key>069DDD7904004BE0ACB77FBF</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array/>
+			<key>inputPaths</key>
+			<array/>
+			<key>isa</key>
+			<string>PBXShellScriptBuildPhase</string>
+			<key>name</key>
+			<string>Check Pods Manifest.lock</string>
+			<key>outputPaths</key>
+			<array/>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+			<key>shellPath</key>
+			<string>/bin/sh</string>
+			<key>shellScript</key>
+			<string>diff "${PODS_ROOT}/../Podfile.lock" "${PODS_ROOT}/Manifest.lock" &gt; /dev/null
+if [[ $? != 0 ]] ; then
+    cat &lt;&lt; EOM
+error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.
+EOM
+    exit 1
+fi
+</string>
+			<key>showEnvVarsInLog</key>
+			<string>0</string>
+		</dict>
+		<key>166299B1671E420FAB10B8C1</key>
+		<dict>
+			<key>explicitFileType</key>
+			<string>archive.ar</string>
+			<key>includeInIndex</key>
+			<string>0</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>path</key>
+			<string>libPods-MAGCoreDataLogicTests.a</string>
+			<key>sourceTree</key>
+			<string>BUILT_PRODUCTS_DIR</string>
+		</dict>
+		<key>24D2377B2BFD463497DEFB62</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array/>
+			<key>inputPaths</key>
+			<array/>
+			<key>isa</key>
+			<string>PBXShellScriptBuildPhase</string>
+			<key>name</key>
+			<string>Copy Pods Resources</string>
+			<key>outputPaths</key>
+			<array/>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+			<key>shellPath</key>
+			<string>/bin/sh</string>
+			<key>shellScript</key>
+			<string>"${SRCROOT}/Pods/Pods-MAGCoreDataLogicTests-resources.sh"
+</string>
+			<key>showEnvVarsInLog</key>
+			<string>0</string>
+		</dict>
+		<key>824E1B50192E0093008E321C</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>MAGCoreDataManagedObjectTests.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>824E1B51192E0093008E321C</key>
+		<dict>
+			<key>fileRef</key>
+			<string>824E1B50192E0093008E321C</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>829958A7192CCFD8008AACE2</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array>
+				<string>829958B7192CCFD8008AACE2</string>
+				<string>824E1B51192E0093008E321C</string>
+			</array>
+			<key>isa</key>
+			<string>PBXSourcesBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>829958A8192CCFD8008AACE2</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array>
+				<string>829958AD192CCFD8008AACE2</string>
+				<string>829958AF192CCFD8008AACE2</string>
+				<string>829958AE192CCFD8008AACE2</string>
+				<string>B2B6FC380E1B4540922156AC</string>
+			</array>
+			<key>isa</key>
+			<string>PBXFrameworksBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>829958A9192CCFD8008AACE2</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array>
+				<string>829958B5192CCFD8008AACE2</string>
+			</array>
+			<key>isa</key>
+			<string>PBXResourcesBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>829958AA192CCFD8008AACE2</key>
+		<dict>
+			<key>buildConfigurationList</key>
+			<string>829958BD192CCFD8008AACE2</string>
+			<key>buildPhases</key>
+			<array>
+				<string>069DDD7904004BE0ACB77FBF</string>
+				<string>829958A7192CCFD8008AACE2</string>
+				<string>829958A8192CCFD8008AACE2</string>
+				<string>829958A9192CCFD8008AACE2</string>
+				<string>24D2377B2BFD463497DEFB62</string>
+			</array>
+			<key>buildRules</key>
+			<array/>
+			<key>dependencies</key>
+			<array>
+				<string>829958BA192CCFD8008AACE2</string>
+			</array>
+			<key>isa</key>
+			<string>PBXNativeTarget</string>
+			<key>name</key>
+			<string>MAGCoreDataLogicTests</string>
+			<key>productName</key>
+			<string>MAGCoreDataLogicTests</string>
+			<key>productReference</key>
+			<string>829958AB192CCFD8008AACE2</string>
+			<key>productType</key>
+			<string>com.apple.product-type.bundle.unit-test</string>
+		</dict>
+		<key>829958AB192CCFD8008AACE2</key>
+		<dict>
+			<key>explicitFileType</key>
+			<string>wrapper.cfbundle</string>
+			<key>includeInIndex</key>
+			<string>0</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>path</key>
+			<string>MAGCoreDataLogicTests.xctest</string>
+			<key>sourceTree</key>
+			<string>BUILT_PRODUCTS_DIR</string>
+		</dict>
+		<key>829958AC192CCFD8008AACE2</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>wrapper.framework</string>
+			<key>name</key>
+			<string>XCTest.framework</string>
+			<key>path</key>
+			<string>Library/Frameworks/XCTest.framework</string>
+			<key>sourceTree</key>
+			<string>DEVELOPER_DIR</string>
+		</dict>
+		<key>829958AD192CCFD8008AACE2</key>
+		<dict>
+			<key>fileRef</key>
+			<string>829958AC192CCFD8008AACE2</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>829958AE192CCFD8008AACE2</key>
+		<dict>
+			<key>fileRef</key>
+			<string>BDD82FA817CE409C00F1CD8D</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>829958AF192CCFD8008AACE2</key>
+		<dict>
+			<key>fileRef</key>
+			<string>BDD82FA617CE409C00F1CD8D</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>829958B0192CCFD8008AACE2</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>824E1B50192E0093008E321C</string>
+				<string>829958B6192CCFD8008AACE2</string>
+				<string>829958B1192CCFD8008AACE2</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>path</key>
+			<string>MAGCoreDataLogicTests</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>829958B1192CCFD8008AACE2</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>829958B2192CCFD8008AACE2</string>
+				<string>829958B3192CCFD8008AACE2</string>
+				<string>829958B8192CCFD8008AACE2</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>Supporting Files</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>829958B2192CCFD8008AACE2</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.plist.xml</string>
+			<key>path</key>
+			<string>MAGCoreDataLogicTests-Info.plist</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>829958B3192CCFD8008AACE2</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>829958B4192CCFD8008AACE2</string>
+			</array>
+			<key>isa</key>
+			<string>PBXVariantGroup</string>
+			<key>name</key>
+			<string>InfoPlist.strings</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>829958B4192CCFD8008AACE2</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.plist.strings</string>
+			<key>name</key>
+			<string>en</string>
+			<key>path</key>
+			<string>en.lproj/InfoPlist.strings</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>829958B5192CCFD8008AACE2</key>
+		<dict>
+			<key>fileRef</key>
+			<string>829958B3192CCFD8008AACE2</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>829958B6192CCFD8008AACE2</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>MAGCoreDataLogicTests.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>829958B7192CCFD8008AACE2</key>
+		<dict>
+			<key>fileRef</key>
+			<string>829958B6192CCFD8008AACE2</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>829958B8192CCFD8008AACE2</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>path</key>
+			<string>MAGCoreDataLogicTests-Prefix.pch</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>829958B9192CCFD8008AACE2</key>
+		<dict>
+			<key>containerPortal</key>
+			<string>BDD82F9B17CE409C00F1CD8D</string>
+			<key>isa</key>
+			<string>PBXContainerItemProxy</string>
+			<key>proxyType</key>
+			<string>1</string>
+			<key>remoteGlobalIDString</key>
+			<string>BDD82FA217CE409C00F1CD8D</string>
+			<key>remoteInfo</key>
+			<string>MAGCoreDataExample</string>
+		</dict>
+		<key>829958BA192CCFD8008AACE2</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXTargetDependency</string>
+			<key>target</key>
+			<string>BDD82FA217CE409C00F1CD8D</string>
+			<key>targetProxy</key>
+			<string>829958B9192CCFD8008AACE2</string>
+		</dict>
+		<key>829958BB192CCFD8008AACE2</key>
+		<dict>
+			<key>baseConfigurationReference</key>
+			<string>8ADF2960B3204F668E459339</string>
+			<key>buildSettings</key>
+			<dict>
+				<key>BUNDLE_LOADER</key>
+				<string>$(BUILT_PRODUCTS_DIR)/MAGCoreDataExample.app/MAGCoreDataExample</string>
+				<key>CLANG_ENABLE_MODULES</key>
+				<string>YES</string>
+				<key>CLANG_WARN_BOOL_CONVERSION</key>
+				<string>YES</string>
+				<key>CLANG_WARN_DIRECT_OBJC_ISA_USAGE</key>
+				<string>YES_ERROR</string>
+				<key>CLANG_WARN_OBJC_ROOT_CLASS</key>
+				<string>YES_ERROR</string>
+				<key>FRAMEWORK_SEARCH_PATHS</key>
+				<array>
+					<string>$(SDKROOT)/Developer/Library/Frameworks</string>
+					<string>$(inherited)</string>
+					<string>$(DEVELOPER_FRAMEWORKS_DIR)</string>
+					<string>$(SRCROOT)</string>
+				</array>
+				<key>GCC_PRECOMPILE_PREFIX_HEADER</key>
+				<string>YES</string>
+				<key>GCC_PREFIX_HEADER</key>
+				<string>MAGCoreDataLogicTests/MAGCoreDataLogicTests-Prefix.pch</string>
+				<key>GCC_PREPROCESSOR_DEFINITIONS</key>
+				<array>
+					<string>DEBUG=1</string>
+					<string>$(inherited)</string>
+				</array>
+				<key>GCC_WARN_64_TO_32_BIT_CONVERSION</key>
+				<string>YES</string>
+				<key>GCC_WARN_ABOUT_RETURN_TYPE</key>
+				<string>YES_ERROR</string>
+				<key>GCC_WARN_UNDECLARED_SELECTOR</key>
+				<string>YES</string>
+				<key>GCC_WARN_UNINITIALIZED_AUTOS</key>
+				<string>YES_AGGRESSIVE</string>
+				<key>GCC_WARN_UNUSED_FUNCTION</key>
+				<string>YES</string>
+				<key>HEADER_SEARCH_PATHS</key>
+				<array>
+					<string>$(inherited)</string>
+					<string>/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include</string>
+					<string>$(SRCROOT)/OCMock</string>
+				</array>
+				<key>INFOPLIST_FILE</key>
+				<string>MAGCoreDataLogicTests/MAGCoreDataLogicTests-Info.plist</string>
+				<key>IPHONEOS_DEPLOYMENT_TARGET</key>
+				<string>7.1</string>
+				<key>LIBRARY_SEARCH_PATHS</key>
+				<array>
+					<string>$(inherited)</string>
+					<string>$(PROJECT_DIR)</string>
+				</array>
+				<key>OTHER_LDFLAGS</key>
+				<array>
+					<string>$(inherited)</string>
+					<string>-framework</string>
+					<string>XCTest</string>
+					<string>-all_load</string>
+				</array>
+				<key>PRODUCT_NAME</key>
+				<string>$(TARGET_NAME)</string>
+				<key>TEST_HOST</key>
+				<string>$(BUNDLE_LOADER)</string>
+				<key>WRAPPER_EXTENSION</key>
+				<string>xctest</string>
+			</dict>
+			<key>isa</key>
+			<string>XCBuildConfiguration</string>
+			<key>name</key>
+			<string>Debug</string>
+		</dict>
+		<key>829958BC192CCFD8008AACE2</key>
+		<dict>
+			<key>baseConfigurationReference</key>
+			<string>8ADF2960B3204F668E459339</string>
+			<key>buildSettings</key>
+			<dict>
+				<key>BUNDLE_LOADER</key>
+				<string>$(BUILT_PRODUCTS_DIR)/MAGCoreDataExample.app/MAGCoreDataExample</string>
+				<key>CLANG_ENABLE_MODULES</key>
+				<string>YES</string>
+				<key>CLANG_WARN_BOOL_CONVERSION</key>
+				<string>YES</string>
+				<key>CLANG_WARN_DIRECT_OBJC_ISA_USAGE</key>
+				<string>YES_ERROR</string>
+				<key>CLANG_WARN_OBJC_ROOT_CLASS</key>
+				<string>YES_ERROR</string>
+				<key>ENABLE_NS_ASSERTIONS</key>
+				<string>NO</string>
+				<key>FRAMEWORK_SEARCH_PATHS</key>
+				<array>
+					<string>$(SDKROOT)/Developer/Library/Frameworks</string>
+					<string>$(inherited)</string>
+					<string>$(DEVELOPER_FRAMEWORKS_DIR)</string>
+					<string>$(SRCROOT)</string>
+				</array>
+				<key>GCC_PRECOMPILE_PREFIX_HEADER</key>
+				<string>YES</string>
+				<key>GCC_PREFIX_HEADER</key>
+				<string>MAGCoreDataLogicTests/MAGCoreDataLogicTests-Prefix.pch</string>
+				<key>GCC_WARN_64_TO_32_BIT_CONVERSION</key>
+				<string>YES</string>
+				<key>GCC_WARN_ABOUT_RETURN_TYPE</key>
+				<string>YES_ERROR</string>
+				<key>GCC_WARN_UNDECLARED_SELECTOR</key>
+				<string>YES</string>
+				<key>GCC_WARN_UNINITIALIZED_AUTOS</key>
+				<string>YES_AGGRESSIVE</string>
+				<key>GCC_WARN_UNUSED_FUNCTION</key>
+				<string>YES</string>
+				<key>HEADER_SEARCH_PATHS</key>
+				<array>
+					<string>$(inherited)</string>
+					<string>/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include</string>
+					<string>$(SRCROOT)/OCMock</string>
+				</array>
+				<key>INFOPLIST_FILE</key>
+				<string>MAGCoreDataLogicTests/MAGCoreDataLogicTests-Info.plist</string>
+				<key>IPHONEOS_DEPLOYMENT_TARGET</key>
+				<string>7.1</string>
+				<key>LIBRARY_SEARCH_PATHS</key>
+				<array>
+					<string>$(inherited)</string>
+					<string>$(PROJECT_DIR)</string>
+				</array>
+				<key>OTHER_LDFLAGS</key>
+				<array>
+					<string>$(inherited)</string>
+					<string>-framework</string>
+					<string>XCTest</string>
+					<string>-all_load</string>
+				</array>
+				<key>PRODUCT_NAME</key>
+				<string>$(TARGET_NAME)</string>
+				<key>TEST_HOST</key>
+				<string>$(BUNDLE_LOADER)</string>
+				<key>WRAPPER_EXTENSION</key>
+				<string>xctest</string>
+			</dict>
+			<key>isa</key>
+			<string>XCBuildConfiguration</string>
+			<key>name</key>
+			<string>Release</string>
+		</dict>
+		<key>829958BD192CCFD8008AACE2</key>
+		<dict>
+			<key>buildConfigurations</key>
+			<array>
+				<string>829958BB192CCFD8008AACE2</string>
+				<string>829958BC192CCFD8008AACE2</string>
+			</array>
+			<key>defaultConfigurationIsVisible</key>
+			<string>0</string>
+			<key>defaultConfigurationName</key>
+			<string>Release</string>
+			<key>isa</key>
+			<string>XCConfigurationList</string>
+		</dict>
+		<key>8ADF2960B3204F668E459339</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.xcconfig</string>
+			<key>name</key>
+			<string>Pods-MAGCoreDataLogicTests.xcconfig</string>
+			<key>path</key>
+			<string>Pods/Pods-MAGCoreDataLogicTests.xcconfig</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>B2B6FC380E1B4540922156AC</key>
+		<dict>
+			<key>fileRef</key>
+			<string>166299B1671E420FAB10B8C1</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>BDD82F9A17CE409C00F1CD8D</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>BDD82FAC17CE409C00F1CD8D</string>
+				<string>829958B0192CCFD8008AACE2</string>
+				<string>BDD82FA517CE409C00F1CD8D</string>
+				<string>BDD82FA417CE409C00F1CD8D</string>
+				<string>8ADF2960B3204F668E459339</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>BDD82F9B17CE409C00F1CD8D</key>
+		<dict>
+			<key>attributes</key>
+			<dict>
+				<key>CLASSPREFIX</key>
+				<string>MAG</string>
+				<key>LastUpgradeCheck</key>
+				<string>0460</string>
+				<key>ORGANIZATIONNAME</key>
+				<string>MadAppGang</string>
+				<key>TargetAttributes</key>
+				<dict>
+					<key>829958AA192CCFD8008AACE2</key>
+					<dict>
+						<key>TestTargetID</key>
+						<string>BDD82FA217CE409C00F1CD8D</string>
+					</dict>
+				</dict>
+			</dict>
+			<key>buildConfigurationList</key>
+			<string>BDD82F9E17CE409C00F1CD8D</string>
+			<key>compatibilityVersion</key>
+			<string>Xcode 3.2</string>
+			<key>developmentRegion</key>
+			<string>English</string>
+			<key>hasScannedForEncodings</key>
+			<string>0</string>
+			<key>isa</key>
+			<string>PBXProject</string>
+			<key>knownRegions</key>
+			<array>
+				<string>en</string>
+			</array>
+			<key>mainGroup</key>
+			<string>BDD82F9A17CE409C00F1CD8D</string>
+			<key>productRefGroup</key>
+			<string>BDD82FA417CE409C00F1CD8D</string>
+			<key>projectDirPath</key>
+			<string></string>
+			<key>projectReferences</key>
+			<array/>
+			<key>projectRoot</key>
+			<string></string>
+			<key>targets</key>
+			<array>
+				<string>BDD82FA217CE409C00F1CD8D</string>
+				<string>829958AA192CCFD8008AACE2</string>
+			</array>
+		</dict>
+		<key>BDD82F9E17CE409C00F1CD8D</key>
+		<dict>
+			<key>buildConfigurations</key>
+			<array>
+				<string>BDD82FBE17CE409C00F1CD8D</string>
+				<string>BDD82FBF17CE409C00F1CD8D</string>
+			</array>
+			<key>defaultConfigurationIsVisible</key>
+			<string>0</string>
+			<key>defaultConfigurationName</key>
+			<string>Release</string>
+			<key>isa</key>
+			<string>XCConfigurationList</string>
+		</dict>
+		<key>BDD82F9F17CE409C00F1CD8D</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array>
+				<string>FA38F0E118ACC5F700332A34</string>
+				<string>FA38F0DF18ACC5F700332A34</string>
+				<string>BDD82FB317CE409C00F1CD8D</string>
+				<string>BDD82FB717CE409C00F1CD8D</string>
+				<string>FA38F0E018ACC5F700332A34</string>
+				<string>FA38F0DE18ACC5F700332A34</string>
+				<string>FAD99EC718ACCB2600896266</string>
+			</array>
+			<key>isa</key>
+			<string>PBXSourcesBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>BDD82FA017CE409C00F1CD8D</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array>
+				<string>BDD82FCB17CE412100F1CD8D</string>
+				<string>BDD82FA717CE409C00F1CD8D</string>
+				<string>BDD82FA917CE409C00F1CD8D</string>
+				<string>BDD82FAB17CE409C00F1CD8D</string>
+			</array>
+			<key>isa</key>
+			<string>PBXFrameworksBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>BDD82FA117CE409C00F1CD8D</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array>
+				<string>BDD82FB117CE409C00F1CD8D</string>
+				<string>BDD82FB917CE409C00F1CD8D</string>
+				<string>BDD82FBB17CE409C00F1CD8D</string>
+				<string>BDD82FBD17CE409C00F1CD8D</string>
+			</array>
+			<key>isa</key>
+			<string>PBXResourcesBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>BDD82FA217CE409C00F1CD8D</key>
+		<dict>
+			<key>buildConfigurationList</key>
+			<string>BDD82FC017CE409C00F1CD8D</string>
+			<key>buildPhases</key>
+			<array>
+				<string>BDD82F9F17CE409C00F1CD8D</string>
+				<string>BDD82FA017CE409C00F1CD8D</string>
+				<string>BDD82FA117CE409C00F1CD8D</string>
+			</array>
+			<key>buildRules</key>
+			<array/>
+			<key>dependencies</key>
+			<array/>
+			<key>isa</key>
+			<string>PBXNativeTarget</string>
+			<key>name</key>
+			<string>MAGCoreDataExample</string>
+			<key>productName</key>
+			<string>MAGCoreDataExample</string>
+			<key>productReference</key>
+			<string>BDD82FA317CE409C00F1CD8D</string>
+			<key>productType</key>
+			<string>com.apple.product-type.application</string>
+		</dict>
+		<key>BDD82FA317CE409C00F1CD8D</key>
+		<dict>
+			<key>explicitFileType</key>
+			<string>wrapper.application</string>
+			<key>includeInIndex</key>
+			<string>0</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>path</key>
+			<string>MAGCoreDataExample.app</string>
+			<key>sourceTree</key>
+			<string>BUILT_PRODUCTS_DIR</string>
+		</dict>
+		<key>BDD82FA417CE409C00F1CD8D</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>BDD82FA317CE409C00F1CD8D</string>
+				<string>829958AB192CCFD8008AACE2</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>Products</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>BDD82FA517CE409C00F1CD8D</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>BDD82FCA17CE412100F1CD8D</string>
+				<string>BDD82FA617CE409C00F1CD8D</string>
+				<string>BDD82FA817CE409C00F1CD8D</string>
+				<string>BDD82FAA17CE409C00F1CD8D</string>
+				<string>829958AC192CCFD8008AACE2</string>
+				<string>166299B1671E420FAB10B8C1</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>Frameworks</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>BDD82FA617CE409C00F1CD8D</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>wrapper.framework</string>
+			<key>name</key>
+			<string>UIKit.framework</string>
+			<key>path</key>
+			<string>System/Library/Frameworks/UIKit.framework</string>
+			<key>sourceTree</key>
+			<string>SDKROOT</string>
+		</dict>
+		<key>BDD82FA717CE409C00F1CD8D</key>
+		<dict>
+			<key>fileRef</key>
+			<string>BDD82FA617CE409C00F1CD8D</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>BDD82FA817CE409C00F1CD8D</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>wrapper.framework</string>
+			<key>name</key>
+			<string>Foundation.framework</string>
+			<key>path</key>
+			<string>System/Library/Frameworks/Foundation.framework</string>
+			<key>sourceTree</key>
+			<string>SDKROOT</string>
+		</dict>
+		<key>BDD82FA917CE409C00F1CD8D</key>
+		<dict>
+			<key>fileRef</key>
+			<string>BDD82FA817CE409C00F1CD8D</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>BDD82FAA17CE409C00F1CD8D</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>wrapper.framework</string>
+			<key>name</key>
+			<string>CoreGraphics.framework</string>
+			<key>path</key>
+			<string>System/Library/Frameworks/CoreGraphics.framework</string>
+			<key>sourceTree</key>
+			<string>SDKROOT</string>
+		</dict>
+		<key>BDD82FAB17CE409C00F1CD8D</key>
+		<dict>
+			<key>fileRef</key>
+			<string>BDD82FAA17CE409C00F1CD8D</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>BDD82FAC17CE409C00F1CD8D</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>FAD99EC118ACCB0F00896266</string>
+				<string>BDD82FC317CE40B900F1CD8D</string>
+				<string>BDD82FB517CE409C00F1CD8D</string>
+				<string>BDD82FB617CE409C00F1CD8D</string>
+				<string>BDD82FAD17CE409C00F1CD8D</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>path</key>
+			<string>MAGCoreDataExample</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>BDD82FAD17CE409C00F1CD8D</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>BDD82FAE17CE409C00F1CD8D</string>
+				<string>BDD82FAF17CE409C00F1CD8D</string>
+				<string>BDD82FB217CE409C00F1CD8D</string>
+				<string>BDD82FB417CE409C00F1CD8D</string>
+				<string>BDD82FB817CE409C00F1CD8D</string>
+				<string>BDD82FBA17CE409C00F1CD8D</string>
+				<string>BDD82FBC17CE409C00F1CD8D</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>Supporting Files</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>BDD82FAE17CE409C00F1CD8D</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.plist.xml</string>
+			<key>path</key>
+			<string>MAGCoreDataExample-Info.plist</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>BDD82FAF17CE409C00F1CD8D</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>BDD82FB017CE409C00F1CD8D</string>
+			</array>
+			<key>isa</key>
+			<string>PBXVariantGroup</string>
+			<key>name</key>
+			<string>InfoPlist.strings</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>BDD82FB017CE409C00F1CD8D</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.plist.strings</string>
+			<key>name</key>
+			<string>en</string>
+			<key>path</key>
+			<string>en.lproj/InfoPlist.strings</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>BDD82FB117CE409C00F1CD8D</key>
+		<dict>
+			<key>fileRef</key>
+			<string>BDD82FAF17CE409C00F1CD8D</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>BDD82FB217CE409C00F1CD8D</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>main.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>BDD82FB317CE409C00F1CD8D</key>
+		<dict>
+			<key>fileRef</key>
+			<string>BDD82FB217CE409C00F1CD8D</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>BDD82FB417CE409C00F1CD8D</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>path</key>
+			<string>MAGCoreDataExample-Prefix.pch</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>BDD82FB517CE409C00F1CD8D</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>path</key>
+			<string>MAGAppDelegate.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>BDD82FB617CE409C00F1CD8D</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>MAGAppDelegate.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>BDD82FB717CE409C00F1CD8D</key>
+		<dict>
+			<key>fileRef</key>
+			<string>BDD82FB617CE409C00F1CD8D</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>BDD82FB817CE409C00F1CD8D</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>image.png</string>
+			<key>path</key>
+			<string>Default.png</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>BDD82FB917CE409C00F1CD8D</key>
+		<dict>
+			<key>fileRef</key>
+			<string>BDD82FB817CE409C00F1CD8D</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>BDD82FBA17CE409C00F1CD8D</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>image.png</string>
+			<key>path</key>
+			<string>Default@2x.png</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>BDD82FBB17CE409C00F1CD8D</key>
+		<dict>
+			<key>fileRef</key>
+			<string>BDD82FBA17CE409C00F1CD8D</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>BDD82FBC17CE409C00F1CD8D</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>image.png</string>
+			<key>path</key>
+			<string>Default-568h@2x.png</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>BDD82FBD17CE409C00F1CD8D</key>
+		<dict>
+			<key>fileRef</key>
+			<string>BDD82FBC17CE409C00F1CD8D</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>BDD82FBE17CE409C00F1CD8D</key>
+		<dict>
+			<key>buildSettings</key>
+			<dict>
+				<key>ALWAYS_SEARCH_USER_PATHS</key>
+				<string>NO</string>
+				<key>CLANG_CXX_LANGUAGE_STANDARD</key>
+				<string>gnu++0x</string>
+				<key>CLANG_CXX_LIBRARY</key>
+				<string>libc++</string>
+				<key>CLANG_ENABLE_OBJC_ARC</key>
+				<string>YES</string>
+				<key>CLANG_WARN_CONSTANT_CONVERSION</key>
+				<string>YES</string>
+				<key>CLANG_WARN_EMPTY_BODY</key>
+				<string>YES</string>
+				<key>CLANG_WARN_ENUM_CONVERSION</key>
+				<string>YES</string>
+				<key>CLANG_WARN_INT_CONVERSION</key>
+				<string>YES</string>
+				<key>CLANG_WARN__DUPLICATE_METHOD_MATCH</key>
+				<string>YES</string>
+				<key>CODE_SIGN_IDENTITY[sdk=iphoneos*]</key>
+				<string>iPhone Developer</string>
+				<key>COPY_PHASE_STRIP</key>
+				<string>NO</string>
+				<key>GCC_C_LANGUAGE_STANDARD</key>
+				<string>gnu99</string>
+				<key>GCC_DYNAMIC_NO_PIC</key>
+				<string>NO</string>
+				<key>GCC_OPTIMIZATION_LEVEL</key>
+				<string>0</string>
+				<key>GCC_PREPROCESSOR_DEFINITIONS</key>
+				<array>
+					<string>DEBUG=1</string>
+					<string>$(inherited)</string>
+				</array>
+				<key>GCC_SYMBOLS_PRIVATE_EXTERN</key>
+				<string>NO</string>
+				<key>GCC_WARN_ABOUT_RETURN_TYPE</key>
+				<string>YES</string>
+				<key>GCC_WARN_UNINITIALIZED_AUTOS</key>
+				<string>YES</string>
+				<key>GCC_WARN_UNUSED_VARIABLE</key>
+				<string>YES</string>
+				<key>IPHONEOS_DEPLOYMENT_TARGET</key>
+				<string>6.1</string>
+				<key>ONLY_ACTIVE_ARCH</key>
+				<string>YES</string>
+				<key>SDKROOT</key>
+				<string>iphoneos</string>
+			</dict>
+			<key>isa</key>
+			<string>XCBuildConfiguration</string>
+			<key>name</key>
+			<string>Debug</string>
+		</dict>
+		<key>BDD82FBF17CE409C00F1CD8D</key>
+		<dict>
+			<key>buildSettings</key>
+			<dict>
+				<key>ALWAYS_SEARCH_USER_PATHS</key>
+				<string>NO</string>
+				<key>CLANG_CXX_LANGUAGE_STANDARD</key>
+				<string>gnu++0x</string>
+				<key>CLANG_CXX_LIBRARY</key>
+				<string>libc++</string>
+				<key>CLANG_ENABLE_OBJC_ARC</key>
+				<string>YES</string>
+				<key>CLANG_WARN_CONSTANT_CONVERSION</key>
+				<string>YES</string>
+				<key>CLANG_WARN_EMPTY_BODY</key>
+				<string>YES</string>
+				<key>CLANG_WARN_ENUM_CONVERSION</key>
+				<string>YES</string>
+				<key>CLANG_WARN_INT_CONVERSION</key>
+				<string>YES</string>
+				<key>CLANG_WARN__DUPLICATE_METHOD_MATCH</key>
+				<string>YES</string>
+				<key>CODE_SIGN_IDENTITY[sdk=iphoneos*]</key>
+				<string>iPhone Developer</string>
+				<key>COPY_PHASE_STRIP</key>
+				<string>YES</string>
+				<key>GCC_C_LANGUAGE_STANDARD</key>
+				<string>gnu99</string>
+				<key>GCC_WARN_ABOUT_RETURN_TYPE</key>
+				<string>YES</string>
+				<key>GCC_WARN_UNINITIALIZED_AUTOS</key>
+				<string>YES</string>
+				<key>GCC_WARN_UNUSED_VARIABLE</key>
+				<string>YES</string>
+				<key>IPHONEOS_DEPLOYMENT_TARGET</key>
+				<string>6.1</string>
+				<key>OTHER_CFLAGS</key>
+				<string>-DNS_BLOCK_ASSERTIONS=1</string>
+				<key>SDKROOT</key>
+				<string>iphoneos</string>
+				<key>VALIDATE_PRODUCT</key>
+				<string>YES</string>
+			</dict>
+			<key>isa</key>
+			<string>XCBuildConfiguration</string>
+			<key>name</key>
+			<string>Release</string>
+		</dict>
+		<key>BDD82FC017CE409C00F1CD8D</key>
+		<dict>
+			<key>buildConfigurations</key>
+			<array>
+				<string>BDD82FC117CE409C00F1CD8D</string>
+				<string>BDD82FC217CE409C00F1CD8D</string>
+			</array>
+			<key>defaultConfigurationIsVisible</key>
+			<string>0</string>
+			<key>defaultConfigurationName</key>
+			<string>Release</string>
+			<key>isa</key>
+			<string>XCConfigurationList</string>
+		</dict>
+		<key>BDD82FC117CE409C00F1CD8D</key>
+		<dict>
+			<key>buildSettings</key>
+			<dict>
+				<key>GCC_PRECOMPILE_PREFIX_HEADER</key>
+				<string>YES</string>
+				<key>GCC_PREFIX_HEADER</key>
+				<string>MAGCoreDataExample/MAGCoreDataExample-Prefix.pch</string>
+				<key>INFOPLIST_FILE</key>
+				<string>MAGCoreDataExample/MAGCoreDataExample-Info.plist</string>
+				<key>LIBRARY_SEARCH_PATHS</key>
+				<array>
+					<string>$(inherited)</string>
+					<string>$(PROJECT_DIR)/MAGCoreDataExample</string>
+				</array>
+				<key>PRODUCT_NAME</key>
+				<string>$(TARGET_NAME)</string>
+				<key>WRAPPER_EXTENSION</key>
+				<string>app</string>
+			</dict>
+			<key>isa</key>
+			<string>XCBuildConfiguration</string>
+			<key>name</key>
+			<string>Debug</string>
+		</dict>
+		<key>BDD82FC217CE409C00F1CD8D</key>
+		<dict>
+			<key>buildSettings</key>
+			<dict>
+				<key>GCC_PRECOMPILE_PREFIX_HEADER</key>
+				<string>YES</string>
+				<key>GCC_PREFIX_HEADER</key>
+				<string>MAGCoreDataExample/MAGCoreDataExample-Prefix.pch</string>
+				<key>INFOPLIST_FILE</key>
+				<string>MAGCoreDataExample/MAGCoreDataExample-Info.plist</string>
+				<key>LIBRARY_SEARCH_PATHS</key>
+				<array>
+					<string>$(inherited)</string>
+					<string>$(PROJECT_DIR)/MAGCoreDataExample</string>
+				</array>
+				<key>PRODUCT_NAME</key>
+				<string>$(TARGET_NAME)</string>
+				<key>WRAPPER_EXTENSION</key>
+				<string>app</string>
+			</dict>
+			<key>isa</key>
+			<string>XCBuildConfiguration</string>
+			<key>name</key>
+			<string>Release</string>
+		</dict>
+		<key>BDD82FC317CE40B900F1CD8D</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>FA38F0D618ACC5F700332A34</string>
+				<string>FA38F0D718ACC5F700332A34</string>
+				<string>FA38F0D818ACC5F700332A34</string>
+				<string>FA38F0D918ACC5F700332A34</string>
+				<string>FA38F0DA18ACC5F700332A34</string>
+				<string>FA38F0DB18ACC5F700332A34</string>
+				<string>FA38F0DC18ACC5F700332A34</string>
+				<string>FA38F0DD18ACC5F700332A34</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>MagCoreData</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>BDD82FCA17CE412100F1CD8D</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>wrapper.framework</string>
+			<key>name</key>
+			<string>CoreData.framework</string>
+			<key>path</key>
+			<string>System/Library/Frameworks/CoreData.framework</string>
+			<key>sourceTree</key>
+			<string>SDKROOT</string>
+		</dict>
+		<key>BDD82FCB17CE412100F1CD8D</key>
+		<dict>
+			<key>fileRef</key>
+			<string>BDD82FCA17CE412100F1CD8D</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>FA38F0D618ACC5F700332A34</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>name</key>
+			<string>MAGCoreData.h</string>
+			<key>path</key>
+			<string>../../MagCoreData/MAGCoreData.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>FA38F0D718ACC5F700332A34</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>name</key>
+			<string>MAGCoreData.m</string>
+			<key>path</key>
+			<string>../../MagCoreData/MAGCoreData.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>FA38F0D818ACC5F700332A34</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>name</key>
+			<string>MAGSimpleFetchedResultsControllerManager.h</string>
+			<key>path</key>
+			<string>../../MagCoreData/MAGSimpleFetchedResultsControllerManager.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>FA38F0D918ACC5F700332A34</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>name</key>
+			<string>MAGSimpleFetchedResultsControllerManager.m</string>
+			<key>path</key>
+			<string>../../MagCoreData/MAGSimpleFetchedResultsControllerManager.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>FA38F0DA18ACC5F700332A34</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>name</key>
+			<string>NSManagedObject+MAGCoreData.h</string>
+			<key>path</key>
+			<string>../../MagCoreData/NSManagedObject+MAGCoreData.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>FA38F0DB18ACC5F700332A34</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>name</key>
+			<string>NSManagedObject+MAGCoreData.m</string>
+			<key>path</key>
+			<string>../../MagCoreData/NSManagedObject+MAGCoreData.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>FA38F0DC18ACC5F700332A34</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>name</key>
+			<string>NSManagedObjectContext+MAGCoreData.h</string>
+			<key>path</key>
+			<string>../../MagCoreData/NSManagedObjectContext+MAGCoreData.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>FA38F0DD18ACC5F700332A34</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>name</key>
+			<string>NSManagedObjectContext+MAGCoreData.m</string>
+			<key>path</key>
+			<string>../../MagCoreData/NSManagedObjectContext+MAGCoreData.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>FA38F0DE18ACC5F700332A34</key>
+		<dict>
+			<key>fileRef</key>
+			<string>FA38F0D718ACC5F700332A34</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>FA38F0DF18ACC5F700332A34</key>
+		<dict>
+			<key>fileRef</key>
+			<string>FA38F0D918ACC5F700332A34</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>FA38F0E018ACC5F700332A34</key>
+		<dict>
+			<key>fileRef</key>
+			<string>FA38F0DB18ACC5F700332A34</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>FA38F0E118ACC5F700332A34</key>
+		<dict>
+			<key>fileRef</key>
+			<string>FA38F0DD18ACC5F700332A34</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>FAD99EC118ACCB0F00896266</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>FAD99EC218ACCB2600896266</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>path</key>
+			<string>Vendors</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>FAD99EC218ACCB2600896266</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>FAD99EC318ACCB2600896266</string>
+				<string>FAD99EC418ACCB2600896266</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>path</key>
+			<string>ISO8601DateFormatter</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>FAD99EC318ACCB2600896266</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>path</key>
+			<string>ISO8601DateFormatter.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>FAD99EC418ACCB2600896266</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>ISO8601DateFormatter.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>FAD99EC718ACCB2600896266</key>
+		<dict>
+			<key>fileRef</key>
+			<string>FAD99EC418ACCB2600896266</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+			<key>settings</key>
+			<dict>
+				<key>COMPILER_FLAGS</key>
+				<string>-fno-objc-arc</string>
+			</dict>
+		</dict>
+	</dict>
+	<key>rootObject</key>
+	<string>BDD82F9B17CE409C00F1CD8D</string>
+</dict>
+</plist>

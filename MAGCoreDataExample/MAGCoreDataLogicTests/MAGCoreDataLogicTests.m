@@ -9,11 +9,11 @@
 #import <XCTest/XCTest.h>
 #import "MAGCoreData.h"
 
-@interface MAGCoreDataLogicTests : XCTestCase
+@interface MAGCoreDataTests : XCTestCase
 
 @end
 
-@implementation MAGCoreDataLogicTests
+@implementation MAGCoreDataTests
 
 - (void)setUp
 {
@@ -34,6 +34,7 @@
 - (void)testCreatingSingletonInstanceOnce {
     XCTAssertEqual([MAGCoreData instance], [MAGCoreData instance]);
 }
+
 
 
 @end
