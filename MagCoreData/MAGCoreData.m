@@ -77,7 +77,7 @@
 
     MAGCoreData *mag = [MAGCoreData instance];
     if (modelName) {
-        NSURL *modelURL = [[NSBundle mainBundle] URLForResource:storageName withExtension:@"momd"];
+        NSURL *modelURL = [[NSBundle mainBundle] URLForResource:modelName withExtension:@"momd"];
         mag.model = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
     }   else {
         mag.model = [NSManagedObjectModel mergedModelFromBundles:nil];
@@ -119,8 +119,8 @@
     NSError *error = nil;
     if ([context hasChanges] && ![context save:&error]) {
         NSArray *detailedErrors = [error userInfo][NSDetailedErrorsKey];
-        if(detailedErrors != nil && [detailedErrors count] > 0) {
-            for(NSError *detailedError in detailedErrors) {
+        if (detailedErrors != nil && [detailedErrors count] > 0) {
+            for (NSError *detailedError in detailedErrors) {
                 NSLog(@"MAGCoreData  DetailedError: %@", [detailedError userInfo]);
             }
         }
@@ -137,16 +137,17 @@
     self.persistentStore = nil;
 }
 
-+ (void)deleteStorage {
-    [self deleteStorageWithName:nil];
++ (BOOL)deleteStorage {
+    return [self deleteStorageWithName:nil];
 }
 
-+ (void)deleteStorageWithName:(NSString *)storageName {
++ (BOOL)deleteStorageWithName:(NSString *)storageName {
     NSURL *storageURL = [self storageURLWithName:storageName];
     [[MAGCoreData instance] close];
     @try {
-        [[NSFileManager defaultManager] removeItemAtPath:storageURL.path error:nil];
+        return [[NSFileManager defaultManager] removeItemAtPath:storageURL.path error:nil];
     } @catch (NSException *exception) {
+        return NO;
     }
 }
 

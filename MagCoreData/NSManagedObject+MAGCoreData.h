@@ -22,7 +22,7 @@
 //http://www.unicode.org/reports/tr35/tr35-25.html#Date_Format_Patterns for iOS6
 //http://www.unicode.org/reports/tr35/tr35-19.html#Date_Format_Patterns for iOS6
 //http://www.unicode.org/reports/tr35/tr35-17.html#Date_Format_Patterns for iOS4.3
-+ (NSString*)defaultDateFormat;
++ (NSString *)defaultDateFormat;
 + (void)setDefaultDateFormat:(NSString *)dateFormat;
 //DateFormatForEveryField
 + (NSDictionary *)dateFormats;
