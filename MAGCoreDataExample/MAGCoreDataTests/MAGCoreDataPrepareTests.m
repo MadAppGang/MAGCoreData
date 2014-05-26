@@ -6,10 +6,9 @@
 //  Copyright (c) 2014 MadAppGang. All rights reserved.
 //
 
-#import <XCTest/XCTest.h>
-#import "MAGCoreData.h"
+#import "MAGCoreDataTestCase.h"
 
-@interface MAGCoreDataPrepareTests : XCTestCase
+@interface MAGCoreDataPrepareTests : MAGCoreDataTestCase
 
 @end
 
@@ -23,34 +22,27 @@
     [super tearDown];
 }
 
-- (void)testPrepareDefaultCoreData {
-    NSError *error = [MAGCoreData prepareCoreData];
-    XCTAssertNil(error);
-}
-
-- (void)testInitializationAndDeletionWithModelName {
-    NSString *modelName = @"Model";
-    NSError *error;
-    XCTAssertTrue([MAGCoreData prepareCoreDataWithModelName:modelName error:&error]);
+- (void)testCoreDataCreationAndDeletion {
+    XCTAssertNil([MAGCoreData prepareCoreData]);
     XCTAssertTrue([MAGCoreData deleteStorage]);
-}
-
-- (void)testInitializationAndDeletionWithModelNameAndStorageName {
-    NSString *storageName = [NSString stringWithFormat:@"TestStorage%f", [NSDate date].timeIntervalSince1970];
-    NSString *modelName = @"Model";
-    NSError *error;
-    XCTAssertTrue([MAGCoreData prepareCoreDataWithModelName:modelName andStorageName:storageName error:&error]);
-    XCTAssertTrue([MAGCoreData deleteStorageWithName:storageName]);
+    
+    XCTAssertTrue([MAGCoreData prepareCoreDataWithModelName:@"Model" error:nil]);
+    XCTAssertTrue([MAGCoreData deleteStorage]);
+    
+    XCTAssertTrue([[self class] createEmptyStorageWithModelName:@"Model" andStorageName:kStorageName error:nil]);
+    XCTAssertTrue([[self class] dropStorage:kStorageName]);
 }
 
 - (void)testContextCreatedSuccessfuly {
-    [MAGCoreData prepareCoreData];
+    [[self class] createEmptyStorageWithName:kStorageName];
     XCTAssertNotNil([MAGCoreData context]);
+    XCTAssertTrue([[self class] dropStorage:kStorageName]);
 }
 
 - (void)testPrivateContextCreatedSuccessfuly {
-    [MAGCoreData prepareCoreData];
+    [[self class] createEmptyStorageWithName:kStorageName];
     XCTAssertNotNil([MAGCoreData createPrivateContext]);
+    XCTAssertTrue([[self class] dropStorage:kStorageName]);
 }
 
 @end

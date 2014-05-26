@@ -6,24 +6,13 @@
 //  Copyright (c) 2014 MadAppGang. All rights reserved.
 //
 
-#import <XCTest/XCTest.h>
-#import "MAGCoreData.h"
-#import "Weather.h"
-#import "NSManagedObject+MAGCoreData.h"
+#import "MAGCoreDataTestCase.h"
 
-NSString * const storageName = @"TestStorage";
-
-@interface MAGCoreDataObjectCreationTests : XCTestCase
+@interface MAGCoreDataObjectCreationTests : MAGCoreDataTestCase
 
 @end
 
 @implementation MAGCoreDataObjectCreationTests
-
-+ (void)setUp {
-}
-
-+ (void)tearDown {
-}
 
 - (void)setUp {
     [super setUp];
@@ -33,16 +22,8 @@ NSString * const storageName = @"TestStorage";
     [super tearDown];
 }
 
-- (void)setupStorage {
-    [MAGCoreData prepareCoreDataWithModelName:nil andStorageName:storageName error:nil];
-}
-
-- (void)dropStorage {
-    [MAGCoreData deleteStorageWithName:storageName];
-}
-
 - (void)testObjectCreationAndUpdatingInMainContext {
-    [self setupStorage];
+    [[self class] createEmptyStorageWithName:kStorageName];
     
     Weather *obj1 = [Weather create];
     XCTAssertNotNil(obj1);
@@ -51,10 +32,11 @@ NSString * const storageName = @"TestStorage";
     Weather *obj2 = [Weather createFromDictionary:@{@"id": identifier}];
     XCTAssertNotNil(obj2);
     XCTAssertTrue([identifier isEqualToNumber:obj2.identifier]);
+    [[self class] dropStorage:kStorageName];
 }
 
 - (void)testObjectCreationInPrivateContext {
-    [self setupStorage];
+    [[self class] createEmptyStorageWithName:kStorageName];
     
     NSManagedObjectContext *privateContext = [MAGCoreData createPrivateContext];
     
@@ -64,27 +46,27 @@ NSString * const storageName = @"TestStorage";
     Weather *obj2 = [Weather createFromDictionary:@{@"id": identifier} inContext:privateContext];
     XCTAssertNotNil(obj2);
     XCTAssertTrue([identifier isEqualToNumber:obj2.identifier]);
+    [[self class] dropStorage:kStorageName];
 }
 
 - (void)testObjectCreationAndSavingInMainContext {
-    [self dropStorage];
-    [self setupStorage];
+    [[self class] createEmptyStorageWithName:kStorageName];
     Weather *weather = [Weather create];
 
     [MAGCoreData save];
     
     [[MAGCoreData instance] close];
-    [self setupStorage];
+    [[self class] setupStorageWithName:kStorageName];
     
     Weather *storedWeather = [Weather first];
     
     BOOL same = [weather.objectID.URIRepresentation isEqual:storedWeather.objectID.URIRepresentation];
     XCTAssertTrue(same);
+    [[self class] dropStorage:kStorageName];
 }
 
 - (void)testObjectCreationAndSavingInPrivateContext {
-    [self dropStorage];
-    [self setupStorage];
+    [[self class] createEmptyStorageWithName:kStorageName];
     
     NSManagedObjectContext *privateContext = [MAGCoreData createPrivateContext];
 
@@ -93,17 +75,17 @@ NSString * const storageName = @"TestStorage";
     [MAGCoreData saveContext:privateContext];
     
     [[MAGCoreData instance] close];
-    [self setupStorage];
+    [[self class] setupStorageWithName:kStorageName];
     
     Weather *storedWeather = [Weather first];
     
     BOOL same = [weather.objectID.URIRepresentation isEqual:storedWeather.objectID.URIRepresentation];
     XCTAssertTrue(same);
+    [[self class] dropStorage:kStorageName];
 }
 
 - (void)testCreateOrUpdateObject {
-    [self dropStorage];
-    [self setupStorage];
+    [[self class] createEmptyStorageWithName:kStorageName];
     // create object
     Weather *obj1 = [Weather getOrCreateObjectForPrimaryKey:@1];
     XCTAssertNotNil(obj1);
@@ -121,33 +103,23 @@ NSString * const storageName = @"TestStorage";
     XCTAssertTrue(differentURI);
     BOOL sameId = obj2.identifier.intValue == storedObj2InMainContext.identifier.intValue == storedObj2InPrivateContext.identifier.intValue;
     XCTAssertTrue(sameId);
+    [[self class] dropStorage:kStorageName];
 }
 
 - (void)testObjectsDeletion {
-    [self dropStorage];
-    [self setupStorage];
+    [[self class] createEmptyStorageWithName:kStorageName];
     
+    [Weather create];
+    [Weather create];
+    [Weather create];
+    XCTAssertTrue([Weather all].count == 3);
+    
+    [[Weather first] delete];
+    XCTAssertTrue([Weather all].count == 2);
+    
+    [Weather deleteAll];
+    XCTAssertTrue([Weather all].count == 0);
+    [[self class] dropStorage:kStorageName];
 }
-
-//NSString *cityMoscow = @"Moscow";
-//NSString *cityPoltava = @"Poltava";
-//Weather *obj2 = [Weather createFromDictionary:@{@"id": identifier, @"city": cityMoscow}];
-//Weather *obj2 = [Weather createFromDictionary:@{@"identifier": @1, @"city": @"Moscow", @"temperature" : @22}];
-
-/*
- + (instancetype)getOrCreateObjectForPrimaryKey:(id)primaryKey;
- + (instancetype)getOrCreateObjectForPrimaryKey:(id)primaryKey inContext:(NSManagedObjectContext *)context;
-
-+ (instancetype)safeCreateOrUpdateWithDictionary:(NSDictionary *)keyedValues;
-+ (instancetype)safeCreateOrUpdateWithDictionary:(NSDictionary *)keyedValues inContext:(NSManagedObjectContext *)context;
-
-#pragma mark - deleting objects
-+ (void)deleteAll;
-+ (void)deleteAllInContext:(NSManagedObjectContext *)context;
-- (void)delete;
-
-#pragma mark - refreshing object
-- (void)refreshMerging:(BOOL)merging;
-*/
 
 @end

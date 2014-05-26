@@ -6,10 +6,9 @@
 //  Copyright (c) 2014 MadAppGang. All rights reserved.
 //
 
-#import <XCTest/XCTest.h>
-#import "MAGCoreData.h"
+#import "MAGCoreDataTestCase.h"
 
-@interface MAGCoreDataSingletonTests : XCTestCase
+@interface MAGCoreDataSingletonTests : MAGCoreDataTestCase
 
 @end
 
