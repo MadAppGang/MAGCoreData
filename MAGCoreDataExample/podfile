@@ -1,0 +1,11 @@
+platform :ios, '7.0'
+
+target :MAGCoreDataExample do
+	pod 'OCMock'
+	pod 'Expecta'
+end
+
+target :MAGCoreDataExampleTests do
+        pod 'OCMock'
+        pod 'Expecta'
+end
