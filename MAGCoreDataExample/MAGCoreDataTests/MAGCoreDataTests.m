@@ -25,8 +25,9 @@
 - (void)testUnicornMagic {
     expect(@"unicorn and magic").toNot.beNil;
     
-    id obj = [OCMockObject mockForClass:[NSObject class]];
-    [[[obj expect] classMethod] allocWithZone:(__bridge NSZone *)([OCMArg any])];
+//    id obj = [OCMockObject mockForClass:[NSObject class]];
+//    [[[obj expect] classMethod] allocWithZone:(__bridge NSZone *)([OCMArg any])];
+//    [obj verify];
 }
 
 @end

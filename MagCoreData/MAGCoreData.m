@@ -44,8 +44,14 @@
         [[NSNotificationCenter defaultCenter] addObserverForName:NSManagedObjectContextDidSaveNotification
                                                           object:nil
                                                            queue:nil
-                                                      usingBlock:^(NSNotification *notification){
-                                                          if (notification.object == self.mainContext) return;
+                                                      usingBlock:^(NSNotification *notification) {
+                                                          
+                                                          NSManagedObjectContext *context = notification.object;
+                                                          
+                                                          if (context == self.mainContext || context.persistentStoreCoordinator != self.persistentStore) {
+                                                                return;   
+                                                          }
+                                                          
                                                           [self.mainContext performBlock:^{
                                                               [self.mainContext mergeChangesFromContextDidSaveNotification:notification];
                                                           }];
