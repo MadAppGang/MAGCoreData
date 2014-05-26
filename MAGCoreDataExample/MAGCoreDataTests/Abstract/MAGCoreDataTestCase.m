@@ -30,6 +30,13 @@
 
 #pragma mark - Methods
 
+- (void)testStorageInitialization {
+    expect([[self class] createEmptyStorageWithModelName:nil andStorageName:kStorageName error:nil]).to.beTruthy;
+    expect([[self class] createEmptyStorageWithName:kStorageName]).to.beTruthy;
+    expect([[self class] setupStorageWithName:kStorageName]).to.beTruthy;
+    expect([[self class] dropStorage:kStorageName]).to.beTruthy;
+}
+
 + (BOOL)createEmptyStorageWithModelName:(NSString *)modelName andStorageName:(NSString *)storageName error:(NSError **)error {
     [MAGCoreData deleteStorageWithName:storageName];
     return [MAGCoreData prepareCoreDataWithModelName:modelName andStorageName:storageName error:error];

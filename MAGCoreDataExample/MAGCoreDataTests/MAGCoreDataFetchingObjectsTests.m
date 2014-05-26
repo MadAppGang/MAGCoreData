@@ -16,29 +16,30 @@
 
 + (void)setUp {
     [super setUp];
-    [self createEmptyStorageWithName:NSStringFromClass([self class])];
 }
 
 + (void)tearDown {
     [super tearDown];
-    [self dropStorage:NSStringFromClass([self class])];
 }
 
 - (void)setUp {
     [super setUp];
+    
+    [[self class] createEmptyStorageWithName:NSStringFromClass([self class])];
 }
 
 - (void)tearDown {
     [super tearDown];
+    
+    [[self class] dropStorage:NSStringFromClass([self class])];
 }
 
 - (void)testFetchingObjects {
-
     [Weather create];
     [Weather create];
     [Weather create];
-    XCTAssertTrue([Weather all].count == 3);
-    
+    NSArray *arr = [Weather all];
+    expect(arr.count == 3).to.beTruthy;
 }
 
 @end

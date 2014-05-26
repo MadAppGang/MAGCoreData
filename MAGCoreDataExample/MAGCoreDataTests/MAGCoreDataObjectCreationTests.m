@@ -26,12 +26,12 @@
     [[self class] createEmptyStorageWithName:kStorageName];
     
     Weather *obj1 = [Weather create];
-    XCTAssertNotNil(obj1);
+    expect(obj1).toNot.beNil;
     
     NSNumber *identifier = @1;
     Weather *obj2 = [Weather createFromDictionary:@{@"id": identifier}];
-    XCTAssertNotNil(obj2);
-    XCTAssertTrue([identifier isEqualToNumber:obj2.identifier]);
+    expect(obj2).toNot.beNil;
+    expect([identifier isEqualToNumber:obj2.identifier]).to.beTruthy;
     [[self class] dropStorage:kStorageName];
 }
 
@@ -41,11 +41,11 @@
     NSManagedObjectContext *privateContext = [MAGCoreData createPrivateContext];
     
     Weather *obj1 = [Weather createInContext:privateContext];
-    XCTAssertNotNil(obj1);
+    expect(obj1).toNot.beNil;
     NSNumber *identifier = @1;
     Weather *obj2 = [Weather createFromDictionary:@{@"id": identifier} inContext:privateContext];
-    XCTAssertNotNil(obj2);
-    XCTAssertTrue([identifier isEqualToNumber:obj2.identifier]);
+    expect(obj2).toNot.beNil;
+    expect([identifier isEqualToNumber:obj2.identifier]).to.beTruthy;
     [[self class] dropStorage:kStorageName];
 }
 
@@ -61,7 +61,7 @@
     Weather *storedWeather = [Weather first];
     
     BOOL same = [weather.objectID.URIRepresentation isEqual:storedWeather.objectID.URIRepresentation];
-    XCTAssertTrue(same);
+    expect(same).to.beTruthy;
     [[self class] dropStorage:kStorageName];
 }
 
@@ -80,7 +80,7 @@
     Weather *storedWeather = [Weather first];
     
     BOOL same = [weather.objectID.URIRepresentation isEqual:storedWeather.objectID.URIRepresentation];
-    XCTAssertTrue(same);
+    expect(same).to.beTruthy;
     [[self class] dropStorage:kStorageName];
 }
 
@@ -88,7 +88,7 @@
     [[self class] createEmptyStorageWithName:kStorageName];
     // create object
     Weather *obj1 = [Weather getOrCreateObjectForPrimaryKey:@1];
-    XCTAssertNotNil(obj1);
+    expect(obj1).toNot.beNil;
     
     // get object
     NSManagedObjectContext *privateContext = [MAGCoreData createPrivateContext];
@@ -96,13 +96,13 @@
     NSNumber *obj2Id = @2;
     Weather *obj2 = [Weather createFromDictionary:@{@"id": obj2Id} inContext:privateContext];
     Weather *storedObj2InMainContext = [Weather getOrCreateObjectForPrimaryKey:obj2Id];
-    XCTAssertNotNil(storedObj2InMainContext);
+    expect(storedObj2InMainContext).toNot.beNil;
     Weather *storedObj2InPrivateContext = [Weather getOrCreateObjectForPrimaryKey:obj2Id];
-    XCTAssertNotNil(storedObj2InPrivateContext);
+    expect(storedObj2InPrivateContext).toNot.beNil;
     BOOL differentURI = ![storedObj2InMainContext.objectID.URIRepresentation isEqual:storedObj2InPrivateContext.objectID.URIRepresentation];
-    XCTAssertTrue(differentURI);
+    expect(differentURI).to.beTruthy;
     BOOL sameId = obj2.identifier.intValue == storedObj2InMainContext.identifier.intValue == storedObj2InPrivateContext.identifier.intValue;
-    XCTAssertTrue(sameId);
+    expect(sameId).to.beTruthy;
     [[self class] dropStorage:kStorageName];
 }
 
@@ -112,13 +112,13 @@
     [Weather create];
     [Weather create];
     [Weather create];
-    XCTAssertTrue([Weather all].count == 3);
+    expect([Weather all].count == 3).to.beTruthy;
     
     [[Weather first] delete];
-    XCTAssertTrue([Weather all].count == 2);
+    expect([Weather all].count == 2).to.beTruthy;
     
     [Weather deleteAll];
-    XCTAssertTrue([Weather all].count == 0);
+    expect([Weather all].count == 0).to.beTruthy;
     [[self class] dropStorage:kStorageName];
 }
 

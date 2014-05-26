@@ -23,26 +23,26 @@
 }
 
 - (void)testCoreDataCreationAndDeletion {
-    XCTAssertNil([MAGCoreData prepareCoreData]);
-    XCTAssertTrue([MAGCoreData deleteStorage]);
+    expect([MAGCoreData prepareCoreData]).toNot.beNil;
+    expect([MAGCoreData deleteStorage]).to.beTruthy();
     
-    XCTAssertTrue([MAGCoreData prepareCoreDataWithModelName:@"Model" error:nil]);
-    XCTAssertTrue([MAGCoreData deleteStorage]);
+    expect([MAGCoreData prepareCoreDataWithModelName:@"Model" error:nil]).to.beTruthy();
+    expect([MAGCoreData deleteStorage]).to.beTruthy();
     
-    XCTAssertTrue([[self class] createEmptyStorageWithModelName:@"Model" andStorageName:kStorageName error:nil]);
-    XCTAssertTrue([[self class] dropStorage:kStorageName]);
+    expect([[self class] createEmptyStorageWithModelName:@"Model" andStorageName:kStorageName error:nil]).to.beTruthy();
+    expect([[self class] dropStorage:kStorageName]).to.beTruthy();
 }
 
 - (void)testContextCreatedSuccessfuly {
     [[self class] createEmptyStorageWithName:kStorageName];
-    XCTAssertNotNil([MAGCoreData context]);
-    XCTAssertTrue([[self class] dropStorage:kStorageName]);
+    expect([MAGCoreData context]).toNot.beNil;
+    expect([[self class] dropStorage:kStorageName]).to.beTruthy();
 }
 
 - (void)testPrivateContextCreatedSuccessfuly {
     [[self class] createEmptyStorageWithName:kStorageName];
-    XCTAssertNotNil([MAGCoreData createPrivateContext]);
-    XCTAssertTrue([[self class] dropStorage:kStorageName]);
+    expect([MAGCoreData createPrivateContext]).toNot.beNil;
+    expect([[self class] dropStorage:kStorageName]).to.beTruthy();
 }
 
 @end
