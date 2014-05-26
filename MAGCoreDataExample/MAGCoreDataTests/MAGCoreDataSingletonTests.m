@@ -23,23 +23,23 @@
 }
 
 - (void)testSingletonSharedInstanceCreated {
-    XCTAssertNotNil([MAGCoreData instance]);
+    expect([MAGCoreData instance]).toNot.beNil();
 }
 
 - (void)testSingletonUniqueInstanceCreated {
-    XCTAssertNotNil([MAGCoreData new]);
+    expect([MAGCoreData new]).toNot.beNil();
 }
 
 - (void)testSingletonReturnsSameSharedInstance{
-    XCTAssertEqual([MAGCoreData instance], [MAGCoreData instance]);
+    expect([MAGCoreData instance]).to.equal([MAGCoreData instance]);
 }
 
 - (void)testSingletonSharedInstanceSeparateFromUniqueInstance {
-    XCTAssertNotEqual([MAGCoreData instance], [MAGCoreData new]);
+    expect([MAGCoreData instance]).toNot.equal([MAGCoreData new]);
 }
 
 - (void)testSingletonReturnsSeparateUniqueInstances {
-    XCTAssertNotEqual([MAGCoreData new], [MAGCoreData new]);
+    expect([MAGCoreData new]).toNot.equal([MAGCoreData new]);
 }
 
 

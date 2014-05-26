@@ -24,6 +24,9 @@
 
 - (void)testUnicornMagic {
     XCTAssertTrue(@"unicorn and magic");
+    
+    id obj = [OCMockObject mockForClass:[NSObject class]];
+    [[[obj expect] classMethod] allocWithZone:(__bridge NSZone *)([OCMArg any])];
 }
 
 @end

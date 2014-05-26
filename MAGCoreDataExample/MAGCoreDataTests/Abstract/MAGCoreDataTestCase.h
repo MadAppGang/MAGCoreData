@@ -11,6 +11,9 @@
 #import "MAGCoreData.h"
 #import "Weather.h"
 #import "NSManagedObject+MAGCoreData.h"
+#define EXP_SHORTHAND
+#import "Expecta.h"
+#import "OCMock.h"
 
 #define kStorageName NSStringFromSelector(_cmd)
 
