@@ -38,10 +38,10 @@
     id objectMock = [OCMockObject partialMockForObject:[MAGCoreData instance]];
     [[objectMock expect] close];
     
-    expect([[self class] createEmptyStorageWithModelName:nil andStorageName:kStorageName error:nil]).to.beTruthy;
-    expect([[self class] createEmptyStorageWithName:kStorageName]).to.beTruthy;
-    expect([[self class] setupStorageWithName:kStorageName]).to.beTruthy;
-    expect([[self class] dropStorage:kStorageName]).to.beTruthy;
+    expect([[self class] createEmptyStorageWithModelName:nil andStorageName:kStorageName error:nil]).to.beTruthy();
+    expect([[self class] createEmptyStorageWithName:kStorageName]).to.beTruthy();
+    expect([[self class] setupStorageWithName:kStorageName]).to.beTruthy();
+    expect([[self class] dropStorage:kStorageName]).to.beTruthy();
     
     [classMock verify];
     [objectMock verify];

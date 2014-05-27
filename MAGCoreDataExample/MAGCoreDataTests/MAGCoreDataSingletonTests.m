@@ -27,19 +27,7 @@
 }
 
 - (void)testSingletonUniqueInstanceCreated {
-    expect([MAGCoreData new]).toNot.beNil();
-}
-
-- (void)testSingletonReturnsSameSharedInstance{
-    expect([MAGCoreData instance]).to.equal([MAGCoreData instance]);
-}
-
-- (void)testSingletonSharedInstanceSeparateFromUniqueInstance {
-    expect([MAGCoreData instance]).toNot.equal([MAGCoreData new]);
-}
-
-- (void)testSingletonReturnsSeparateUniqueInstances {
-    expect([MAGCoreData new]).toNot.equal([MAGCoreData new]);
+    expect([MAGCoreData instance]).to.beIdenticalTo([MAGCoreData instance]);
 }
 
 

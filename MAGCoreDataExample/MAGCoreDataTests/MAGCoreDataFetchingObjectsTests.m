@@ -39,7 +39,7 @@
     [Weather create];
     [Weather create];
     NSArray *arr = [Weather all];
-    expect(arr.count == 3).to.beTruthy;
+    expect(arr.count == 3).to.beTruthy();
 }
 
 @end

@@ -26,12 +26,12 @@
     [[self class] createEmptyStorageWithName:kStorageName];
     
     Weather *obj1 = [Weather create];
-    expect(obj1).toNot.beNil;
+    expect(obj1).toNot.beNil();
     
     NSNumber *identifier = @1;
     Weather *obj2 = [Weather createFromDictionary:@{@"id": identifier}];
-    expect(obj2).toNot.beNil;
-    expect([identifier isEqualToNumber:obj2.identifier]).to.beTruthy;
+    expect(obj2).toNot.beNil();
+    expect([identifier isEqualToNumber:obj2.identifier]).to.beTruthy();
     [[self class] dropStorage:kStorageName];
 }
 
@@ -41,11 +41,11 @@
     NSManagedObjectContext *privateContext = [MAGCoreData createPrivateContext];
     
     Weather *obj1 = [Weather createInContext:privateContext];
-    expect(obj1).toNot.beNil;
+    expect(obj1).toNot.beNil();
     NSNumber *identifier = @1;
     Weather *obj2 = [Weather createFromDictionary:@{@"id": identifier} inContext:privateContext];
-    expect(obj2).toNot.beNil;
-    expect([identifier isEqualToNumber:obj2.identifier]).to.beTruthy;
+    expect(obj2).toNot.beNil();
+    expect([identifier isEqualToNumber:obj2.identifier]).to.beTruthy();
     [[self class] dropStorage:kStorageName];
 }
 
@@ -61,7 +61,7 @@
     Weather *storedWeather = [Weather first];
     
     BOOL same = [weather.objectID.URIRepresentation isEqual:storedWeather.objectID.URIRepresentation];
-    expect(same).to.beTruthy;
+    expect(same).to.beTruthy();
     [[self class] dropStorage:kStorageName];
 }
 
@@ -80,7 +80,7 @@
     Weather *storedWeather = [Weather first];
     
     BOOL same = [weather.objectID.URIRepresentation isEqual:storedWeather.objectID.URIRepresentation];
-    expect(same).to.beTruthy;
+    expect(same).to.beTruthy();
     [[self class] dropStorage:kStorageName];
 }
 
@@ -88,7 +88,7 @@
     [[self class] createEmptyStorageWithName:kStorageName];
     // create object
     Weather *obj1 = [Weather getOrCreateObjectForPrimaryKey:@1];
-    expect(obj1).toNot.beNil;
+    expect(obj1).toNot.beNil();
     
     // get object
     NSManagedObjectContext *privateContext = [MAGCoreData createPrivateContext];
@@ -96,13 +96,13 @@
     NSNumber *obj2Id = @2;
     Weather *obj2 = [Weather createFromDictionary:@{@"id": obj2Id} inContext:privateContext];
     Weather *storedObj2InMainContext = [Weather getOrCreateObjectForPrimaryKey:obj2Id];
-    expect(storedObj2InMainContext).toNot.beNil;
+    expect(storedObj2InMainContext).toNot.beNil();
     Weather *storedObj2InPrivateContext = [Weather getOrCreateObjectForPrimaryKey:obj2Id];
-    expect(storedObj2InPrivateContext).toNot.beNil;
+    expect(storedObj2InPrivateContext).toNot.beNil();
     BOOL differentURI = ![storedObj2InMainContext.objectID.URIRepresentation isEqual:storedObj2InPrivateContext.objectID.URIRepresentation];
-    expect(differentURI).to.beTruthy;
+    expect(differentURI).to.beTruthy();
     BOOL sameId = obj2.identifier.intValue == storedObj2InMainContext.identifier.intValue == storedObj2InPrivateContext.identifier.intValue;
-    expect(sameId).to.beTruthy;
+    expect(sameId).to.beTruthy();
     [[self class] dropStorage:kStorageName];
 }
 
@@ -112,13 +112,13 @@
     [Weather create];
     [Weather create];
     [Weather create];
-    expect([Weather all].count == 3).to.beTruthy;
+    expect([Weather all].count == 3).to.beTruthy();
     
     [[Weather first] delete];
-    expect([Weather all].count == 2).to.beTruthy;
+    expect([Weather all].count == 2).to.beTruthy();
     
     [Weather deleteAll];
-    expect([Weather all].count == 0).to.beTruthy;
+    expect([Weather all].count == 0).to.beTruthy();
     [[self class] dropStorage:kStorageName];
 }
 

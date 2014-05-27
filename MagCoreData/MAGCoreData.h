@@ -25,7 +25,7 @@
 
 #pragma mark - Saving
 + (void)save; // Save main context
-+ (void)saveContext:(NSManagedObjectContext*)context;
++ (void)saveContext:(NSManagedObjectContext *)context;
 
 #pragma mark -
 - (void)close;
