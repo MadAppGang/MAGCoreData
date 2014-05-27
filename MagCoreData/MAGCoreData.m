@@ -24,7 +24,8 @@
     static dispatch_once_t once;
     static MAGCoreData *sharedInstance;
     dispatch_once(&once, ^{
-            sharedInstance = [self new];
+        sharedInstance = [self new];
+        MAGCoreDataLog(@"Singleton instance created");
     });
     return sharedInstance;
 }
@@ -61,7 +62,7 @@
     }
 }
 
-+ (NSURL *)storageURLWithName:(NSString *)storageName {
++ (NSURL *)defaultStorageURLWithName:(NSString *)storageName {
     NSURL *docDir = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
     NSURL *storeURL = storageName ? [docDir URLByAppendingPathComponent:[NSString stringWithFormat:@"%@.sqlite",storageName]] : [docDir URLByAppendingPathComponent:@"MAGStore.sqlite"];
     return storeURL;
@@ -79,7 +80,7 @@
 }
 
 + (BOOL)prepareCoreDataWithModelName:(NSString *)modelName andStorageName:(NSString *)storageName error:(NSError **)error {
-    if ([[MAGCoreData instance] mainContext]) return YES;
+    if ([[MAGCoreData instance] mainContext]) return NO;
 
     MAGCoreData *mag = [MAGCoreData instance];
     if (modelName) {
@@ -95,10 +96,10 @@
                               NSInferMappingModelAutomaticallyOption:@(YES)};
     if (![mag.persistentStore addPersistentStoreWithType:NSSQLiteStoreType
                                            configuration:nil
-                                                     URL:[self storageURLWithName:storageName]
+                                                     URL:[self defaultStorageURLWithName:storageName]
                                                  options:options
                                                    error:error]) {
-        NSLog(@"!!!MAGCoreData: Error creating persistent store:%@",*error);
+        NSLog(@"MAGCoreData: Error creating persistent store:%@",*error);
         return NO;
     }
     mag.mainContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
@@ -117,22 +118,24 @@
     return moc;
 }
 
-+ (void)save {
-    [MAGCoreData saveContext:[MAGCoreData context]];
++ (BOOL)save {
+    return [MAGCoreData saveContext:[MAGCoreData context]];
 }
 
-+ (void)saveContext:(NSManagedObjectContext *)context {
++ (BOOL)saveContext:(NSManagedObjectContext *)context {
     NSError *error = nil;
     if ([context hasChanges] && ![context save:&error]) {
         NSArray *detailedErrors = [error userInfo][NSDetailedErrorsKey];
-        if (detailedErrors != nil && [detailedErrors count] > 0) {
+        if (detailedErrors.count) {
             for (NSError *detailedError in detailedErrors) {
-                NSLog(@"MAGCoreData  DetailedError: %@", [detailedError userInfo]);
+                NSLog(@"MAGCoreData DetailedError: %@", detailedError.userInfo);
             }
+        } else {
+            NSLog(@"MAGCoreData %@", error.userInfo);
         }
-        else {
-            NSLog(@"MAGCoreData %@", [error userInfo]);
-        }
+        return NO;
+    } else {
+        return YES;
     }
 
 }
@@ -143,29 +146,26 @@
     self.persistentStore = nil;
 }
 
-+ (BOOL)deleteStorage {
-    return [self deleteStorageWithName:nil];
-}
-
-+ (BOOL)deleteStorageWithName:(NSString *)storageName {
-    NSURL *storageURL = [self storageURLWithName:storageName];
-    [[MAGCoreData instance] close];
++ (BOOL)removeStoreAtPath:(NSURL *)storeURL {
     @try {
-        return [[NSFileManager defaultManager] removeItemAtPath:storageURL.path error:nil];
+        [[NSFileManager defaultManager] removeItemAtPath:storeURL.path error:nil];
+        return YES;
     } @catch (NSException *exception) {
         return NO;
     }
 }
 
-+ (void)deleteAll __attribute__((deprecated)) {
++ (BOOL)deleteAll {
     //assume we use only one persistent store
     NSURL *storeURL = [[[[MAGCoreData instance] persistentStore] persistentStores][0] URL];
     [[MAGCoreData instance] close];
-    @try {
-        [[NSFileManager defaultManager] removeItemAtPath:storeURL.path error:nil];
-    } @catch (NSException *exception) {
-        // ignore, totally normal
-    }
+    return [MAGCoreData removeStoreAtPath:storeURL];
 }
+
++ (BOOL)deleteAllInStorageWithName:(NSString *)storageName {
+    [[MAGCoreData instance] close];
+    return [MAGCoreData removeStoreAtPath:[self defaultStorageURLWithName:storageName]];
+}
+
 
 @end

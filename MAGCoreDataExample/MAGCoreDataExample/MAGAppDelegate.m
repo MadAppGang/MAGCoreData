@@ -7,6 +7,7 @@
 //
 
 #import "MAGAppDelegate.h"
+#import "MAGCoreData.h"
 
 @implementation MAGAppDelegate
 
@@ -15,6 +16,9 @@
     
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
+    
+    [MAGCoreData instance];
+    
     return YES;
 }
 

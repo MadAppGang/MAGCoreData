@@ -24,10 +24,10 @@
 
 - (void)testCoreDataCreationAndDeletion {
     expect([MAGCoreData prepareCoreData]).toNot.beNil();
-    expect([MAGCoreData deleteStorage]).to.beTruthy();
+    expect([MAGCoreData deleteAll]).to.beTruthy();
     
     expect([MAGCoreData prepareCoreDataWithModelName:@"Model" error:nil]).to.beTruthy();
-    expect([MAGCoreData deleteStorage]).to.beTruthy();
+    expect([MAGCoreData deleteAll]).to.beTruthy();
     
     expect([[self class] createEmptyStorageWithModelName:@"Model" andStorageName:kStorageName error:nil]).to.beTruthy();
     expect([[self class] dropStorage:kStorageName]).to.beTruthy();
