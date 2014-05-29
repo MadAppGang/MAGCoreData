@@ -23,26 +23,18 @@
 }
 
 - (void)testCoreDataCreationAndDeletion {
-    expect([MAGCoreData prepareCoreData]).toNot.beNil();
-    expect([MAGCoreData deleteAll]).to.beTruthy();
+    NSError *prepareError;
+    BOOL prepareSuccess = [MAGCoreData prepareCoreDataWithModelName:@"Model" andStorageName:kStorageName error:&prepareError];
+    expect(prepareError).to.beNil();
+    expect(prepareSuccess).to.beTruthy();
     
-    expect([MAGCoreData prepareCoreDataWithModelName:@"Model" error:nil]).to.beTruthy();
-    expect([MAGCoreData deleteAll]).to.beTruthy();
-    
-    expect([[self class] createEmptyStorageWithModelName:@"Model" andStorageName:kStorageName error:nil]).to.beTruthy();
-    expect([[self class] dropStorage:kStorageName]).to.beTruthy();
-}
-
-- (void)testContextCreatedSuccessfuly {
-    [[self class] createEmptyStorageWithName:kStorageName];
     expect([MAGCoreData context]).toNot.beNil();
-    expect([[self class] dropStorage:kStorageName]).to.beTruthy();
-}
-
-- (void)testPrivateContextCreatedSuccessfuly {
-    [[self class] createEmptyStorageWithName:kStorageName];
-    expect([MAGCoreData createPrivateContext]).toNot.beNil();
-    expect([[self class] dropStorage:kStorageName]).to.beTruthy();
+    expect([MAGCoreData createPrivateContext].persistentStoreCoordinator).toNot.beNil();
+    
+    expect([MAGCoreData deleteAll]).to.beTruthy();
+    
+    expect([MAGCoreData context]).to.beNil();
+    expect([MAGCoreData createPrivateContext]).to.beNil();
 }
 
 @end

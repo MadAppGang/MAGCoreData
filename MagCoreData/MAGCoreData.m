@@ -113,6 +113,8 @@
 }
 
 + (NSManagedObjectContext *)createPrivateContext {
+    if (![MAGCoreData instance].mainContext) return nil;
+    
     NSManagedObjectContext *moc = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
     moc.persistentStoreCoordinator = [[MAGCoreData instance] persistentStore];
     return moc;

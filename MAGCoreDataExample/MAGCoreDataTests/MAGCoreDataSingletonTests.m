@@ -14,14 +14,6 @@
 
 @implementation MAGCoreDataSingletonTests
 
-- (void)setUp {
-    [super setUp];
-}
-
-- (void)tearDown {
-    [super tearDown];
-}
-
 - (void)testSingletonSharedInstanceCreated {
     expect([MAGCoreData instance]).toNot.beNil();
 }
@@ -29,6 +21,5 @@
 - (void)testSingletonUniqueInstanceCreated {
     expect([MAGCoreData instance]).to.beIdenticalTo([MAGCoreData instance]);
 }
-
 
 @end
