@@ -9,14 +9,14 @@
 #import <CoreData/CoreData.h>
 #import "MAGCoreData.h"
 
-@interface MAGCoreData () {
+@interface MAGCoreData ()
 
-}
 @property (nonatomic, strong) NSManagedObjectContext *mainContext;
 @property (nonatomic, strong) NSManagedObjectModel *model;
 @property (nonatomic, strong) NSPersistentStoreCoordinator *persistentStore;
 
 @end
+
 
 @implementation MAGCoreData
 
@@ -24,12 +24,12 @@
     static dispatch_once_t once;
     static MAGCoreData *sharedInstance;
     dispatch_once(&once, ^{
-            sharedInstance = [[self alloc] init];
+            sharedInstance = [self new];
     });
     return sharedInstance;
 }
 
--(instancetype)init{
+- (instancetype)init {
     self = [super init];
     if (self) {
         _autoMergeFromChildContexts = NO;
@@ -120,7 +120,7 @@
 + (void)saveContext:(NSManagedObjectContext *)context {
     NSError *error = nil;
     if ([context hasChanges] && ![context save:&error]) {
-        NSArray* detailedErrors = [[error userInfo] objectForKey:NSDetailedErrorsKey];
+        NSArray* detailedErrors = [error userInfo][NSDetailedErrorsKey];
         if(detailedErrors != nil && [detailedErrors count] > 0) {
             for(NSError* detailedError in detailedErrors) {
                 NSLog(@"MAGCoreData  DetailedError: %@", [detailedError userInfo]);
@@ -135,7 +135,7 @@
 
 + (void)deleteAll {
     //assume we use only one persistent store
-    NSURL *storeURL = [[[[[MAGCoreData instance] persistentStore] persistentStores] objectAtIndex:0] URL];
+    NSURL *storeURL = [[[[MAGCoreData instance] persistentStore] persistentStores][0] URL];
     [[MAGCoreData instance] close];
     @try {
         [[NSFileManager defaultManager] removeItemAtPath:storeURL.path error:nil];

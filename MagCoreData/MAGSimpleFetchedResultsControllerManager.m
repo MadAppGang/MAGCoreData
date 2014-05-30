@@ -13,13 +13,11 @@
 @interface MAGSimpleFetchedResultsControllerManager() <NSFetchedResultsControllerDelegate>
 @property (nonatomic, weak) UITableView *tableView;
 @property (nonatomic, weak) NSFetchedResultsController *fetchedResultController;
-@property (nonatomic, copy) void(^updateBlock)(UITableViewCell *, NSIndexPath *) ;
+@property (nonatomic, copy) void(^updateBlock)(UITableViewCell *, NSIndexPath *);
 @end;
 
 
-@implementation MAGSimpleFetchedResultsControllerManager {
-
-}
+@implementation MAGSimpleFetchedResultsControllerManager
 
 - (instancetype)initWithFRC:(NSFetchedResultsController *)frc
                forTableView:(UITableView *)tableView
@@ -69,12 +67,12 @@
     switch(type) {
 
         case NSFetchedResultsChangeInsert:
-            [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath]
+            [tableView insertRowsAtIndexPaths:@[newIndexPath]
                              withRowAnimation:UITableViewRowAnimationFade];
             break;
 
         case NSFetchedResultsChangeDelete:
-            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath]
+            [tableView deleteRowsAtIndexPaths:@[indexPath]
                              withRowAnimation:UITableViewRowAnimationFade];
             break;
 
@@ -83,9 +81,9 @@
             break;
 
         case NSFetchedResultsChangeMove:
-            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath]
+            [tableView deleteRowsAtIndexPaths:@[indexPath]
                              withRowAnimation:UITableViewRowAnimationFade];
-            [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath]
+            [tableView insertRowsAtIndexPaths:@[newIndexPath]
                              withRowAnimation:UITableViewRowAnimationFade];
             break;
     }

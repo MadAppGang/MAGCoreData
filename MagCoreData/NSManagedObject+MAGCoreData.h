@@ -34,7 +34,8 @@
 + (id)primaryKeyName;
 + (void)setPrimaryKeyName:(id)primaryKey;
 
-
++ (id)updateDateKeyName;
++ (void)setUpdateDateKeyName:(id)updateKeyName;
 
 
 
@@ -66,14 +67,19 @@
 
 + (id)first;
 + (id)firstWithKey:(NSString *)key value:(id)value;
++ (id)firstForPredicate:(NSPredicate *)predicate orderBy:(NSString *)key ascending:(BOOL)ascending;
++ (id)firstForPredicate:(NSPredicate *)predicate orderBy:(NSString *)key ascending:(BOOL)ascending inContext:(NSManagedObjectContext *)context;
+
 
 + (id)firstInContext:(NSManagedObjectContext *)context;
 + (id)firstWithKey:(NSString *)key value:(id)value inContext:(NSManagedObjectContext *)context;
 
 #pragma mark - deleting objects
-
 + (void)deleteAll;
 + (void)deleteAllInContext:(NSManagedObjectContext *)context;
 - (void)delete;
+
+#pragma mark - refreshing object
+- (void)refreshMerging:(BOOL)merging;
 
 @end
