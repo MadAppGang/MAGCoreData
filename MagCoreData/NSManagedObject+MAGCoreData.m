@@ -361,8 +361,29 @@ static NSString const * kUpdateDateKey= @"NSManagedObjectMagCoreDataUpdateDateKe
 }
 
 
++ (id)firstForPredicate:(NSPredicate *)predicate orderBy:(NSString *)key ascending:(BOOL)ascending {
+    return [self firstForPredicate:predicate orderBy:key ascending:ascending inContext:[MAGCoreData context]];
+}
+
++ (id)firstForPredicate:(NSPredicate *)predicate orderBy:(NSString *)key ascending:(BOOL)ascending inContext:(NSManagedObjectContext *)context{
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:NSStringFromClass([self class])];
+    [request setFetchLimit:1];
+    NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:key ascending:ascending];
+    [request setPredicate:predicate];
+    [request setSortDescriptors:@[sortDescriptor]];
+    __block NSArray *ret = nil;
+    ret = [context executeFetchRequest:request error:nil];
+    if ([ret count]>0) {
+        return ret[0];
+    }
+    return nil;
+}
+
+
+
 + (id)firstInContext:(NSManagedObjectContext *)context {
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:NSStringFromClass([self class])];
+    [request setFetchLimit:1];
     __block NSArray *values = nil;
     values = [context executeFetchRequest:request error:nil];
     if (values.count > 0) {
@@ -374,6 +395,7 @@ static NSString const * kUpdateDateKey= @"NSManagedObjectMagCoreDataUpdateDateKe
 + (id)firstWithKey:(NSString *)key value:(id)value inContext:(NSManagedObjectContext *)context {
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@", key, value];
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:NSStringFromClass([self class])];
+    [request setFetchLimit:1];
     [request setPredicate:predicate];
     __block NSArray *values = nil;
     values = [context executeFetchRequest:request error:nil];
