@@ -99,7 +99,7 @@
                                                      URL:[self defaultStorageURLWithName:storageName]
                                                  options:options
                                                    error:error]) {
-        NSLog(@"MAGCoreData: Error creating persistent store:%@",*error);
+        NSLog(@"MAGCoreData: Error creating persistent store:%@", *error);
         return NO;
     }
     mag.mainContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];

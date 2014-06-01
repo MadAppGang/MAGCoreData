@@ -14,14 +14,6 @@
 
 @implementation MAGCoreDataPrepareTests
 
-- (void)setUp {
-    [super setUp];
-}
-
-- (void)tearDown {
-    [super tearDown];
-}
-
 - (void)testCoreDataCreationAndDeletion {
     NSError *prepareError;
     BOOL prepareSuccess = [MAGCoreData prepareCoreDataWithModelName:@"Model" andStorageName:kStorageName error:&prepareError];

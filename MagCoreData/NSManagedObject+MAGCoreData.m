@@ -377,7 +377,7 @@ static NSString const * kUpdateDateKey= @"NSManagedObjectMagCoreDataUpdateDateKe
     [request setPredicate:predicate];
     __block NSArray *values = nil;
     values = [context executeFetchRequest:request error:nil];
-    if (values.count > 0) {
+    if (values.count) {
         return (NSManagedObject *)values[0];
     }
     return nil;
