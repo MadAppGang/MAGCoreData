@@ -37,6 +37,10 @@
 + (id)updateDateKeyName;
 + (void)setUpdateDateKeyName:(id)updateKeyName;
 
+//custom values transformers
++ (NSDictionary *)valueTransformers;
++ (void)setValueTransformers:(NSDictionary *)valueTransformers;
+
 
 
 - (void)safeSetValuesForKeysWithDictionary:(NSDictionary *)keyedValues;
