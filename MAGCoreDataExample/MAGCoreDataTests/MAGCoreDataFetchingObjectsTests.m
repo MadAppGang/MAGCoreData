@@ -24,22 +24,31 @@
 
 - (void)setUp {
     [super setUp];
-    
-    [[self class] createEmptyStorageWithName:NSStringFromClass([self class])];
 }
 
 - (void)tearDown {
     [super tearDown];
-    
-    [[self class] dropStorage:NSStringFromClass([self class])];
 }
 
-- (void)testFetchingObjects {
-    [Weather create];
-    [Weather create];
-    [Weather create];
-    NSArray *arr = [Weather all];
-    expect(arr.count == 3).to.beTruthy();
+- (void)testGettingObject {
+    id mock = [OCMockObject mockForClass:[NSManagedObjectContext class]];    
+
+    [[mock expect] executeFetchRequest:[OCMArg any] error:[OCMArg anyObjectRef]];
+    [Weather allInContext:mock];
+    
+    [[mock expect] executeFetchRequest:[OCMArg any] error:[OCMArg anyObjectRef]];
+    [Weather allForPredicate:nil orderBy:nil ascending:YES inContext:mock];
+
+    [[mock expect] executeFetchRequest:[OCMArg any] error:[OCMArg anyObjectRef]];
+    [Weather allOrderedBy:nil ascending:YES inContext:mock];
+    
+    [[mock expect] executeFetchRequest:[OCMArg any] error:[OCMArg anyObjectRef]];
+    [Weather firstForPredicate:nil orderBy:nil ascending:NO inContext:mock];
+    
+    [[mock expect] executeFetchRequest:[OCMArg any] error:[OCMArg anyObjectRef]];
+    [Weather firstInContext:mock];
+    
+    [mock verify];
 }
 
 @end

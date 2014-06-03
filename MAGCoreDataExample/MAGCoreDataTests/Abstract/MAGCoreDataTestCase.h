@@ -19,9 +19,4 @@
 
 @interface MAGCoreDataTestCase : XCTestCase
 
-+ (BOOL)createEmptyStorageWithModelName:(NSString *)modelName andStorageName:(NSString *)storageName error:(NSError **)error;
-+ (BOOL)createEmptyStorageWithName:(NSString *)storageName;
-+ (BOOL)setupStorageWithName:(NSString *)storageName;
-+ (BOOL)dropStorage:(NSString *)storageName;
-
 @end

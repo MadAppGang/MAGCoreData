@@ -27,7 +27,7 @@
     [MAGCoreData deleteAll];
 }
 
-- (void)testAsynchronousActions1 {
+- (void)testAsynchronousSavingInBackgroundThread {
     NSNumber *objId = @1;
     
     __block NSManagedObjectContext *privateContext;
@@ -49,7 +49,7 @@
     expect(objectExistInMainContext).will.beTruthy();
 }
 
-- (void)testAsynchronousActions2 {
+- (void)testAccessToObjectFromBackgroundThread {
     NSNumber *objId = @1;
     
     __block NSManagedObjectContext *privateContext;
@@ -69,42 +69,30 @@
     expect(objectExistInPrivateContext).will.beTruthy();
 }
 
-- (void)testTest1 {
-    NSOperationQueue *operationQueue = [NSOperationQueue new];
-    __block NSObject *obj;
-    
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^(){
-        [[NSOperationQueue mainQueue] addOperationWithBlock:^(){
-            expect(YES).to.beFalsy();
-            obj = nil;
-            XCTFail();
-        }];
-        
-        [operationQueue addOperationWithBlock:^(){
-//            expect(YES).to.beFalsy();
-        }];
-        
-//        [operationQueue start];
-    });
-    
-//    NSLog(@"234");
-//    expect(obj).willNot.beFalsy();
-}
-
-- (void)testTest3 {
-    [[NSOperationQueue new] addOperationWithBlock:^{
-//        expect(YES).to.beFalsy();
-        XCTFail();
-    }];
-}
-
-- (void)testTest4 {
-    dispatch_queue_t queue = dispatch_queue_create("IDDQD", 0);
-    dispatch_async(queue, ^{
-        expect(YES).to.beFalsy();
-    });
-}
-
-
+//- (void)testAutoMergeFromChildContexts {
+//    [MAGCoreData deleteAllInStorageWithName:kStorageName];
+//    [MAGCoreData prepareCoreDataWithModelName:@"Model" andStorageName:kStorageName error:nil];
+//    
+//    [MAGCoreData instance].autoMergeFromChildContexts = YES;
+//    
+//    __block BOOL saveSuccess = NO;
+//    __block NSManagedObjectContext *context;
+//    
+//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^(){
+//        context = [MAGCoreData createPrivateContext];
+//        [Weather createInContext:context];
+//        saveSuccess = [context save:nil];
+//    });
+//    
+////    [MAGCoreData save];
+//    
+//    
+//    expect(saveSuccess).will.beTruthy();
+//    
+//    NSLog(@"Weather in main:%d", [Weather all].count);
+//    NSLog(@"Weather in cntx:%d", [Weather allInContext:context].count);
+//    
+//    [MAGCoreData deleteAllInStorageWithName:kStorageName];
+//}
 
 @end

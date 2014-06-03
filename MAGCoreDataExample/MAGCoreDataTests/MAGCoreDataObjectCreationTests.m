@@ -16,15 +16,26 @@
 
 - (void)setUp {
     [super setUp];
+    
+    [MAGCoreData deleteAllInStorageWithName:NSStringFromClass([self class])];
+    [MAGCoreData prepareCoreDataWithModelName:@"Model" andStorageName:NSStringFromClass([self class]) error:nil];
 }
 
 - (void)tearDown {
     [super tearDown];
+    
+    [MAGCoreData deleteAllInStorageWithName:NSStringFromClass([self class])];
+}
+
+- (void)testObjectCreationInContext {
+    NSManagedObjectContext *context = [NSManagedObjectContext new];
+    id mock = [OCMockObject mockForClass:[NSEntityDescription class]];
+    [[[mock expect] classMethod] insertNewObjectForEntityForName:NSStringFromClass([Weather class]) inManagedObjectContext:context];
+    [Weather createInContext:context];
+    [mock verify];
 }
 
 - (void)testObjectCreationAndUpdatingInMainContext {
-    [[self class] createEmptyStorageWithName:kStorageName];
-    
     Weather *obj1 = [Weather create];
     expect(obj1).toNot.beNil();
     
@@ -32,12 +43,9 @@
     Weather *obj2 = [Weather createFromDictionary:@{@"id": identifier}];
     expect(obj2).toNot.beNil();
     expect([identifier isEqualToNumber:obj2.identifier]).to.beTruthy();
-    [[self class] dropStorage:kStorageName];
 }
 
 - (void)testObjectCreationInPrivateContext {
-    [[self class] createEmptyStorageWithName:kStorageName];
-    
     NSManagedObjectContext *privateContext = [MAGCoreData createPrivateContext];
     
     Weather *obj1 = [Weather createInContext:privateContext];
@@ -46,46 +54,31 @@
     Weather *obj2 = [Weather createFromDictionary:@{@"id": identifier} inContext:privateContext];
     expect(obj2).toNot.beNil();
     expect([identifier isEqualToNumber:obj2.identifier]).to.beTruthy();
-    [[self class] dropStorage:kStorageName];
-}
-
-- (void)testObjectCreationAndSavingInMainContext {
-    [[self class] createEmptyStorageWithName:kStorageName];
-    Weather *weather = [Weather create];
-
-    [MAGCoreData save];
-    
-    [[MAGCoreData instance] close];
-    [[self class] setupStorageWithName:kStorageName];
-    
-    Weather *storedWeather = [Weather first];
-    
-    BOOL same = [weather.objectID.URIRepresentation isEqual:storedWeather.objectID.URIRepresentation];
-    expect(same).to.beTruthy();
-    [[self class] dropStorage:kStorageName];
 }
 
 - (void)testObjectCreationAndSavingInPrivateContext {
-    [[self class] createEmptyStorageWithName:kStorageName];
-    
     NSManagedObjectContext *privateContext = [MAGCoreData createPrivateContext];
 
     Weather *weather = [Weather createInContext:privateContext];
+    expect(weather).toNot.beNil();
+    expect([MAGCoreData saveContext:privateContext]).to.beTruthy();
     
-    [MAGCoreData saveContext:privateContext];
+    NSLog(@"hasChanges");
+    NSLog(@"array %d", [Weather all].count);
     
     [[MAGCoreData instance] close];
-    [[self class] setupStorageWithName:kStorageName];
+    expect([MAGCoreData prepareCoreDataWithModelName:nil andStorageName:NSStringFromClass([self class]) error:nil]).to.beTruthy();
     
-    Weather *storedWeather = [Weather first];
+    Weather *storedWeather = [[Weather all] firstObject];
+    expect(storedWeather).toNot.beNil();
+    
+    NSLog(@"array %d", [Weather all].count);
     
     BOOL same = [weather.objectID.URIRepresentation isEqual:storedWeather.objectID.URIRepresentation];
     expect(same).to.beTruthy();
-    [[self class] dropStorage:kStorageName];
 }
 
 - (void)testCreateOrUpdateObject {
-    [[self class] createEmptyStorageWithName:kStorageName];
     // create object
     Weather *obj1 = [Weather getOrCreateObjectForPrimaryKey:@1];
     expect(obj1).toNot.beNil();
@@ -103,23 +96,15 @@
     expect(differentURI).to.beTruthy();
     BOOL sameId = obj2.identifier.intValue == storedObj2InMainContext.identifier.intValue == storedObj2InPrivateContext.identifier.intValue;
     expect(sameId).to.beTruthy();
-    [[self class] dropStorage:kStorageName];
 }
 
 - (void)testObjectsDeletion {
-    [[self class] createEmptyStorageWithName:kStorageName];
-    
-    [Weather create];
-    [Weather create];
-    [Weather create];
-    expect([Weather all].count == 3).to.beTruthy();
-    
-    [[Weather first] delete];
-    expect([Weather all].count == 2).to.beTruthy();
-    
-    [Weather deleteAll];
-    expect([Weather all].count == 0).to.beTruthy();
-    [[self class] dropStorage:kStorageName];
+    id mock = [OCMockObject mockForClass:[NSManagedObjectContext class]];
+    id obj = [OCMockObject mockForClass:[NSManagedObject class]];
+    [[[mock stub] andReturn:@[obj]] executeFetchRequest:[OCMArg any] error:[OCMArg anyObjectRef]];
+    [[mock expect] deleteObject:[OCMArg any]];
+    [Weather deleteAllInContext:mock];
+    [mock verify];
 }
 
 @end
