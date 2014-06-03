@@ -16,6 +16,7 @@ static NSString const * kDatesFormatKey = @"NSManagedObjectMagCoreDataDatesForma
 static NSString const * kDefaultDateFormatKey = @"NSManagedObjectMagCoreDataDefaultDateFormatKey";
 static NSString const * kPrimaryKeyNameKey= @"NSManagedObjectMagCoreDataPrimaryKeyNameKey";
 static NSString const * kUpdateDateKey= @"NSManagedObjectMagCoreDataUpdateDateKey";
+static NSString const * kValueTransformersKey = @"NSManagedObjectValueTransformersKey";
 
 
 
@@ -28,6 +29,14 @@ static NSString const * kUpdateDateKey= @"NSManagedObjectMagCoreDataUpdateDateKe
 
 + (void)setKeyMapping:(NSDictionary *)keyMapping {
     objc_setAssociatedObject(self, &kKeyMapKey, keyMapping, OBJC_ASSOCIATION_COPY_NONATOMIC);
+}
+
++ (NSDictionary *)valueTransformers {
+    return objc_getAssociatedObject(self, &kValueTransformersKey);
+}
+
++ (void)setValueTransformers:(NSDictionary *)valueTransformers {
+    objc_setAssociatedObject(self, &kValueTransformersKey, valueTransformers, OBJC_ASSOCIATION_COPY_NONATOMIC);
 }
 
 
@@ -124,19 +133,24 @@ static NSString const * kUpdateDateKey= @"NSManagedObjectMagCoreDataUpdateDateKe
     //fill attributes
     NSDictionary *attributes = [[self entity] attributesByName];
     NSDictionary *mapping = [[self class] keyMapping];
+    NSDictionary *valueTransformers = [[self class] valueTransformers];
 
     //attributes
     if ([self shouldUpdateFromDictionary:keyedValues]) {
         for (NSString *attribute in attributes) {
             NSString *attributeKey = mapping?mapping[attribute]:attribute;
-            id value = keyedValues[attributeKey];
+            id value = [keyedValues valueForKeyPath:attributeKey];
             if (value == nil) {
                 // Don't attempt to set nil, or you'll overwrite values in self that aren't present in keyedValues
 //                NSLog(@"MAGCoreData+NSManagedObjectContext: mapping lost for attribute:%@ for class %@",attribute, [self class]);
                 continue;
             }
             NSAttributeType attributeType = [attributes[attribute] attributeType];
-            if ([value isKindOfClass:[NSNull class]]) {
+            if ([valueTransformers objectForKey:attribute]) {
+                //if we have custom value transformer - apply it
+                id(^transformer)(id value) = valueTransformers[attribute];
+                value = transformer(value);
+            } else if ([value isKindOfClass:[NSNull class]]) {
                 value = nil;
             } else if ((attributeType == NSStringAttributeType) && ([value isKindOfClass:[NSNumber class]])) {
                 value = [value stringValue];
