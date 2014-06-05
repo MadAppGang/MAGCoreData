@@ -15,8 +15,12 @@ class ViewController: UIViewController {
         
         // init core data
         var coreData = MAGCoreData()
-        var error2:NSError
-        coreData.prepareCoreData()
+        var prepareError = coreData.prepareCoreData()
+        println(prepareError ? prepareError!.localizedDescription : "Prepare success")
+        
+        MAGCoreData.sharedInstance
+        
+        NSFileManager.defaultManager()
     }
 
 }

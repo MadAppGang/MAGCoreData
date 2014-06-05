@@ -15,6 +15,7 @@
 		FA88769619408E9D00B8BA41 /* MAGCoreDataSwiftExampleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA88769519408E9D00B8BA41 /* MAGCoreDataSwiftExampleTests.swift */; };
 		FAD70CEA19408F8C00F25246 /* MAGCoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD70CE919408F8C00F25246 /* MAGCoreData.swift */; };
 		FAD70CF4194090B200F25246 /* MAGCoreData.m in Sources */ = {isa = PBXBuildFile; fileRef = FAD70CED194090B200F25246 /* MAGCoreData.m */; };
+		FAD70CF91940A09000F25246 /* NSManagedObject+MAGCoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD70CF81940A09000F25246 /* NSManagedObject+MAGCoreData.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +48,7 @@
 		FAD70CF1194090B200F25246 /* NSManagedObject+MAGCoreData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObject+MAGCoreData.m"; sourceTree = "<group>"; };
 		FAD70CF2194090B200F25246 /* NSManagedObjectContext+MAGCoreData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSManagedObjectContext+MAGCoreData.h"; sourceTree = "<group>"; };
 		FAD70CF3194090B200F25246 /* NSManagedObjectContext+MAGCoreData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObjectContext+MAGCoreData.m"; sourceTree = "<group>"; };
+		FAD70CF81940A09000F25246 /* NSManagedObject+MAGCoreData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSManagedObject+MAGCoreData.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -137,6 +139,7 @@
 			isa = PBXGroup;
 			children = (
 				FAD70CE919408F8C00F25246 /* MAGCoreData.swift */,
+				FAD70CF81940A09000F25246 /* NSManagedObject+MAGCoreData.swift */,
 			);
 			name = MAGCoreDataSwift;
 			path = ../../../../MAGCoreDataSwift;
@@ -259,6 +262,7 @@
 			files = (
 				FAD70CEA19408F8C00F25246 /* MAGCoreData.swift in Sources */,
 				FA88768519408E9D00B8BA41 /* ViewController.swift in Sources */,
+				FAD70CF91940A09000F25246 /* NSManagedObject+MAGCoreData.swift in Sources */,
 				FA88768019408E9D00B8BA41 /* AppDelegate.swift in Sources */,
 				FA88768319408E9D00B8BA41 /* MAGCoreDataSwiftExample.xcdatamodeld in Sources */,
 				FAD70CF4194090B200F25246 /* MAGCoreData.m in Sources */,
