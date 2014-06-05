@@ -35,7 +35,6 @@
 		FA80B3BD1933485D00BCC225 /* Weather+Initialization.m in Sources */ = {isa = PBXBuildFile; fileRef = FA80B3BC1933485D00BCC225 /* Weather+Initialization.m */; };
 		FA80B3C3193348EF00BCC225 /* Weather.m in Sources */ = {isa = PBXBuildFile; fileRef = FA80B3C2193348EF00BCC225 /* Weather.m */; };
 		FA80B3C519335F2D00BCC225 /* MAGCoreDataFetchingObjectsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = FA80B3C419335F2D00BCC225 /* MAGCoreDataFetchingObjectsTests.m */; };
-		FA9153E0193DEE320043851B /* MAGCoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9153DF193DEE320043851B /* MAGCoreData.swift */; };
 		FAB1874D1937691F00E49578 /* MAGCoreDataTest.m in Sources */ = {isa = PBXBuildFile; fileRef = FAB1874C1937691F00E49578 /* MAGCoreDataTest.m */; };
 		FACC9A291933769A00F74FFA /* MAGCoreDataTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = FACC9A281933769A00F74FFA /* MAGCoreDataTestCase.m */; };
 		FAD99EC718ACCB2600896266 /* ISO8601DateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = FAD99EC418ACCB2600896266 /* ISO8601DateFormatter.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -84,7 +83,6 @@
 		FA46F1CB19323EBA009FF04B /* MAGCoreDataSingletonTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAGCoreDataSingletonTests.m; sourceTree = "<group>"; };
 		FA46F1CF19324218009FF04B /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		FA46F1D1193246B4009FF04B /* MAGCoreDataPrepareTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAGCoreDataPrepareTests.m; sourceTree = "<group>"; };
-		FA732FAA193DFAEB0096BDC4 /* MAGCoreDataTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MAGCoreDataTests-Bridging-Header.h"; sourceTree = "<group>"; };
 		FA732FAB193DFAEC0096BDC4 /* MAGCoreDataSwiftTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MAGCoreDataSwiftTests.swift; sourceTree = "<group>"; };
 		FA80B3B91933456F00BCC225 /* MAGCoreDataObjectCreationTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAGCoreDataObjectCreationTests.m; sourceTree = "<group>"; };
 		FA80B3BB1933485D00BCC225 /* Weather+Initialization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Weather+Initialization.h"; sourceTree = "<group>"; };
@@ -92,8 +90,6 @@
 		FA80B3C1193348EF00BCC225 /* Weather.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Weather.h; sourceTree = "<group>"; };
 		FA80B3C2193348EF00BCC225 /* Weather.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Weather.m; sourceTree = "<group>"; };
 		FA80B3C419335F2D00BCC225 /* MAGCoreDataFetchingObjectsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAGCoreDataFetchingObjectsTests.m; sourceTree = "<group>"; };
-		FA9153DE193DEE320043851B /* MAGCoreDataExample-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MAGCoreDataExample-Bridging-Header.h"; sourceTree = "<group>"; };
-		FA9153DF193DEE320043851B /* MAGCoreData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MAGCoreData.swift; path = ../../MAGCoreData.swift; sourceTree = "<group>"; };
 		FA9E402019338EE100C001F8 /* libPods.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPods.a; path = "Pods/build/Debug-iphoneos/libPods.a"; sourceTree = "<group>"; };
 		FAA8C4B9193391980004C55F /* libPods.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPods.a; path = "Pods/build/Debug-iphoneos/libPods.a"; sourceTree = "<group>"; };
 		FAB1874C1937691F00E49578 /* MAGCoreDataTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAGCoreDataTest.m; sourceTree = "<group>"; };
@@ -195,8 +191,6 @@
 		BDD82FC317CE40B900F1CD8D /* MagCoreData */ = {
 			isa = PBXGroup;
 			children = (
-				FA9153DF193DEE320043851B /* MAGCoreData.swift */,
-				FA9153DE193DEE320043851B /* MAGCoreDataExample-Bridging-Header.h */,
 				FA38F0D618ACC5F700332A34 /* MAGCoreData.h */,
 				FA38F0D718ACC5F700332A34 /* MAGCoreData.m */,
 				FA38F0D818ACC5F700332A34 /* MAGSimpleFetchedResultsControllerManager.h */,
@@ -219,7 +213,6 @@
 				FA80B3C419335F2D00BCC225 /* MAGCoreDataFetchingObjectsTests.m */,
 				FAB1874C1937691F00E49578 /* MAGCoreDataTest.m */,
 				FA732FAB193DFAEC0096BDC4 /* MAGCoreDataSwiftTests.swift */,
-				FA732FAA193DFAEB0096BDC4 /* MAGCoreDataTests-Bridging-Header.h */,
 				FA46F1B9192FE440009FF04B /* Supporting Files */,
 			);
 			path = MAGCoreDataTests;
@@ -448,7 +441,6 @@
 				FA38F0E018ACC5F700332A34 /* NSManagedObject+MAGCoreData.m in Sources */,
 				FA38F0DE18ACC5F700332A34 /* MAGCoreData.m in Sources */,
 				FAD99EC718ACCB2600896266 /* ISO8601DateFormatter.m in Sources */,
-				FA9153E0193DEE320043851B /* MAGCoreData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
