@@ -18,9 +18,16 @@ class MAGCoreDataSwiftExampleTests: XCTestCase {
         super.tearDown()
     }
     
-    func testExample() {
-        XCTAssert(true, "Pass")
+    func testSingletonSharedInstanceCreated() {
+//        XCTAssertNotNil(MAGCoreData)
+    }
+    
+    func testSingletonUniqueInstanceCreated() {
         
+    }
+    
+    func testMAGCoreData() {
+//        var x = MAGCoreData()
     }
     
 }
