@@ -12,98 +12,111 @@ import CoreData
 
 class MAGCoreData: NSObject {
     
+    // TODO:: Class variables not yet supported :)
+    
     var model:NSManagedObjectModel?
     var mainContext:NSManagedObjectContext?
     var persistentStore:NSPersistentStoreCoordinator?
   
-    // TODO::
-//    @property (nonatomic, assign) BOOL autoMergeFromChildContexts; //default is NO
-
-    
-    init() {
-    }
-    
-//    func instance() -> MAGCoreData {
-//        let sharedInstance:MAGCoreData = MAGCoreData()
-//        var token : dispatch_once_t = 0
-//        dispatch_once(&token, {
-//            sharedInstance = MAGCoreData()
-//            })
-//        return sharedInstance
-//    }
-    
-    // TODO
-    class var sharedInstance:MAGCoreData {
+    // TODO //default is NO
+    var autoMergeFromChildContexts:Bool {
         get {
-            struct Static {
-                static var instance : MAGCoreData? = nil
-                static var token : dispatch_once_t = 0
-            }
+            return true
+        }
+        set (value) {
             
-            dispatch_once(&Static.token) { Static.instance = MAGCoreData() }
-            
-            return Static.instance!
-    }
+        }
     }
     
-    func prepareCoreData() -> NSError? {
-        self.prepareCoreDataWithModelName(nil, storageName: nil, error: nil)
-        return nil
+    /* Returns the singleton instance.
+    */
+    class func instance() -> MAGCoreData! {
+        struct Static {
+            static var instance : MAGCoreData? = nil
+            static var token : dispatch_once_t = 0
+        }
+        
+        dispatch_once(&Static.token) {
+            Static.instance = MAGCoreData()
+        }
+        
+        return Static.instance!
+    }
+
+
+    /* Initialisation
+    */
+    class func prepareCoreData() -> Bool {
+        return self.prepareCoreDataWithModelName(nil, storageName: nil, error: nil)
     }
     
-    func prepareCoreDataWithModelName(modelName: String?, error: NSError?) -> Bool {
+    class func prepareCoreDataWithModelName(modelName: String?, error: NSError?) -> Bool {
         return self.prepareCoreDataWithModelName(modelName, storageName: nil, error: error)
     }
     
-    func prepareCoreDataWithModelName(modelName: String?, storageName: String?, error: NSError?) -> Bool {
+    // TODO:: error pointer
+    class func prepareCoreDataWithModelName(modelName: String?, storageName: String?, error: NSError?) -> Bool {
+        let mag = MAGCoreData.instance()
         
-        if modelName != nil {
-            var modelURL:NSURL = NSBundle.mainBundle().URLForResource(modelName, withExtension:"momd")
-            self.model = NSManagedObjectModel(contentsOfURL: modelURL)
-        } else {
-            self.model = NSManagedObjectModel.mergedModelFromBundles(nil)
-        }
-        
-        self.persistentStore = NSPersistentStoreCoordinator(managedObjectModel: self.model)
-        var options = [NSMigratePersistentStoresAutomaticallyOption : true, NSInferMappingModelAutomaticallyOption : true]
-        
-        var storeURL = self.defaultStorageURLWithName(storageName)
-        
-        if !self.persistentStore!.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: storeURL, options: options, error: nil) {
+        if MAGCoreData.instance().mainContext != nil {
+            // TODO:: error
             return false
         }
         
-        self.mainContext = NSManagedObjectContext(concurrencyType:NSManagedObjectContextConcurrencyType.MainQueueConcurrencyType)
-        self.mainContext!.persistentStoreCoordinator = self.persistentStore
+        if modelName != nil {
+            var modelURL:NSURL = NSBundle.mainBundle().URLForResource(modelName, withExtension:"momd")
+            mag.model = NSManagedObjectModel(contentsOfURL: modelURL)
+        } else {
+            mag.model = NSManagedObjectModel.mergedModelFromBundles(nil)
+        }
+        
+        mag.persistentStore = NSPersistentStoreCoordinator(managedObjectModel: mag.model)
+        var options = [NSMigratePersistentStoresAutomaticallyOption : true, NSInferMappingModelAutomaticallyOption : true]
+        
+        var storeURL = defaultStorageURLWithName(storageName)
+        
+        if !mag.persistentStore!.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: storeURL, options: options, error: nil) {
+            // TODO:: error
+            return false
+        }
+        
+        mag.mainContext = NSManagedObjectContext(concurrencyType:NSManagedObjectContextConcurrencyType.MainQueueConcurrencyType)
+        mag.mainContext!.persistentStoreCoordinator = mag.persistentStore
         
         return true;
     }
     
-    func defaultStorageURLWithName(storageName: String?) -> NSURL {
+    class func defaultStorageURLWithName(storageName: String?) -> NSURL {
         let urls = NSFileManager.defaultManager().URLsForDirectory(NSSearchPathDirectory.DocumentDirectory, inDomains: NSSearchPathDomainMask.UserDomainMask)
         var docDir : NSURL = urls[urls.endIndex - 1] as NSURL
         var fileName:String = storageName ? storageName! + ".sqlite" : "MAGStore.sqlite"
         return docDir.URLByAppendingPathComponent(fileName)
     }
 
-    func context() -> NSManagedObjectContext? {
-        return self.mainContext
+    /* Management Object Context
+    */
+    class func context() -> NSManagedObjectContext? {
+        return MAGCoreData.instance().mainContext
     }
     
-    func createPrivateContext() -> NSManagedObjectContext? {
-        if !self.mainContext {
+    class func createPrivateContext() -> NSManagedObjectContext? {
+        if !MAGCoreData.context() {
             return nil
         }
         var moc = NSManagedObjectContext(concurrencyType: NSManagedObjectContextConcurrencyType.PrivateQueueConcurrencyType)
-        moc.persistentStoreCoordinator = self.persistentStore
+        moc.persistentStoreCoordinator = MAGCoreData.instance().persistentStore
         return moc
     }
     
-    func save() -> Bool {
-        return self.saveContext(self.mainContext)
+    /* Save the main context
+    */
+    class func save() -> Bool {
+        return self.saveContext(MAGCoreData.context())
     }
     
-    func saveContext(context: NSManagedObjectContext?) -> Bool {
+    /* Saving
+    */
+    class func saveContext(context: NSManagedObjectContext?) -> Bool {
         if !context {
             return false
         }
@@ -113,24 +126,26 @@ class MAGCoreData: NSObject {
         return true
     }
     
-    func close() {
-        self.mainContext = nil
-        self.model = nil
-        self.persistentStore = nil
+    class func close() {
+        var mag = MAGCoreData.instance()
+        mag.mainContext = nil
+        mag.model = nil
+        mag.persistentStore = nil
     }
     
-    func removeStoreAtPath(storeURL: NSURL) -> Bool {
-        NSFileManager.defaultManager().removeItemAtPath(storeURL.path, error: nil)
-        return true
+    class func removeStoreAtPath(storeURL: NSURL) -> Bool {
+        return NSFileManager.defaultManager().removeItemAtPath(storeURL.path, error: nil)
     }
     
-    func deleteAll() -> Bool {
-        var storeURL = self.persistentStore!.persistentStores[0].URL
+    /* Delete all data from first persistent store in persistent store coordinator
+    */
+    class func deleteAll() -> Bool {
+        var storeURL = MAGCoreData.instance().persistentStore!.persistentStores[0].URL
         self.close()
         return self.removeStoreAtPath(storeURL)
     }
     
-    func deleteAllInStorageWithName(storageName: String?) -> Bool {
+    class func deleteAllInStorageWithName(storageName: String?) -> Bool {
         self.close()
         return self.removeStoreAtPath(self.defaultStorageURLWithName(storageName))
     }

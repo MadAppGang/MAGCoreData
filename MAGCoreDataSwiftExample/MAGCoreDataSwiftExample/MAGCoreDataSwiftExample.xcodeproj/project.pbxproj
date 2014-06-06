@@ -8,11 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		FA88768019408E9D00B8BA41 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA88767F19408E9D00B8BA41 /* AppDelegate.swift */; };
-		FA88768319408E9D00B8BA41 /* MAGCoreDataSwiftExample.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FA88768119408E9D00B8BA41 /* MAGCoreDataSwiftExample.xcdatamodeld */; };
 		FA88768519408E9D00B8BA41 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA88768419408E9D00B8BA41 /* ViewController.swift */; };
 		FA88768819408E9D00B8BA41 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FA88768619408E9D00B8BA41 /* Main.storyboard */; };
 		FA88768A19408E9D00B8BA41 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FA88768919408E9D00B8BA41 /* Images.xcassets */; };
 		FA88769619408E9D00B8BA41 /* MAGCoreDataSwiftExampleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA88769519408E9D00B8BA41 /* MAGCoreDataSwiftExampleTests.swift */; };
+		FA91DEE71941BE4700DE5F73 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FA91DEE51941BE4700DE5F73 /* Model.xcdatamodeld */; };
+		FA91DEEA1941C01100DE5F73 /* Venues.m in Sources */ = {isa = PBXBuildFile; fileRef = FA91DEE91941C01100DE5F73 /* Venues.m */; };
 		FAD70CEA19408F8C00F25246 /* MAGCoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD70CE919408F8C00F25246 /* MAGCoreData.swift */; };
 		FAD70CF4194090B200F25246 /* MAGCoreData.m in Sources */ = {isa = PBXBuildFile; fileRef = FAD70CED194090B200F25246 /* MAGCoreData.m */; };
 		FAD70CF91940A09000F25246 /* NSManagedObject+MAGCoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD70CF81940A09000F25246 /* NSManagedObject+MAGCoreData.swift */; };
@@ -32,22 +33,20 @@
 		FA88767A19408E9D00B8BA41 /* MAGCoreDataSwiftExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MAGCoreDataSwiftExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA88767E19408E9D00B8BA41 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FA88767F19408E9D00B8BA41 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		FA88768219408E9D00B8BA41 /* MAGCoreDataSwiftExample.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MAGCoreDataSwiftExample.xcdatamodel; sourceTree = "<group>"; };
 		FA88768419408E9D00B8BA41 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		FA88768719408E9D00B8BA41 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		FA88768919408E9D00B8BA41 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		FA88768F19408E9D00B8BA41 /* MAGCoreDataSwiftExampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MAGCoreDataSwiftExampleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA88769419408E9D00B8BA41 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FA88769519408E9D00B8BA41 /* MAGCoreDataSwiftExampleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MAGCoreDataSwiftExampleTests.swift; sourceTree = "<group>"; };
+		FA91DEE61941BE4700DE5F73 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
+		FA91DEE81941C01100DE5F73 /* Venues.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Venues.h; sourceTree = "<group>"; };
+		FA91DEE91941C01100DE5F73 /* Venues.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Venues.m; sourceTree = "<group>"; };
 		FAD70CE919408F8C00F25246 /* MAGCoreData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MAGCoreData.swift; sourceTree = "<group>"; };
 		FAD70CEC194090B200F25246 /* MAGCoreData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAGCoreData.h; sourceTree = "<group>"; };
 		FAD70CED194090B200F25246 /* MAGCoreData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAGCoreData.m; sourceTree = "<group>"; };
-		FAD70CEE194090B200F25246 /* MAGSimpleFetchedResultsControllerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAGSimpleFetchedResultsControllerManager.h; sourceTree = "<group>"; };
-		FAD70CEF194090B200F25246 /* MAGSimpleFetchedResultsControllerManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAGSimpleFetchedResultsControllerManager.m; sourceTree = "<group>"; };
 		FAD70CF0194090B200F25246 /* NSManagedObject+MAGCoreData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSManagedObject+MAGCoreData.h"; sourceTree = "<group>"; };
 		FAD70CF1194090B200F25246 /* NSManagedObject+MAGCoreData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObject+MAGCoreData.m"; sourceTree = "<group>"; };
-		FAD70CF2194090B200F25246 /* NSManagedObjectContext+MAGCoreData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSManagedObjectContext+MAGCoreData.h"; sourceTree = "<group>"; };
-		FAD70CF3194090B200F25246 /* NSManagedObjectContext+MAGCoreData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObjectContext+MAGCoreData.m"; sourceTree = "<group>"; };
 		FAD70CF81940A09000F25246 /* NSManagedObject+MAGCoreData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSManagedObject+MAGCoreData.swift"; sourceTree = "<group>"; };
 		FAD70CFC1941B6DD00F25246 /* MAGCoreDataTestCase.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MAGCoreDataTestCase.h; sourceTree = "<group>"; };
 		FAD70CFD1941B6DD00F25246 /* MAGCoreDataTestCase.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MAGCoreDataTestCase.m; sourceTree = "<group>"; };
@@ -99,12 +98,12 @@
 		FA88767C19408E9D00B8BA41 /* MAGCoreDataSwiftExample */ = {
 			isa = PBXGroup;
 			children = (
+				FA91DEE41941BE1700DE5F73 /* Model */,
 				FA88769F19408EB600B8BA41 /* Vendors */,
 				FA88767F19408E9D00B8BA41 /* AppDelegate.swift */,
 				FA88768419408E9D00B8BA41 /* ViewController.swift */,
 				FA88768619408E9D00B8BA41 /* Main.storyboard */,
 				FA88768919408E9D00B8BA41 /* Images.xcassets */,
-				FA88768119408E9D00B8BA41 /* MAGCoreDataSwiftExample.xcdatamodeld */,
 				FA88767D19408E9D00B8BA41 /* Supporting Files */,
 			);
 			path = MAGCoreDataSwiftExample;
@@ -145,6 +144,16 @@
 			path = Vendors;
 			sourceTree = "<group>";
 		};
+		FA91DEE41941BE1700DE5F73 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				FA91DEE51941BE4700DE5F73 /* Model.xcdatamodeld */,
+				FA91DEE81941C01100DE5F73 /* Venues.h */,
+				FA91DEE91941C01100DE5F73 /* Venues.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		FAD70CE819408F8C00F25246 /* MAGCoreDataSwift */ = {
 			isa = PBXGroup;
 			children = (
@@ -160,12 +169,8 @@
 			children = (
 				FAD70CEC194090B200F25246 /* MAGCoreData.h */,
 				FAD70CED194090B200F25246 /* MAGCoreData.m */,
-				FAD70CEE194090B200F25246 /* MAGSimpleFetchedResultsControllerManager.h */,
-				FAD70CEF194090B200F25246 /* MAGSimpleFetchedResultsControllerManager.m */,
 				FAD70CF0194090B200F25246 /* NSManagedObject+MAGCoreData.h */,
 				FAD70CF1194090B200F25246 /* NSManagedObject+MAGCoreData.m */,
-				FAD70CF2194090B200F25246 /* NSManagedObjectContext+MAGCoreData.h */,
-				FAD70CF3194090B200F25246 /* NSManagedObjectContext+MAGCoreData.m */,
 			);
 			name = MagCoreData;
 			path = ../../../../MagCoreData;
@@ -295,10 +300,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				FAD70CEA19408F8C00F25246 /* MAGCoreData.swift in Sources */,
+				FA91DEEA1941C01100DE5F73 /* Venues.m in Sources */,
 				FA88768519408E9D00B8BA41 /* ViewController.swift in Sources */,
 				FAD70CF91940A09000F25246 /* NSManagedObject+MAGCoreData.swift in Sources */,
+				FA91DEE71941BE4700DE5F73 /* Model.xcdatamodeld in Sources */,
 				FA88768019408E9D00B8BA41 /* AppDelegate.swift in Sources */,
-				FA88768319408E9D00B8BA41 /* MAGCoreDataSwiftExample.xcdatamodeld in Sources */,
 				FAD70CF4194090B200F25246 /* MAGCoreData.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -501,13 +507,13 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		FA88768119408E9D00B8BA41 /* MAGCoreDataSwiftExample.xcdatamodeld */ = {
+		FA91DEE51941BE4700DE5F73 /* Model.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				FA88768219408E9D00B8BA41 /* MAGCoreDataSwiftExample.xcdatamodel */,
+				FA91DEE61941BE4700DE5F73 /* Model.xcdatamodel */,
 			);
-			currentVersion = FA88768219408E9D00B8BA41 /* MAGCoreDataSwiftExample.xcdatamodel */;
-			path = MAGCoreDataSwiftExample.xcdatamodeld;
+			currentVersion = FA91DEE61941BE4700DE5F73 /* Model.xcdatamodel */;
+			path = Model.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};
