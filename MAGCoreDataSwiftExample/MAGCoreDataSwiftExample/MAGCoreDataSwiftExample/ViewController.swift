@@ -36,6 +36,9 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         // other
         
+        MAGCoreData.instance().autoMergeFromChildContexts = true
+        MAGCoreData.instance().autoMergeFromChildContexts = false
+        
 //        println(coreData.mad)
         
         NSFileManager.defaultManager()
@@ -46,6 +49,23 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
 //        MAGCoreData.someDescr
         
+//        var z = 4.0
+//        
+//        switch "xxx" {
+//        case let z where z.hasSuffix("x"):
+//            println("true")
+//        default:
+//            println("default")
+//        }
+//        
+//        let z1 where "xxx".hasSuffix("x")
+//        let z2 = "xxx".hasSuffix("x")
+//        if z1 == z2 {
+//            println("same")
+//        }
+        
+//        MAGCoreData.instance().x = 4
+
     }
     
     func tableView(tableView: UITableView!, didSelectRowAtIndexPath indexPath: NSIndexPath!) {

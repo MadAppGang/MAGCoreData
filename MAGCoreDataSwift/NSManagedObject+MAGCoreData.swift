@@ -9,14 +9,6 @@
 import Foundation
 import CoreData
 
-let kKeyMapKey = "NSManagedObjectMagCoreDataMappingKey"
-let kRelationsKey = "NSManagedObjectMagCoreDataRelationsKey"
-let kDatesFormatKey = "NSManagedObjectMagCoreDataDatesFormatKey"
-let kDefaultDateFormatKey = "NSManagedObjectMagCoreDataDefaultDateFormatKey"
-let kPrimaryKeyNameKey = "NSManagedObjectMagCoreDataPrimaryKeyNameKey"
-let kUpdateDateKey = "NSManagedObjectMagCoreDataUpdateDateKey"
-let kValueTransformersKey = "NSManagedObjectValueTransformersKey"
-
 extension NSManagedObjectContext {
     
     class func createInContext(context: NSManagedObjectContext) -> AnyObject! {
@@ -34,11 +26,6 @@ extension NSManagedObjectContext {
         var request = NSFetchRequest(entityName:entityName)
         var objects = context.executeFetchRequest(request, error: nil)
         return objects;
-    }
-    
-    // TODO:: 
-    var someDescr: String {
-        return "sdfsdf"
     }
     
 }

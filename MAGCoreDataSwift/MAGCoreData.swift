@@ -12,25 +12,46 @@ import CoreData
 
 class MAGCoreData: NSObject {
     
+    // TODO:: http://habrahabr.ru/post/225727/
     // TODO:: Class variables not yet supported :)
     
     var model:NSManagedObjectModel?
     var mainContext:NSManagedObjectContext?
     var persistentStore:NSPersistentStoreCoordinator?
-  
-    // TODO //default is NO
-    var autoMergeFromChildContexts:Bool {
-        get {
-            return true
-        }
-        set (value) {
+    
+    var autoMergeFromChildContexts:Bool = false {
+    didSet {
+        if autoMergeFromChildContexts {
             
+            NSNotificationCenter.defaultCenter().addObserverForName(NSManagedObjectContextDidSaveNotification, object: nil, queue: nil, usingBlock: {(notification: NSNotification!) -> Void in
+                let context:NSManagedObjectContext = notification.object as NSManagedObjectContext
+                
+                if context == self.mainContext || context.persistentStoreCoordinator != self.persistentStore {
+                    return
+                }
+                
+                if let mainContext = self.mainContext {
+                    mainContext.performBlock() {
+                        mainContext.mergeChangesFromContextDidSaveNotification(notification)
+                    }
+                }
+                
+                })
+        } else {
+            NSNotificationCenter.defaultCenter().removeObserver(self)
         }
+    }
+    }
+    
+    init()  {
+        super.init()
+        autoMergeFromChildContexts = false
     }
     
     /* Returns the singleton instance.
     */
     class func instance() -> MAGCoreData! {
+        // TODO:: ждем реализацию class var
         struct Static {
             static var instance : MAGCoreData? = nil
             static var token : dispatch_once_t = 0

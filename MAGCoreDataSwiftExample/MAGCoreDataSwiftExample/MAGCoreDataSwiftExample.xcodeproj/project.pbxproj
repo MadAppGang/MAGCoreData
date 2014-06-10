@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FA5870AE1946FCB100479BCE /* NSManagedObject+Association.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA5870AD1946FCB100479BCE /* NSManagedObject+Association.swift */; };
 		FA88768019408E9D00B8BA41 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA88767F19408E9D00B8BA41 /* AppDelegate.swift */; };
 		FA88768519408E9D00B8BA41 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA88768419408E9D00B8BA41 /* ViewController.swift */; };
 		FA88768819408E9D00B8BA41 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FA88768619408E9D00B8BA41 /* Main.storyboard */; };
@@ -30,6 +31,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		FA5870AD1946FCB100479BCE /* NSManagedObject+Association.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSManagedObject+Association.swift"; sourceTree = "<group>"; };
 		FA88767A19408E9D00B8BA41 /* MAGCoreDataSwiftExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MAGCoreDataSwiftExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA88767E19408E9D00B8BA41 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FA88767F19408E9D00B8BA41 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -158,6 +160,7 @@
 			isa = PBXGroup;
 			children = (
 				FAD70CE919408F8C00F25246 /* MAGCoreData.swift */,
+				FA5870AD1946FCB100479BCE /* NSManagedObject+Association.swift */,
 				FAD70CF81940A09000F25246 /* NSManagedObject+MAGCoreData.swift */,
 			);
 			name = MAGCoreDataSwift;
@@ -302,6 +305,7 @@
 				FAD70CEA19408F8C00F25246 /* MAGCoreData.swift in Sources */,
 				FA91DEEA1941C01100DE5F73 /* Venues.m in Sources */,
 				FA88768519408E9D00B8BA41 /* ViewController.swift in Sources */,
+				FA5870AE1946FCB100479BCE /* NSManagedObject+Association.swift in Sources */,
 				FAD70CF91940A09000F25246 /* NSManagedObject+MAGCoreData.swift in Sources */,
 				FA91DEE71941BE4700DE5F73 /* Model.xcdatamodeld in Sources */,
 				FA88768019408E9D00B8BA41 /* AppDelegate.swift in Sources */,
