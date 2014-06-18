@@ -20,14 +20,14 @@ var kUpdateDateKeySelector:Selector = "NSManagedObjectMagCoreDataUpdateDateKey"
 var kValueTransformersKeySelector:Selector = "NSManagedObjectValueTransformersKey"
 
 let kKeyMapKey:CConstVoidPointer = &kKeyMapKeySelector
-var kRelationsKey:CConstVoidPointer = &kRelationsKeySelector
-var kDatesFormatKey:CConstVoidPointer = &kDatesFormatKeySelector
-var kDefaultDateFormatKey:CConstVoidPointer = &kDefaultDateFormatKeySelector
-var kPrimaryKeyNameKey:CConstVoidPointer = &kPrimaryKeyNameKeySelector
-var kUpdateDateKey:CConstVoidPointer = &kUpdateDateKeySelector
-var kValueTransformersKey:CConstVoidPointer = &kValueTransformersKeySelector
+let kRelationsKey:CConstVoidPointer = &kRelationsKeySelector
+let kDatesFormatKey:CConstVoidPointer = &kDatesFormatKeySelector
+let kDefaultDateFormatKey:CConstVoidPointer = &kDefaultDateFormatKeySelector
+let kPrimaryKeyNameKey:CConstVoidPointer = &kPrimaryKeyNameKeySelector
+let kUpdateDateKey:CConstVoidPointer = &kUpdateDateKeySelector
+let kValueTransformersKey:CConstVoidPointer = &kValueTransformersKeySelector
 
-extension NSManagedObjectContext {
+extension NSManagedObject {
     
     /* Key mapping of local names and web service names, key of dictionary is local name and value is web service name
     */

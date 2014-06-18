@@ -9,9 +9,13 @@
 import Foundation
 import CoreData
 
-extension NSManagedObjectContext {
+extension NSManagedObject {
     
-    class func createInContext(context: NSManagedObjectContext) -> AnyObject! {
+    class func create() -> AnyObject! {
+        return createInContext(MAGCoreData.instance().mainContext)
+    }
+    
+    class func createInContext(context: NSManagedObjectContext?) -> AnyObject! {
         var entityName = "Venues"// NSStringFromClass(MAGCoreData)
         var object : AnyObject! = NSEntityDescription.insertNewObjectForEntityForName(entityName, inManagedObjectContext: context)
         return object
@@ -21,11 +25,27 @@ extension NSManagedObjectContext {
 //        return object;
     }
     
-    class func allInContext(context: NSManagedObjectContext) -> AnyObject[]! {
-        var entityName = "Venues" //NSStringFromClass(MAGCoreData)
-        var request = NSFetchRequest(entityName:entityName)
-        var objects = context.executeFetchRequest(request, error: nil)
-        return objects;
+    
+    /* Fetching objects
+    */
+    
+    class func all() -> AnyObject[]! {
+        return allInContext(MAGCoreData.instance().mainContext)
     }
     
+    class func allInContext(context: NSManagedObjectContext?) -> AnyObject[]! {
+        if context {
+            var entityName = "Venues" //NSStringFromClass(MAGCoreData)
+            var request = NSFetchRequest(entityName:entityName)
+            var objects = context!.executeFetchRequest(request, error: nil)
+            return objects
+        }
+        return nil
+    }
+
+    /* Deleting objects
+    */
+
+    /* Refreshing object
+    */
 }

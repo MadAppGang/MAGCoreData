@@ -9,6 +9,7 @@
 import UIKit
 import CoreData
 
+
 class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
                             
     @IBOutlet var uiTableView : UITableView
@@ -21,18 +22,18 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         let storageName = "MAGCoreDataSwiftStorage"
         var error:NSError?
         
-        MAGCoreData.deleteAllInStorageWithName(storageName)
-        assert(MAGCoreData.prepareCoreDataWithModelName(modelName, storageName: storageName, error: error), "Prepare error")
-        assert(MAGCoreData.deleteAllInStorageWithName(storageName), "Delete error")
+//        MAGCoreData.deleteAllInStorageWithName(storageName)
+//        assert(MAGCoreData.prepareCoreDataWithModelName(modelName, storageName: storageName, error: error), "Prepare error")
+//        assert(MAGCoreData.deleteAllInStorageWithName(storageName), "Delete error")
 
         assert(MAGCoreData.prepareCoreDataWithModelName(modelName, storageName: storageName, error: error), "Prepare error")
         
-        
         // create objects
-//        var obj = NSManagedObject()
-//        NSManagedObject.createInContext
-        
-        
+        NSManagedObject.create()
+        println("count \(NSManagedObject.all().count)")
+        NSManagedObject.create()
+        println("count \(NSManagedObject.all().count)")
+        assert(MAGCoreData.save())
         
         // other
         
@@ -42,7 +43,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
 //        println(coreData.mad)
         
         NSFileManager.defaultManager()
-        
+
+//        var x:Venues
 //        coreData.cre
         
 //        coreData.someDescr
