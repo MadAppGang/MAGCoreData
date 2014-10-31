@@ -7,6 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <CoreData/CoreData.h>
+
 
 #ifdef MAGCOREDATA_LOGGING_ENABLED
 #define MAGCoreDataLog(frmt, ...) NSLog(frmt, ##__VA_ARGS__)
