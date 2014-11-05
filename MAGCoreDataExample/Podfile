@@ -1,4 +1,14 @@
-link_with 'MAGCoreDataExample', 'MAGCoreDataTests'
+source 'https://github.com/CocoaPods/Specs.git'
 
-pod 'Expecta', '~> 0.3.0'
-pod 'OCMock', '~> 2.2.4'
+#link_with 'MAGCoreDataExample', 'MAGCoreDataTests'
+
+target :MAGCoreDataExample do
+    pod 'AFNetworking', '~> 2.0'
+    pod 'MBProgressHUD', '~> 0.8'
+    pod 'Masonry'
+end
+
+target :MAGCoreDataTests do
+    pod 'OCMock', '~> 2.2.4'
+    pod 'Expecta', '~> 0.3.0'
+end

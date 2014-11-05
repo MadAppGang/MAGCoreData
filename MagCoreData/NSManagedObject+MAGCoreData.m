@@ -84,14 +84,17 @@ static NSString const * kValueTransformersKey = @"NSManagedObjectValueTransforme
     objc_setAssociatedObject(self, &kUpdateDateKey, updateKeyName, OBJC_ASSOCIATION_COPY_NONATOMIC);
 }
 
++ (NSString *)entityName {
+    return NSStringFromClass([self class]);
+}
 
 - (void)safeSetValuesForKeysWithDictionary:(NSDictionary *)keyedValues {
     [self safeSetValuesForKeysWithDictionary:keyedValues inContext:[MAGCoreData context]];
 }
 
-- (NSDate *)dateFromObject:(id)object forAttribute:(id)attribute{
-    NSString *df = [[self class] defaultDateFormat];
-    NSString *specificDF = [[self class] dateFormats][attribute];
++ (NSDate *)dateFromObject:(id)object forAttribute:(id)attribute{
+    NSString *df = [self defaultDateFormat];
+    NSString *specificDF = [self dateFormats][attribute];
     df = specificDF?specificDF:df;
     if (df) {
 //                ISO8601 timezone +XX:XX not available on iOS<6.x, that is why using ISO8601 date formatter:
@@ -119,7 +122,7 @@ static NSString const * kValueTransformersKey = @"NSManagedObjectValueTransforme
     id updateDateMappedKey = mapping && updateDateKey && mapping[updateDateKey]?mapping[updateDateKey]: nil;
     if (updateDateMappedKey) {
         NSDate *localUpdateDate = [self valueForKey:updateDateKey];
-        NSDate *remoteUpdateDate = [self dateFromObject:keyedValues[updateDateMappedKey] forAttribute:updateDateKey];
+        NSDate *remoteUpdateDate = [[self class] dateFromObject:keyedValues[updateDateMappedKey] forAttribute:updateDateKey];
         //if the same date or local date is later then prevent update
         if (localUpdateDate && [localUpdateDate compare:remoteUpdateDate] != NSOrderedAscending) {
             return NO;
@@ -127,6 +130,33 @@ static NSString const * kValueTransformersKey = @"NSManagedObjectValueTransforme
     }
     return YES;
 
+}
+
+
+
++ (id)safeValueMappedFromKeyedValue:(id)keyedValue withAttributeType:(NSAttributeType)attributeType attribute:(NSString *)attribute valueTransformers:(NSDictionary *)valueTransformers {
+    
+    id safeValue = keyedValue;
+    
+    if (keyedValue == nil) {
+        safeValue = nil;
+    } else if ([valueTransformers objectForKey:attribute]) {
+        //if we have custom value transformer - apply it
+        id(^transformer)(id value) = valueTransformers[attribute];
+        safeValue = transformer(keyedValue);
+    } else if ([keyedValue isKindOfClass:[NSNull class]]) {
+        safeValue = nil;
+    } else if ((attributeType == NSStringAttributeType) && ([keyedValue isKindOfClass:[NSNumber class]])) {
+        safeValue = [keyedValue stringValue];
+    } else if (((attributeType == NSInteger16AttributeType) || (attributeType == NSInteger32AttributeType) || (attributeType == NSInteger64AttributeType) || (attributeType == NSBooleanAttributeType)) && ([keyedValue isKindOfClass:[NSString class]])) {
+        safeValue = @([keyedValue  integerValue]);
+    } else if ((attributeType == NSFloatAttributeType) && ([keyedValue isKindOfClass:[NSString class]])) {
+        safeValue = @([keyedValue doubleValue]);
+    } else if ((attributeType == NSDateAttributeType) && ([keyedValue isKindOfClass:[NSString class]])) {
+        safeValue = [self dateFromObject:keyedValue forAttribute:attribute];
+    }
+    
+    return safeValue;
 }
 
 - (void)safeSetValuesForKeysWithDictionary:(NSDictionary *)keyedValues inContext:(NSManagedObjectContext *)context {
@@ -139,29 +169,15 @@ static NSString const * kValueTransformersKey = @"NSManagedObjectValueTransforme
     if ([self shouldUpdateFromDictionary:keyedValues]) {
         for (NSString *attribute in attributes) {
             NSString *attributeKey = mapping?mapping[attribute]:attribute;
-            id value = [keyedValues valueForKeyPath:attributeKey];
-            if (value == nil) {
+            id keyedValue = [keyedValues valueForKeyPath:attributeKey];
+            if (keyedValue == nil) {
                 // Don't attempt to set nil, or you'll overwrite values in self that aren't present in keyedValues
-//                NSLog(@"MAGCoreData+NSManagedObjectContext: mapping lost for attribute:%@ for class %@",attribute, [self class]);
+                //                NSLog(@"MAGCoreData+NSManagedObjectContext: mapping lost for attribute:%@ for class %@",attribute, [self class]);
                 continue;
             }
             NSAttributeType attributeType = [attributes[attribute] attributeType];
-            if ([valueTransformers objectForKey:attribute]) {
-                //if we have custom value transformer - apply it
-                id(^transformer)(id value) = valueTransformers[attribute];
-                value = transformer(value);
-            } else if ([value isKindOfClass:[NSNull class]]) {
-                value = nil;
-            } else if ((attributeType == NSStringAttributeType) && ([value isKindOfClass:[NSNumber class]])) {
-                value = [value stringValue];
-            } else if (((attributeType == NSInteger16AttributeType) || (attributeType == NSInteger32AttributeType) || (attributeType == NSInteger64AttributeType) || (attributeType == NSBooleanAttributeType)) && ([value isKindOfClass:[NSString class]])) {
-                value = @([value  integerValue]);
-            } else if ((attributeType == NSFloatAttributeType) && ([value isKindOfClass:[NSString class]])) {
-                value = @([value doubleValue]);
-            } else if ((attributeType == NSDateAttributeType) && ([value isKindOfClass:[NSString class]])) {
-                value = [self dateFromObject:value forAttribute:attribute];
-            }
-            [self setValue:value forKey:attribute];
+            id safeValue = [[self class] safeValueMappedFromKeyedValue:keyedValue withAttributeType:attributeType attribute:attribute valueTransformers:valueTransformers];
+            [self setValue:safeValue forKey:attribute];
         }
     }
 
@@ -264,9 +280,9 @@ static NSString const * kValueTransformersKey = @"NSManagedObjectValueTransforme
     return [self getOrCreateObjectForPrimaryKey:primaryKey inContext:[MAGCoreData context]];
 }
 
-+ (instancetype)getOrCreateObjectForPrimaryKey:(id)primaryKey inContext:(NSManagedObjectContext *)context {
++ (instancetype)getOrCreateObjectForPrimaryKey:(id)primaryKeyValue inContext:(NSManagedObjectContext *)context {
     NSManagedObject *object = nil;
-    if (primaryKey) object = [self firstWithKey:[self primaryKeyName] value:primaryKey inContext:context];
+    if (primaryKeyValue) object = [self firstWithKey:[self primaryKeyName] value:primaryKeyValue inContext:context];
     if (object) {
         return object;
     } else {
@@ -280,13 +296,24 @@ static NSString const * kValueTransformersKey = @"NSManagedObjectValueTransforme
 
 }
 
+
 + (instancetype)safeCreateOrUpdateWithDictionary:(NSDictionary *)keyedValues inContext:(NSManagedObjectContext *)context {
     //createOrUpdate
-    id pk = [self primaryKeyName];
-    NSString *mappedPrimaryKey = pk?[self keyMapping][pk]: nil;
-    id primaryKey = mappedPrimaryKey?keyedValues[mappedPrimaryKey]:nil;
-    NSManagedObject *selfObject = [self getOrCreateObjectForPrimaryKey:primaryKey inContext:context];
+    
+    id primaryKeyName = [self primaryKeyName];
+    
+    NSEntityDescription *entityDescription = [NSEntityDescription entityForName:[self entityName] inManagedObjectContext:context];
+    NSDictionary *attributes = [entityDescription attributesByName];
+    NSAttributeDescription *primaryKeyAttributeDescription = [attributes objectForKey:primaryKeyName];
+    NSAttributeType primaryKeyAttributeType = [primaryKeyAttributeDescription attributeType];
+    
+    NSString *mappedPrimaryKey = primaryKeyName ? [self keyMapping][primaryKeyName] : nil;
+    id primaryKeyValue = mappedPrimaryKey ? keyedValues[mappedPrimaryKey] : nil;
+    id safePrimaryKeyValue = [self safeValueMappedFromKeyedValue:primaryKeyValue withAttributeType:primaryKeyAttributeType attribute:primaryKeyName valueTransformers:[self valueTransformers]];
+    
+    NSManagedObject *selfObject = [self getOrCreateObjectForPrimaryKey:safePrimaryKeyValue inContext:context];
     [selfObject safeSetValuesForKeysWithDictionary:keyedValues inContext:context];
+    
     return selfObject;
 }
 
@@ -298,7 +325,7 @@ static NSString const * kValueTransformersKey = @"NSManagedObjectValueTransforme
 + (id)createInContext:(NSManagedObjectContext *)context {
     NSParameterAssert(context);
     NSManagedObject *object = nil;
-    object =  [NSEntityDescription insertNewObjectForEntityForName:NSStringFromClass(self.class) inManagedObjectContext:context];
+    object =  [NSEntityDescription insertNewObjectForEntityForName:[self entityName] inManagedObjectContext:context];
     return object;
 }
 
@@ -332,14 +359,14 @@ static NSString const * kValueTransformersKey = @"NSManagedObjectValueTransforme
 }
 
 + (NSArray *)allInContext:(NSManagedObjectContext *)context {
-    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:NSStringFromClass([self class])];
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:[self entityName]];
     __block NSArray *ret = nil;
     ret = [context executeFetchRequest:request error:nil];
     return ret;
 }
 
 + (NSArray *)allForPredicate:(NSPredicate *)predicate inContext:(NSManagedObjectContext *)context {
-    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:NSStringFromClass([self class])];
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:[self entityName]];
     [request setPredicate:predicate];
     __block NSArray *ret = nil;
     ret = [context executeFetchRequest:request error:nil];
@@ -347,7 +374,7 @@ static NSString const * kValueTransformersKey = @"NSManagedObjectValueTransforme
 }
 
 + (NSArray *)allForPredicate:(NSPredicate *)predicate orderBy:(NSString *)key ascending:(BOOL)ascending inContext:(NSManagedObjectContext *)context {
-    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:NSStringFromClass([self class])];
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:[self entityName]];
     NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:key ascending:ascending];
     [request setPredicate:predicate];
     [request setSortDescriptors:@[sortDescriptor]];
@@ -357,7 +384,7 @@ static NSString const * kValueTransformersKey = @"NSManagedObjectValueTransforme
 }
 
 + (NSArray *)allOrderedBy:(NSString *)key ascending:(BOOL)ascending inContext:(NSManagedObjectContext *)context {
-    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:NSStringFromClass([self class])];
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:[self entityName]];
     NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:key ascending:ascending];
     [request setSortDescriptors:@[sortDescriptor]];
     __block NSArray *ret = nil;
@@ -380,7 +407,7 @@ static NSString const * kValueTransformersKey = @"NSManagedObjectValueTransforme
 }
 
 + (id)firstForPredicate:(NSPredicate *)predicate orderBy:(NSString *)key ascending:(BOOL)ascending inContext:(NSManagedObjectContext *)context{
-    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:NSStringFromClass([self class])];
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:[self entityName]];
     [request setFetchLimit:1];
     NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:key ascending:ascending];
     [request setPredicate:predicate];
@@ -396,7 +423,7 @@ static NSString const * kValueTransformersKey = @"NSManagedObjectValueTransforme
 
 
 + (id)firstInContext:(NSManagedObjectContext *)context {
-    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:NSStringFromClass([self class])];
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:[self entityName]];
     [request setFetchLimit:1];
     __block NSArray *values = nil;
     values = [context executeFetchRequest:request error:nil];
@@ -408,7 +435,7 @@ static NSString const * kValueTransformersKey = @"NSManagedObjectValueTransforme
 
 + (id)firstWithKey:(NSString *)key value:(id)value inContext:(NSManagedObjectContext *)context {
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@", key, value];
-    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:NSStringFromClass([self class])];
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:[self entityName]];
     [request setFetchLimit:1];
     [request setPredicate:predicate];
     __block NSArray *values = nil;
