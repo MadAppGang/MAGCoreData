@@ -34,8 +34,8 @@
 
 
 - (void)testSafeDoubleValue {
-    id durtyValue = @"23.2343";
-    id safeValue = [NSManagedObject safeValueMappedFromKeyedValue:durtyValue withAttributeType:NSDoubleAttributeType attribute:@"attribute" valueTransformers:@{}];
+    id dirtyValue = @"23.2343";
+    id safeValue = [NSManagedObject safeValueMappedFromKeyedValue:dirtyValue withAttributeType:NSDoubleAttributeType attribute:@"attribute" valueTransformers:@{}];
     expect([safeValue isKindOfClass:[NSNumber class]]).beTruthy();
     expect([safeValue doubleValue] == 23.2343).beTruthy();
 }
