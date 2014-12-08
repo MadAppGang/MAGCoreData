@@ -152,6 +152,8 @@ static NSString const * kValueTransformersKey = @"NSManagedObjectValueTransforme
         safeValue = @([keyedValue  integerValue]);
     } else if ((attributeType == NSFloatAttributeType) && ([keyedValue isKindOfClass:[NSString class]])) {
         safeValue = @([keyedValue doubleValue]);
+    } else if ((attributeType == NSDoubleAttributeType) && ([keyedValue isKindOfClass:[NSString class]])) {
+        safeValue = @([keyedValue doubleValue]);
     } else if ((attributeType == NSDateAttributeType) && ([keyedValue isKindOfClass:[NSString class]])) {
         safeValue = [self dateFromObject:keyedValue forAttribute:attribute];
     }

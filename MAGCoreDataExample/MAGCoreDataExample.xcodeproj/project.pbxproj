@@ -19,6 +19,7 @@
 		BDD82FBD17CE409C00F1CD8D /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BDD82FBC17CE409C00F1CD8D /* Default-568h@2x.png */; };
 		BDD82FCB17CE412100F1CD8D /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDD82FCA17CE412100F1CD8D /* CoreData.framework */; };
 		CAE88AF959EC2DACEAACE8D6 /* libPods-MAGCoreDataTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BE40A8B5C8A775A3878F3B2 /* libPods-MAGCoreDataTests.a */; };
+		E3514E561A35E72A00E546DA /* MAGCoreDataTestSafeValue.m in Sources */ = {isa = PBXBuildFile; fileRef = E3514E551A35E72A00E546DA /* MAGCoreDataTestSafeValue.m */; };
 		E3E85F6C1A03BAD300CD7F4C /* MAGCoreDataTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E3E85F6B1A03BAD300CD7F4C /* MAGCoreDataTests.m */; };
 		E3E85F7A1A03BAFC00CD7F4C /* MAGCoreDataFetchingObjectsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E3E85F721A03BAFC00CD7F4C /* MAGCoreDataFetchingObjectsTests.m */; };
 		E3E85F7B1A03BAFC00CD7F4C /* MAGCoreDataObjectCreationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E3E85F731A03BAFC00CD7F4C /* MAGCoreDataObjectCreationTests.m */; };
@@ -74,6 +75,7 @@
 		BDD82FBC17CE409C00F1CD8D /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		BDD82FCA17CE412100F1CD8D /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		CF29C4D268933D6B840686D4 /* libPods-MAGCoreDataExample.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MAGCoreDataExample.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		E3514E551A35E72A00E546DA /* MAGCoreDataTestSafeValue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAGCoreDataTestSafeValue.m; sourceTree = "<group>"; };
 		E3E85F671A03BAD300CD7F4C /* MAGCoreDataTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MAGCoreDataTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E3E85F6A1A03BAD300CD7F4C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E3E85F6B1A03BAD300CD7F4C /* MAGCoreDataTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MAGCoreDataTests.m; sourceTree = "<group>"; };
@@ -225,6 +227,7 @@
 				E3E85F771A03BAFC00CD7F4C /* Abstract */,
 				E3E85F6B1A03BAD300CD7F4C /* MAGCoreDataTests.m */,
 				E3E85F691A03BAD300CD7F4C /* Supporting Files */,
+				E3514E551A35E72A00E546DA /* MAGCoreDataTestSafeValue.m */,
 			);
 			path = MAGCoreDataTests;
 			sourceTree = "<group>";
@@ -466,6 +469,7 @@
 				E3E85F851A03BC0600CD7F4C /* Weather.m in Sources */,
 				E3E85F7C1A03BAFC00CD7F4C /* MAGCoreDataPrepareTests.m in Sources */,
 				E3E85F811A03BBBD00CD7F4C /* MAGSimpleFetchedResultsControllerManager.m in Sources */,
+				E3514E561A35E72A00E546DA /* MAGCoreDataTestSafeValue.m in Sources */,
 				E3E85F7E1A03BAFC00CD7F4C /* MAGCoreDataTest.m in Sources */,
 				E3E85F7A1A03BAFC00CD7F4C /* MAGCoreDataFetchingObjectsTests.m in Sources */,
 				E3E85F821A03BBBD00CD7F4C /* NSManagedObject+MAGCoreData.m in Sources */,
