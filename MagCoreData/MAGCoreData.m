@@ -9,6 +9,9 @@
 #import <CoreData/CoreData.h>
 #import "MAGCoreData.h"
 
+
+static NSString *const MAGDefaultStoreName = @"MAGStore";
+
 @interface MAGCoreData ()
 
 @property (nonatomic, strong) NSManagedObjectContext *mainContext;
@@ -64,14 +67,29 @@
 
 + (NSURL *)defaultStorageURLWithName:(NSString *)storageName {
     NSURL *docDir = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
-    NSURL *storeURL = storageName ? [docDir URLByAppendingPathComponent:[NSString stringWithFormat:@"%@.sqlite",storageName]] : [docDir URLByAppendingPathComponent:@"MAGStore.sqlite"];
+    if (!storageName) {
+        storageName = [self defaultStoreName];
+    }
+    NSURL *storeURL = [docDir URLByAppendingPathComponent:[NSString stringWithFormat:@"%@.sqlite", storageName]];
     return storeURL;
+}
+
+
++ (NSString *)defaultStoreName {
+    return MAGDefaultStoreName;
 }
 
 
 + (NSError *)prepareCoreData {
     NSError *error;
     [self prepareCoreDataWithModelName:nil andStorageName:nil error:&error];
+    return error;
+}
+
++ (NSError *)prepareiCloudCoreData {
+    NSError *error = nil;
+    NSString *iCloudStoreName = [self defaultStoreName];
+    [self prepareCoreDataWithModelName:nil andStorageName:nil error:&error withICloudSupport:YES iCloudStoreName:iCloudStoreName];
     return error;
 }
 
