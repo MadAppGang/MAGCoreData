@@ -24,7 +24,6 @@
 
 #pragma mark - Initialisation
 + (NSError *)prepareCoreData;
-+ (NSError *)prepareiCloudCoreData; // Creates stack with iCloud store
 + (BOOL)prepareCoreDataWithModelName:(NSString *)modelName error:(NSError **)error;
 + (BOOL)prepareCoreDataWithModelName:(NSString *)modelName andStorageName:(NSString *)storageName error:(NSError **)error;
 
@@ -42,6 +41,27 @@
 + (BOOL)deleteAllInStorageWithName:(NSString *)string;
 
 
-#pragma mark - Fetching managed objects
-
+#pragma mark - iCloud
+/**
+ Prepared default MAG Core Data stack with iCloud container.
+ */
++ (NSError *)prepareICloudCoreData;
+/**
+ Migrates from iCloud store to local store.
+ 
+ Use this method if user decided to disable iCloud in app. Call it if store is now
+ managed as iCloud store. Otherwise it returns an error. Save any changes in current
+ managed object context, before this call. Don't do any changes while migration is in progress.
+ */
+- (void)migrateFromICloudToLocalStoreWithCompletion:(void (^)(BOOL succeeded, NSError *error))completion;
+/**
+ Migrates from local store at specified url to iCloud store.
+ 
+ Use this method if user decided to start using iCloud in the app or when you
+ want to seed existed local storage data to iCloud container.
+ 
+ Save any changes in current managed object context, before this call.
+ Don't do any changes while migration is in progress.
+ */
+- (void)migrateFromLocalStoreAtUrl:(NSURL *)url toICloud:(void (^)())completion;
 @end

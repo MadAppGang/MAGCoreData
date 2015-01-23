@@ -9,18 +9,38 @@
 #import <CoreData/CoreData.h>
 #import "MAGCoreData.h"
 
-
+static NSString *const MAGCoreDataErrorDomain = @"MAGCoreDataErrorDomain";
 static NSString *const MAGDefaultStoreName = @"MAGStore";
+
+
+typedef NS_ENUM(NSInteger, MAGCoreDataStoreType) {
+    MAGCoreDataStoreTypeUnknown = 0,
+    MAGCoreDataStoreTypeLocal,
+    MAGCoreDataStoreTypeICloud
+};
+
+
 
 @interface MAGCoreData ()
 
 @property (nonatomic, strong) NSManagedObjectContext *mainContext;
 @property (nonatomic, strong) NSManagedObjectModel *model;
-@property (nonatomic, strong) NSPersistentStoreCoordinator *persistentStore;
+@property (nonatomic, strong) NSPersistentStoreCoordinator *coordinator;
+
+@property (nonatomic, strong) id autoMergeFromChildsObserver;
 
 @property (nonatomic, strong) id iCloudStoresWillChangeObserver;
 @property (nonatomic, strong) id iCloudStoresDidChangeObserver;
+@property (nonatomic, strong) id iCloudContentChangeObserver;
+
+@property (nonatomic, assign) MAGCoreDataStoreType currentStoreType;
+@property (nonatomic, strong) NSURL *localStoreUrl;
+@property (nonatomic, copy) NSString *currentStoreName;
+@property (nonatomic, strong) NSOperationQueue *cloudMigrationsQueue;
+
 @end
+
+
 
 
 @implementation MAGCoreData
@@ -38,32 +58,41 @@ static NSString *const MAGDefaultStoreName = @"MAGStore";
 - (instancetype)init {
     self = [super init];
     if (self) {
+        _currentStoreType = MAGCoreDataStoreTypeUnknown;
+        _currentStoreName = nil;
         _autoMergeFromChildContexts = NO;
+        _cloudMigrationsQueue = [NSOperationQueue new];
+        _cloudMigrationsQueue.maxConcurrentOperationCount = 1;
     }
     return self;
 }
 
 - (void)setAutoMergeFromChildContexts:(BOOL)autoMergeFromChildContexts {
-    if (self.autoMergeFromChildContexts == autoMergeFromChildContexts) return;
+    if (_autoMergeFromChildContexts == autoMergeFromChildContexts) {
+        return;
+    }
     _autoMergeFromChildContexts = autoMergeFromChildContexts;
-    if (self.autoMergeFromChildContexts) {
-        [[NSNotificationCenter defaultCenter] addObserverForName:NSManagedObjectContextDidSaveNotification
-                                                          object:nil
-                                                           queue:nil
-                                                      usingBlock:^(NSNotification *notification) {
-                                                          
-                                                          NSManagedObjectContext *context = notification.object;
-                                                          
-                                                          if (context == self.mainContext || context.persistentStoreCoordinator != self.persistentStore) {
-                                                                return;   
-                                                          }
-                                                          
-                                                          [self.mainContext performBlock:^{
-                                                              [self.mainContext mergeChangesFromContextDidSaveNotification:notification];
-                                                          }];
-                                                      }];
+    
+    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+    if (_autoMergeFromChildContexts) {
+        if (!self.autoMergeFromChildsObserver) {
+            self.autoMergeFromChildsObserver = [nc addObserverForName:NSManagedObjectContextDidSaveNotification object:nil queue:nil usingBlock:^(NSNotification *note) {
+                
+                NSManagedObjectContext *context = note.object;
+                if (context == self.mainContext || context.persistentStoreCoordinator != self.coordinator) {
+                    return;
+                }
+                [self.mainContext performBlock:^{
+                    [self.mainContext mergeChangesFromContextDidSaveNotification:note];
+                }];
+                
+            }];
+        }
     } else {
-        [[NSNotificationCenter defaultCenter] removeObserver:self];
+        if (self.autoMergeFromChildsObserver) {
+            [nc removeObserver:self.autoMergeFromChildsObserver];
+            self.autoMergeFromChildsObserver = nil;
+        }
     }
 }
 
@@ -88,12 +117,6 @@ static NSString *const MAGDefaultStoreName = @"MAGStore";
     return error;
 }
 
-+ (NSError *)prepareiCloudCoreData {
-    NSError *error = nil;
-    NSString *iCloudStoreName = [self defaultStoreName];
-    [self prepareCoreDataWithModelName:nil andStorageName:nil error:&error withICloudSupport:YES iCloudStoreName:iCloudStoreName];
-    return error;
-}
 
 + (BOOL)prepareCoreDataWithModelName:(NSString *)modelName error:(NSError **)error {
     return [self prepareCoreDataWithModelName:modelName andStorageName:nil error:error];
@@ -101,14 +124,23 @@ static NSString *const MAGDefaultStoreName = @"MAGStore";
 
 
 + (BOOL)prepareCoreDataWithModelName:(NSString *)modelName andStorageName:(NSString *)storageName error:(NSError **)error {
-    return [self prepareCoreDataWithModelName:modelName andStorageName:storageName error:error withICloudSupport:NO iCloudStoreName:nil];
+    return [self prepareCoreDataWithModelName:modelName andStorageName:storageName error:error withICloudSupport:NO];
 }
 
 
-+ (BOOL)prepareCoreDataWithModelName:(NSString *)modelName andStorageName:(NSString *)storageName error:(NSError **)error withICloudSupport:(BOOL)withICloudSupport iCloudStoreName:(NSString *)iCloudStoreName {
-    if ([[MAGCoreData instance] mainContext]) return NO;
-
++ (BOOL)prepareCoreDataWithModelName:(NSString *)modelName andStorageName:(NSString *)storageName error:(NSError **)error withICloudSupport:(BOOL)withICloudSupport {
+    
     MAGCoreData *mag = [MAGCoreData instance];
+    if (mag.mainContext)  {
+        return NO;
+    }
+    
+    if ([storageName length] == 0) {
+        storageName = [self defaultStoreName];
+    }
+    mag.currentStoreName = storageName;
+    mag.localStoreUrl = [self defaultStorageURLWithName:mag.currentStoreName];
+    
     if (modelName) {
         NSURL *modelURL = [[NSBundle mainBundle] URLForResource:modelName withExtension:@"momd"];
         mag.model = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
@@ -116,30 +148,20 @@ static NSString *const MAGDefaultStoreName = @"MAGStore";
         mag.model = [NSManagedObjectModel mergedModelFromBundles:nil];
     }
 
-    [mag unsubscribeFromICloudNotificationsForCoordinator:mag.persistentStore];
-    mag.persistentStore = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:mag.model];
+    [mag unsubscribeFromICloudNotificationsForCoordinator:mag.coordinator];
+    mag.coordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:mag.model];
     
-    NSMutableDictionary *options = [NSMutableDictionary new];
-    [options setObject:@YES forKey:NSMigratePersistentStoresAutomaticallyOption];
-    [options setObject:@YES forKey:NSInferMappingModelAutomaticallyOption];
-    
-    if (withICloudSupport && [iCloudStoreName length] > 0) {
-        [options setObject:iCloudStoreName forKey:NSPersistentStoreUbiquitousContentNameKey];
-        [mag subscribeForICloudNotificationsForCoordinator:mag.persistentStore];
+    NSMutableDictionary *options = [[self defaultStoreOptions] mutableCopy];
+    if (withICloudSupport) {
+        mag.currentStoreType = MAGCoreDataStoreTypeICloud;
+        [options setObject:mag.currentStoreName forKey:NSPersistentStoreUbiquitousContentNameKey];
+        [mag subscribeForICloudNotificationsForCoordinator:mag.coordinator];
+    } else {
+        mag.currentStoreType = MAGCoreDataStoreTypeLocal;
     }
     
-    if (![mag.persistentStore addPersistentStoreWithType:NSSQLiteStoreType
-                                           configuration:nil
-                                                     URL:[self defaultStorageURLWithName:storageName]
-                                                 options:options
-                                                   error:error]) {
-        NSLog(@"MAGCoreData: Error creating persistent store:%@", *error);
-        return NO;
-    }
-    mag.mainContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
-    mag.mainContext.persistentStoreCoordinator = mag.persistentStore;
-    
-    return YES;
+    BOOL result = [mag makeContextByAddingStoreAtUrl:mag.localStoreUrl withOptions:options error:error];
+    return result;
 }
 
 
@@ -151,7 +173,7 @@ static NSString *const MAGDefaultStoreName = @"MAGStore";
     if (![MAGCoreData instance].mainContext) return nil;
     
     NSManagedObjectContext *moc = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
-    moc.persistentStoreCoordinator = [[MAGCoreData instance] persistentStore];
+    moc.persistentStoreCoordinator = [[MAGCoreData instance] coordinator];
     return moc;
 }
 
@@ -178,10 +200,10 @@ static NSString *const MAGDefaultStoreName = @"MAGStore";
 }
 
 - (void)close {
-    [self unsubscribeFromICloudNotificationsForCoordinator:self.persistentStore];
+    [self unsubscribeFromICloudNotificationsForCoordinator:self.coordinator];
     self.mainContext = nil;
     self.model = nil;
-    self.persistentStore = nil;
+    self.coordinator = nil;
 }
 
 + (BOOL)removeStoreAtPath:(NSURL *)storeURL {
@@ -195,7 +217,7 @@ static NSString *const MAGDefaultStoreName = @"MAGStore";
 
 + (BOOL)deleteAll {
     //assume we use only one persistent store
-    NSURL *storeURL = [[[[MAGCoreData instance] persistentStore] persistentStores][0] URL];
+    NSURL *storeURL = [[[[MAGCoreData instance] coordinator] persistentStores][0] URL];
     [[MAGCoreData instance] close];
     return [MAGCoreData removeStoreAtPath:storeURL];
 }
@@ -206,9 +228,195 @@ static NSString *const MAGDefaultStoreName = @"MAGStore";
 }
 
 
+#pragma mark - Private
+
++ (NSDictionary *)defaultStoreOptions {
+    NSMutableDictionary *options = [NSMutableDictionary new];
+    [options setObject:@YES forKey:NSMigratePersistentStoresAutomaticallyOption];
+    [options setObject:@YES forKey:NSInferMappingModelAutomaticallyOption];
+    return options;
+}
+
+- (BOOL)makeContextByAddingStoreAtUrl:(NSURL *)url withOptions:(NSDictionary *)options error:(NSError **)error {
+    if ([self.coordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:url options:options error:error]) {
+        self.mainContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
+        self.mainContext.persistentStoreCoordinator = self.coordinator;
+        return YES;
+    } else {
+        self.mainContext = nil;
+        return NO;
+    }
+}
+
+
 #pragma mark - iCloud
 
++ (NSError *)prepareICloudCoreData {
+    NSError *error = nil;
+    [self prepareCoreDataWithModelName:nil andStorageName:nil error:&error withICloudSupport:YES];
+    return error;
+}
+
+
+- (void)migrateFromICloudToLocalStoreWithCompletion:(void (^)(BOOL succeeded, NSError *error))completion {
+    
+    if (self.currentStoreType != MAGCoreDataStoreTypeICloud) {
+        NSError *error = [[self class] errorWithMessage:@"Current store is not iCloud managed"];
+        if (completion) {
+            completion(NO, error);
+        }
+        return;
+    }
+    
+    NSPersistentStoreCoordinator *coordinator = self.coordinator;
+    NSPersistentStore *iCloudStore = [[coordinator persistentStores] firstObject];
+    if (!iCloudStore) {
+        NSError *error = [[self class] errorWithMessage:@"Can't find current store"];
+        if (completion) {
+            completion(NO, error);
+        }
+        return;
+    }
+    
+    self.currentStoreType = MAGCoreDataStoreTypeUnknown;
+    self.mainContext = nil;
+    NSMutableDictionary *migrateOptions = [[[self class] defaultStoreOptions] mutableCopy];
+    [migrateOptions setObject:@YES forKey:NSPersistentStoreRemoveUbiquitousMetadataOption];
+    NSURL *localStoreUrl = [[self class] defaultStorageURLWithName:self.currentStoreName];
+    
+    [self.cloudMigrationsQueue addOperationWithBlock:^{
+        
+        NSError *migrationError = nil;
+        NSPersistentStore *localStore = [coordinator migratePersistentStore:iCloudStore toURL:localStoreUrl options:migrateOptions withType:NSSQLiteStoreType error:&migrationError];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (migrationError) {
+                if (completion) {
+                    completion(NO, migrationError);
+                }
+            }  else {
+                [coordinator removePersistentStore:localStore error:nil];
+                NSDictionary *localStoreOptions = [[self class] defaultStoreOptions];
+                NSError *addLocalStoreError = nil;
+                if ([self makeContextByAddingStoreAtUrl:localStoreUrl withOptions:localStoreOptions error:&addLocalStoreError]) {
+                    
+                    self.currentStoreType = MAGCoreDataStoreTypeLocal;
+                    
+                    if (completion) {
+                        completion(YES, nil);
+                    }
+                } else {
+                    if (completion) {
+                        completion(NO, addLocalStoreError);
+                    }
+                }
+            }
+        });
+    }];
+}
+
+/**
+    Migrates from local store at specified url to iCloud store.
+ 
+    Use this method if user decided to start using iCloud in the app or when you
+    want to seed existed local storage data to iCloud container.
+ 
+    Save any changes in current managed object context, before this call. 
+    Don't do any changes while migration is in progress.
+ */
+- (void)migrateFromLocalStoreAtUrl:(NSURL *)url toICloud:(void (^)())completion {
+    if (self.currentStoreType != MAGCoreDataStoreTypeLocal) {
+        NSError *error = [[self class] errorWithMessage:@"Current store is not locally managed"];
+        if (completion) {
+            completion(NO, error);
+        }
+        return;
+    }
+    
+    NSError *seedStoreError = nil;
+    NSPersistentStoreCoordinator *coordinator = self.coordinator;
+    NSDictionary *localStoreOptions = @{ NSReadOnlyPersistentStoreOption: @YES };
+    NSPersistentStore *localStore = [coordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:url options:localStoreOptions error:&seedStoreError];
+    if (!localStore) {
+        NSError *error = [[self class] errorWithMessage:[NSString stringWithFormat:@"Can't create seed store at url %@ (error: %@)", url, seedStoreError]];
+        if (completion) {
+            completion(NO, error);
+        }
+        return;
+    }
+    
+    self.currentStoreType = MAGCoreDataStoreTypeUnknown;
+    self.mainContext = nil;
+    NSMutableDictionary *iCloudOptions = [[[self class] defaultStoreOptions] mutableCopy];
+    [iCloudOptions setObject:self.currentStoreName forKey:NSPersistentStoreUbiquitousContentNameKey];
+    
+    [self.cloudMigrationsQueue addOperationWithBlock:^{
+        
+        NSError *migrationError = nil;
+        NSPersistentStore *iCloudStore = [coordinator migratePersistentStore:localStore toURL:url options:iCloudOptions withType:NSSQLiteStoreType error:&migrationError];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [coordinator removePersistentStore:localStore error:nil];
+            if (migrationError) {
+                if (completion) {
+                    completion(NO, migrationError);
+                }
+            }  else {
+                [coordinator removePersistentStore:iCloudStore error:nil];
+                NSError *addStoreError = nil;
+                if ([self makeContextByAddingStoreAtUrl:url withOptions:iCloudOptions error:&addStoreError]) {
+                    
+                    self.currentStoreType = MAGCoreDataStoreTypeLocal;
+                    
+                    if (completion) {
+                        completion(YES, nil);
+                    }
+                } else {
+                    if (completion) {
+                        completion(NO, addStoreError);
+                    }
+                }
+            }
+        });
+        
+        
+    }];
+}
+
+
+static NSString *const MAGGoreDataICloudStoreWillAddedNotification = @"MAGGoreDataICloudStoreWillAddedNotification";
+static NSString *const MAGGoreDataICloudStoreWillRemovedNotification = @"MAGGoreDataICloudStoreWillRemovedNotification";
+static NSString *const MAGGoreDataICloudStoreWillCleanedNotification = @"MAGGoreDataICloudStoreWillCleanedNotification";
+static NSString *const MAGGoreDataICloudStoreWillSwitchedToICloudNotification = @"MAGGoreDataICloudStoreWillSwitchedToICloudNotification";
+static NSString *const MAGGoreDataICloudStoreDidAddNotification = @"MAGGoreDataICloudStoreDidAddNotification";
+static NSString *const MAGGoreDataICloudStoreDidRemovedNotification = @"MAGGoreDataICloudStoreDidRemovedNotification";
+static NSString *const MAGGoreDataICloudStoreDidCleanNotification = @"MAGGoreDataICloudStoreDidCleanNotification";
+static NSString *const MAGGoreDataICloudStoreDidSwitchToICloudNotification = @"MAGGoreDataICloudStoreDidSwitchToICloudNotification";
+
+
 - (void)iCloudStoresWillChange:(NSNotification *)n {
+    NSNumber *transitionType = [n.userInfo objectForKey:NSPersistentStoreUbiquitousTransitionTypeKey];
+    if (transitionType) {
+        NSString *notificationName = nil;
+        switch ([transitionType integerValue]) {
+            case NSPersistentStoreUbiquitousTransitionTypeAccountAdded:
+                notificationName = MAGGoreDataICloudStoreWillAddedNotification;
+                break;
+            case NSPersistentStoreUbiquitousTransitionTypeAccountRemoved:
+                notificationName = MAGGoreDataICloudStoreWillRemovedNotification;
+                break;
+            case NSPersistentStoreUbiquitousTransitionTypeContentRemoved:
+                notificationName = MAGGoreDataICloudStoreWillCleanedNotification;
+                break;
+            case NSPersistentStoreUbiquitousTransitionTypeInitialImportCompleted:
+                notificationName = MAGGoreDataICloudStoreWillSwitchedToICloudNotification;
+                break;
+        }
+        if (notificationName) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:self userInfo:@{}];
+        }
+    }
+    
     NSManagedObjectContext *mainContext = self.mainContext;
     [mainContext performBlockAndWait:^{
         NSError *error = nil;
@@ -217,12 +425,39 @@ static NSString *const MAGDefaultStoreName = @"MAGStore";
         }
         [mainContext reset];
     }];
-    NSLog(@"Will change store %@", n.userInfo);
+}
+
+
+- (void)iCloudContentChanged:(NSNotification *)n {
+    NSManagedObjectContext *mainCountext = self.mainContext;
+    [mainCountext performBlock:^{
+        [mainCountext mergeChangesFromContextDidSaveNotification:n];
+    }];
 }
 
 
 - (void)iCloudStoresDidChange:(NSNotification *)n {
-     NSLog(@"Did change store %@", n.userInfo);
+    NSNumber *transitionType = [n.userInfo objectForKey:NSPersistentStoreUbiquitousTransitionTypeKey];
+    if (transitionType) {
+        NSString *notificationName = nil;
+        switch ([transitionType integerValue]) {
+            case NSPersistentStoreUbiquitousTransitionTypeAccountAdded:
+                notificationName = MAGGoreDataICloudStoreDidAddNotification;
+                break;
+            case NSPersistentStoreUbiquitousTransitionTypeAccountRemoved:
+                notificationName = MAGGoreDataICloudStoreDidRemovedNotification;
+                break;
+            case NSPersistentStoreUbiquitousTransitionTypeContentRemoved:
+                notificationName = MAGGoreDataICloudStoreDidCleanNotification;
+                break;
+            case NSPersistentStoreUbiquitousTransitionTypeInitialImportCompleted:
+                notificationName = MAGGoreDataICloudStoreDidSwitchToICloudNotification;
+                break;
+        }
+        if (notificationName) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:self userInfo:@{}];
+        }
+    }
 }
 
 
@@ -241,6 +476,11 @@ static NSString *const MAGDefaultStoreName = @"MAGStore";
         
         [self iCloudStoresDidChange:note];
     }];
+    
+    self.iCloudContentChangeObserver = [nc addObserverForName:NSPersistentStoreDidImportUbiquitousContentChangesNotification object:coordinator queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
+       
+        [self iCloudContentChanged:note];
+    }];
 }
 
 
@@ -250,6 +490,18 @@ static NSString *const MAGDefaultStoreName = @"MAGStore";
     self.iCloudStoresWillChangeObserver = nil;
     [nc removeObserver:self.iCloudStoresDidChangeObserver];
     self.iCloudStoresDidChangeObserver = nil;
+    [nc removeObserver:self.iCloudContentChangeObserver];
+    self.iCloudContentChangeObserver = nil;
+}
+
+
+#pragma mark - Help
+
++ (NSError *)errorWithMessage:(NSString *)errorMessage {
+    if (!errorMessage) {
+        errorMessage = @"Unknown error";
+    }
+    return [NSError errorWithDomain:MAGCoreDataErrorDomain code:0 userInfo:@{NSLocalizedDescriptionKey: errorMessage}];
 }
 
 
