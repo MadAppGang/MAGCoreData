@@ -18,6 +18,8 @@ static NSString *const MAGDefaultStoreName = @"MAGStore";
 @property (nonatomic, strong) NSManagedObjectModel *model;
 @property (nonatomic, strong) NSPersistentStoreCoordinator *persistentStore;
 
+@property (nonatomic, strong) id iCloudStoresWillChangeObserver;
+@property (nonatomic, strong) id iCloudStoresDidChangeObserver;
 @end
 
 
@@ -114,6 +116,7 @@ static NSString *const MAGDefaultStoreName = @"MAGStore";
         mag.model = [NSManagedObjectModel mergedModelFromBundles:nil];
     }
 
+    [mag unsubscribeFromICloudNotificationsForCoordinator:mag.persistentStore];
     mag.persistentStore = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:mag.model];
     
     NSMutableDictionary *options = [NSMutableDictionary new];
@@ -122,6 +125,7 @@ static NSString *const MAGDefaultStoreName = @"MAGStore";
     
     if (withICloudSupport && [iCloudStoreName length] > 0) {
         [options setObject:iCloudStoreName forKey:NSPersistentStoreUbiquitousContentNameKey];
+        [mag subscribeForICloudNotificationsForCoordinator:mag.persistentStore];
     }
     
     if (![mag.persistentStore addPersistentStoreWithType:NSSQLiteStoreType
@@ -174,6 +178,7 @@ static NSString *const MAGDefaultStoreName = @"MAGStore";
 }
 
 - (void)close {
+    [self unsubscribeFromICloudNotificationsForCoordinator:self.persistentStore];
     self.mainContext = nil;
     self.model = nil;
     self.persistentStore = nil;
@@ -198,6 +203,53 @@ static NSString *const MAGDefaultStoreName = @"MAGStore";
 + (BOOL)deleteAllInStorageWithName:(NSString *)storageName {
     [[MAGCoreData instance] close];
     return [MAGCoreData removeStoreAtPath:[self defaultStorageURLWithName:storageName]];
+}
+
+
+#pragma mark - iCloud
+
+- (void)iCloudStoresWillChange:(NSNotification *)n {
+    NSManagedObjectContext *mainContext = self.mainContext;
+    [mainContext performBlockAndWait:^{
+        NSError *error = nil;
+        if ([mainContext hasChanges]) {
+            [mainContext save:&error];
+        }
+        [mainContext reset];
+    }];
+    NSLog(@"Will change store %@", n.userInfo);
+}
+
+
+- (void)iCloudStoresDidChange:(NSNotification *)n {
+     NSLog(@"Did change store %@", n.userInfo);
+}
+
+
+- (void)subscribeForICloudNotificationsForCoordinator:(NSPersistentStoreCoordinator *)coordinator {
+    if (!coordinator) {
+        return;
+    }
+    
+    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+    
+    self.iCloudStoresWillChangeObserver = [nc addObserverForName:NSPersistentStoreCoordinatorStoresWillChangeNotification object:coordinator queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
+        
+        [self iCloudStoresWillChange:note];
+    }];
+    self.iCloudStoresDidChangeObserver = [nc addObserverForName:NSPersistentStoreCoordinatorStoresDidChangeNotification object:coordinator queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
+        
+        [self iCloudStoresDidChange:note];
+    }];
+}
+
+
+- (void)unsubscribeFromICloudNotificationsForCoordinator:(NSPersistentStoreCoordinator *)coordinator {
+    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+    [nc removeObserver:self.iCloudStoresWillChangeObserver];
+    self.iCloudStoresWillChangeObserver = nil;
+    [nc removeObserver:self.iCloudStoresDidChangeObserver];
+    self.iCloudStoresDidChangeObserver = nil;
 }
 
 
