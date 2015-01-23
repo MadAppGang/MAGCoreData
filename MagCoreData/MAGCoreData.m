@@ -148,14 +148,14 @@ typedef NS_ENUM(NSInteger, MAGCoreDataStoreType) {
         mag.model = [NSManagedObjectModel mergedModelFromBundles:nil];
     }
 
-    [mag unsubscribeFromICloudNotificationsForCoordinator:mag.coordinator];
+    [mag unsubscribeFromICloudNotifications];
     mag.coordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:mag.model];
     
     NSMutableDictionary *options = [[self defaultStoreOptions] mutableCopy];
     if (withICloudSupport) {
         mag.currentStoreType = MAGCoreDataStoreTypeICloud;
         [options setObject:mag.currentStoreName forKey:NSPersistentStoreUbiquitousContentNameKey];
-        [mag subscribeForICloudNotificationsForCoordinator:mag.coordinator];
+        [mag subscribeForICloudNotifications];
     } else {
         mag.currentStoreType = MAGCoreDataStoreTypeLocal;
     }
@@ -200,7 +200,7 @@ typedef NS_ENUM(NSInteger, MAGCoreDataStoreType) {
 }
 
 - (void)close {
-    [self unsubscribeFromICloudNotificationsForCoordinator:self.coordinator];
+    [self unsubscribeFromICloudNotifications];
     self.mainContext = nil;
     self.model = nil;
     self.coordinator = nil;
@@ -280,6 +280,8 @@ typedef NS_ENUM(NSInteger, MAGCoreDataStoreType) {
     
     self.currentStoreType = MAGCoreDataStoreTypeUnknown;
     self.mainContext = nil;
+    [self unsubscribeFromICloudNotifications];
+    
     NSMutableDictionary *migrateOptions = [[[self class] defaultStoreOptions] mutableCopy];
     [migrateOptions setObject:@YES forKey:NSPersistentStoreRemoveUbiquitousMetadataOption];
     NSURL *localStoreUrl = [[self class] defaultStorageURLWithName:self.currentStoreName];
@@ -338,6 +340,8 @@ typedef NS_ENUM(NSInteger, MAGCoreDataStoreType) {
     
     self.currentStoreType = MAGCoreDataStoreTypeUnknown;
     self.mainContext = nil;
+    [self subscribeForICloudNotifications];
+    
     NSMutableDictionary *iCloudOptions = [[[self class] defaultStoreOptions] mutableCopy];
     [iCloudOptions setObject:self.currentStoreName forKey:NSPersistentStoreUbiquitousContentNameKey];
     
@@ -455,30 +459,30 @@ static NSString *const MAGGoreDataICloudStoreDidSwitchToICloudNotification = @"M
 }
 
 
-- (void)subscribeForICloudNotificationsForCoordinator:(NSPersistentStoreCoordinator *)coordinator {
-    if (!coordinator) {
+- (void)subscribeForICloudNotifications {
+    if (!self.coordinator) {
         return;
     }
     
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
     
-    self.iCloudStoresWillChangeObserver = [nc addObserverForName:NSPersistentStoreCoordinatorStoresWillChangeNotification object:coordinator queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
+    self.iCloudStoresWillChangeObserver = [nc addObserverForName:NSPersistentStoreCoordinatorStoresWillChangeNotification object:self.coordinator queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
         
         [self iCloudStoresWillChange:note];
     }];
-    self.iCloudStoresDidChangeObserver = [nc addObserverForName:NSPersistentStoreCoordinatorStoresDidChangeNotification object:coordinator queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
+    self.iCloudStoresDidChangeObserver = [nc addObserverForName:NSPersistentStoreCoordinatorStoresDidChangeNotification object:self.coordinator queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
         
         [self iCloudStoresDidChange:note];
     }];
     
-    self.iCloudContentChangeObserver = [nc addObserverForName:NSPersistentStoreDidImportUbiquitousContentChangesNotification object:coordinator queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
+    self.iCloudContentChangeObserver = [nc addObserverForName:NSPersistentStoreDidImportUbiquitousContentChangesNotification object:self.coordinator queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
        
         [self iCloudContentChanged:note];
     }];
 }
 
 
-- (void)unsubscribeFromICloudNotificationsForCoordinator:(NSPersistentStoreCoordinator *)coordinator {
+- (void)unsubscribeFromICloudNotifications {
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
     [nc removeObserver:self.iCloudStoresWillChangeObserver];
     self.iCloudStoresWillChangeObserver = nil;
