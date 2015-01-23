@@ -24,6 +24,7 @@
 
 #pragma mark - Initialisation
 + (NSError *)prepareCoreData;
++ (NSError *)prepareiCloudCoreData;
 + (BOOL)prepareCoreDataWithModelName:(NSString *)modelName error:(NSError **)error;
 + (BOOL)prepareCoreDataWithModelName:(NSString *)modelName andStorageName:(NSString *)storageName error:(NSError **)error;
 
