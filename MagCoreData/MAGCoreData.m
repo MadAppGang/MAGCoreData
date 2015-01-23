@@ -34,7 +34,7 @@ typedef NS_ENUM(NSInteger, MAGCoreDataStoreType) {
 @property (nonatomic, strong) id iCloudContentChangeObserver;
 
 @property (nonatomic, assign) MAGCoreDataStoreType currentStoreType;
-@property (nonatomic, strong) NSURL *localStoreUrl;
+@property (nonatomic, strong) NSURL *currentStoreUrl;
 @property (nonatomic, copy) NSString *currentStoreName;
 @property (nonatomic, strong) NSOperationQueue *cloudMigrationsQueue;
 
@@ -139,7 +139,7 @@ typedef NS_ENUM(NSInteger, MAGCoreDataStoreType) {
         storageName = [self defaultStoreName];
     }
     mag.currentStoreName = storageName;
-    mag.localStoreUrl = [self defaultStorageURLWithName:mag.currentStoreName];
+    mag.currentStoreUrl = [self defaultStorageURLWithName:mag.currentStoreName];
     
     if (modelName) {
         NSURL *modelURL = [[NSBundle mainBundle] URLForResource:modelName withExtension:@"momd"];
@@ -160,7 +160,7 @@ typedef NS_ENUM(NSInteger, MAGCoreDataStoreType) {
         mag.currentStoreType = MAGCoreDataStoreTypeLocal;
     }
     
-    BOOL result = [mag makeContextByAddingStoreAtUrl:mag.localStoreUrl withOptions:options error:error];
+    BOOL result = [mag makeContextByAddingStoreAtUrl:mag.currentStoreUrl withOptions:options error:error];
     return result;
 }
 
@@ -315,16 +315,7 @@ typedef NS_ENUM(NSInteger, MAGCoreDataStoreType) {
     }];
 }
 
-/**
-    Migrates from local store at specified url to iCloud store.
- 
-    Use this method if user decided to start using iCloud in the app or when you
-    want to seed existed local storage data to iCloud container.
- 
-    Save any changes in current managed object context, before this call. 
-    Don't do any changes while migration is in progress.
- */
-- (void)migrateFromLocalStoreAtUrl:(NSURL *)url toICloud:(void (^)())completion {
+- (void)migrateFromLocalStoreAtUrl:(NSURL *)url toICloud:(void (^)(BOOL succeeded, NSError *error))completion {
     if (self.currentStoreType != MAGCoreDataStoreTypeLocal) {
         NSError *error = [[self class] errorWithMessage:@"Current store is not locally managed"];
         if (completion) {
@@ -383,6 +374,9 @@ typedef NS_ENUM(NSInteger, MAGCoreDataStoreType) {
     }];
 }
 
+- (void)migrateFromCurrentLocalStoreToICloud:(void (^)(BOOL succeeded, NSError *error))completion {
+    [self migrateFromLocalStoreAtUrl:self.currentStoreUrl toICloud:completion];
+}
 
 static NSString *const MAGGoreDataICloudStoreWillAddedNotification = @"MAGGoreDataICloudStoreWillAddedNotification";
 static NSString *const MAGGoreDataICloudStoreWillRemovedNotification = @"MAGGoreDataICloudStoreWillRemovedNotification";

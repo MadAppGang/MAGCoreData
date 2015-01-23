@@ -57,11 +57,19 @@
 /**
  Migrates from local store at specified url to iCloud store.
  
- Use this method if user decided to start using iCloud in the app or when you
- want to seed existed local storage data to iCloud container.
- 
+ User this method to seed existed local store data to iCloud container. Call it if store
+ is now managed as local store. Otherwise it returns an error.
  Save any changes in current managed object context, before this call.
  Don't do any changes while migration is in progress.
  */
-- (void)migrateFromLocalStoreAtUrl:(NSURL *)url toICloud:(void (^)())completion;
+- (void)migrateFromLocalStoreAtUrl:(NSURL *)url toICloud:(void (^)(BOOL succeeded, NSError *error))completion;
+/**
+ Migrates from current local store to iCloud store. 
+ 
+ Use this method if user decided to start using iCloud in the app.
+ Call it if store is now managed as local store. Otherwise it returns an error.
+ Save any changes in current managed object context, before this call.
+ Don't do any changes while migration is in progress.
+ */
+- (void)migrateFromCurrentLocalStoreToICloud:(void (^)(BOOL succeeded, NSError *error))completion;
 @end
