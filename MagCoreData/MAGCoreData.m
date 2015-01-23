@@ -79,7 +79,13 @@
     return [self prepareCoreDataWithModelName:modelName andStorageName:nil error:error];
 }
 
+
 + (BOOL)prepareCoreDataWithModelName:(NSString *)modelName andStorageName:(NSString *)storageName error:(NSError **)error {
+    return [self prepareCoreDataWithModelName:modelName andStorageName:storageName error:error withICloudSupport:NO iCloudStoreName:nil];
+}
+
+
++ (BOOL)prepareCoreDataWithModelName:(NSString *)modelName andStorageName:(NSString *)storageName error:(NSError **)error withICloudSupport:(BOOL)withICloudSupport iCloudStoreName:(NSString *)iCloudStoreName {
     if ([[MAGCoreData instance] mainContext]) return NO;
 
     MAGCoreData *mag = [MAGCoreData instance];
@@ -92,8 +98,14 @@
 
     mag.persistentStore = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:mag.model];
     
-    NSDictionary *options = @{NSMigratePersistentStoresAutomaticallyOption:@(YES),
-                              NSInferMappingModelAutomaticallyOption:@(YES)};
+    NSMutableDictionary *options = [NSMutableDictionary new];
+    [options setObject:@YES forKey:NSMigratePersistentStoresAutomaticallyOption];
+    [options setObject:@YES forKey:NSInferMappingModelAutomaticallyOption];
+    
+    if (withICloudSupport && [iCloudStoreName length] > 0) {
+        [options setObject:iCloudStoreName forKey:NSPersistentStoreUbiquitousContentNameKey];
+    }
+    
     if (![mag.persistentStore addPersistentStoreWithType:NSSQLiteStoreType
                                            configuration:nil
                                                      URL:[self defaultStorageURLWithName:storageName]
@@ -107,6 +119,7 @@
     
     return YES;
 }
+
 
 + (NSManagedObjectContext *)context {
     return [[MAGCoreData instance] mainContext];
