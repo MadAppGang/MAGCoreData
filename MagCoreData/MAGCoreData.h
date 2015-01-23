@@ -24,7 +24,7 @@
 
 #pragma mark - Initialisation
 + (NSError *)prepareCoreData;
-+ (NSError *)prepareiCloudCoreData;
++ (NSError *)prepareiCloudCoreData; // Creates stack with iCloud store
 + (BOOL)prepareCoreDataWithModelName:(NSString *)modelName error:(NSError **)error;
 + (BOOL)prepareCoreDataWithModelName:(NSString *)modelName andStorageName:(NSString *)storageName error:(NSError **)error;
 
