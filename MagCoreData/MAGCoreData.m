@@ -329,6 +329,7 @@ typedef NS_ENUM(NSInteger, MAGCoreDataStoreType) {
     NSError *seedStoreError = nil;
     NSPersistentStoreCoordinator *coordinator = self.coordinator;
     NSDictionary *localStoreOptions = @{ NSReadOnlyPersistentStoreOption: @YES };
+    // TODO: check - we can't add same persistant store twice
     NSPersistentStore *localStore = [coordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:url options:localStoreOptions error:&seedStoreError];
     if (!localStore) {
         NSError *error = [[self class] errorWithMessage:[NSString stringWithFormat:@"Can't create seed store at url %@ (error: %@)", url, seedStoreError]];
