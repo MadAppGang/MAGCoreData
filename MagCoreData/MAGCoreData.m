@@ -10,7 +10,7 @@
 #import "MAGCoreData.h"
 
 static NSString *const MAGCoreDataErrorDomain = @"MAGCoreDataErrorDomain";
-static NSString *const MAGDefaultStoreName = @"MAGStore";
+static NSString *const MAGDefaultStoreName = @"MAGStore"; 
 
 
 typedef NS_ENUM(NSInteger, MAGCoreDataStoreType) {
@@ -154,7 +154,7 @@ typedef NS_ENUM(NSInteger, MAGCoreDataStoreType) {
     NSMutableDictionary *options = [[self defaultStoreOptions] mutableCopy];
     if (withICloudSupport) {
         mag.currentStoreType = MAGCoreDataStoreTypeICloud;
-        [options setObject:mag.currentStoreName forKey:NSPersistentStoreUbiquitousContentNameKey];
+        [options setObject:MAGICloudName forKey:NSPersistentStoreUbiquitousContentNameKey];
         [mag subscribeForICloudNotifications];
     } else {
         mag.currentStoreType = MAGCoreDataStoreTypeLocal;
@@ -239,6 +239,10 @@ typedef NS_ENUM(NSInteger, MAGCoreDataStoreType) {
 
 - (BOOL)makeContextByAddingStoreAtUrl:(NSURL *)url withOptions:(NSDictionary *)options error:(NSError **)error {
     if ([self.coordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:url options:options error:error]) {
+        
+        NSPersistentStore *store = [self.coordinator.persistentStores lastObject];
+        NSLog(@"make persistant store at url: %@\n store was mad at url: %@\n", url, store.URL);
+        
         self.mainContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
         self.mainContext.persistentStoreCoordinator = self.coordinator;
         return YES;
