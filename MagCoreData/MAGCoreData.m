@@ -328,15 +328,28 @@ typedef NS_ENUM(NSInteger, MAGCoreDataStoreType) {
     
     NSError *seedStoreError = nil;
     NSPersistentStoreCoordinator *coordinator = self.coordinator;
-    NSDictionary *localStoreOptions = @{ NSReadOnlyPersistentStoreOption: @YES };
-    // TODO: check - we can't add same persistant store twice
-    NSPersistentStore *localStore = [coordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:url options:localStoreOptions error:&seedStoreError];
-    if (!localStore) {
-        NSError *error = [[self class] errorWithMessage:[NSString stringWithFormat:@"Can't create seed store at url %@ (error: %@)", url, seedStoreError]];
-        if (completion) {
-            completion(NO, error);
+    
+    // Firstly check if store is already added
+    NSPersistentStore *localStore = nil;
+    NSArray *stores = coordinator.persistentStores;
+    for (NSPersistentStore *store in stores) {
+        if ([[store.URL absoluteString] isEqualToString:[url absoluteString]] &&
+            [store.type isEqualToString:NSSQLiteStoreType]) {
+            localStore = store;
+            break;
         }
-        return;
+    }
+    if (!localStore) {
+        // Add readonly store to migrate from
+        NSDictionary *localStoreOptions = @{ NSReadOnlyPersistentStoreOption: @YES };
+        localStore = [coordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:url options:localStoreOptions error:&seedStoreError];
+        if (!localStore) {
+            NSError *error = [[self class] errorWithMessage:[NSString stringWithFormat:@"Can't create seed store at url %@ (error: %@)", url, seedStoreError]];
+            if (completion) {
+                completion(NO, error);
+            }
+            return;
+        }
     }
     
     self.currentStoreType = MAGCoreDataStoreTypeUnknown;
