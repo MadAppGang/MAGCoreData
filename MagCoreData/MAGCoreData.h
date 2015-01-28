@@ -9,10 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-/**
-    Add to your XCode project iCloud container with this name
- */
-static NSString *const MAGICloudName = @"iCloud.MAGCoreData";
+
 
 
 #ifdef MAGCOREDATA_LOGGING_ENABLED
@@ -20,6 +17,17 @@ static NSString *const MAGICloudName = @"iCloud.MAGCoreData";
 #else
 #define MAGCoreDataLog(frmt, ...) ((void)0)
 #endif
+
+
+static NSString *const MAGGoreDataICloudStoreWillAddedNotification;
+static NSString *const MAGGoreDataICloudStoreDidAddNotification;
+static NSString *const MAGGoreDataICloudStoreAddFailedNotification;
+static NSString *const MAGGoreDataICloudStoreWillRemovedNotification;
+static NSString *const MAGGoreDataICloudStoreDidRemovedNotification;
+static NSString *const MAGGoreDataICloudStoreRemoveFailedNotification;
+static NSString *const MAGGoreDataICloudStoreWillCleanedNotification;
+static NSString *const MAGGoreDataICloudStoreDidCleanNotification;
+
 
 @interface MAGCoreData : NSObject
 
@@ -69,7 +77,7 @@ static NSString *const MAGICloudName = @"iCloud.MAGCoreData";
  */
 - (void)migrateFromLocalStoreAtUrl:(NSURL *)url toICloud:(void (^)(BOOL succeeded, NSError *error))completion;
 /**
- Migrates from current local store to iCloud store. 
+ Migrates from current local store to iCloud store.
  
  Use this method if user decided to start using iCloud in the app.
  Call it if store is now managed as local store. Otherwise it returns an error.

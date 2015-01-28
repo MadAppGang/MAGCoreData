@@ -9,8 +9,25 @@
 #import <CoreData/CoreData.h>
 #import "MAGCoreData.h"
 
+
+static NSString *const MAGGoreDataICloudStoreWillAddedNotification = @"MAGGoreDataICloudStoreWillAddedNotification";
+static NSString *const MAGGoreDataICloudStoreDidAddNotification = @"MAGGoreDataICloudStoreDidAddNotification";
+static NSString *const MAGGoreDataICloudStoreAddFailedNotification = @"MAGGoreDataICloudStoreAddFailedNotification";
+
+static NSString *const MAGGoreDataICloudStoreWillRemovedNotification = @"MAGGoreDataICloudStoreWillRemovedNotification";
+static NSString *const MAGGoreDataICloudStoreDidRemovedNotification = @"MAGGoreDataICloudStoreDidRemovedNotification";
+static NSString *const MAGGoreDataICloudStoreRemoveFailedNotification = @"MAGGoreDataICloudStoreRemoveFailedNotification";
+
+static NSString *const MAGGoreDataICloudStoreWillCleanedNotification = @"MAGGoreDataICloudStoreWillCleanedNotification";
+static NSString *const MAGGoreDataICloudStoreDidCleanNotification = @"MAGGoreDataICloudStoreDidCleanNotification";
+
+
 static NSString *const MAGCoreDataErrorDomain = @"MAGCoreDataErrorDomain";
-static NSString *const MAGDefaultStoreName = @"MAGStore"; 
+static NSString *const MAGCoreDataDefaultStoreName = @"MAGStore";
+static NSString *const MAGCoreDataDefaultICloudStoreName = @"iCloudMAGStore";
+
+static NSString *const MAGCoreDataStoreLocalConfName = @"Local";
+static NSString *const MAGCoreDataStoreICloudConfName = @"iCloud";
 
 
 typedef NS_ENUM(NSInteger, MAGCoreDataStoreType) {
@@ -107,7 +124,7 @@ typedef NS_ENUM(NSInteger, MAGCoreDataStoreType) {
 
 
 + (NSString *)defaultStoreName {
-    return MAGDefaultStoreName;
+    return MAGCoreDataDefaultStoreName;
 }
 
 
@@ -147,21 +164,29 @@ typedef NS_ENUM(NSInteger, MAGCoreDataStoreType) {
     }   else {
         mag.model = [NSManagedObjectModel mergedModelFromBundles:nil];
     }
-
+    
     [mag unsubscribeFromICloudNotifications];
     mag.coordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:mag.model];
     
     NSMutableDictionary *options = [[self defaultStoreOptions] mutableCopy];
     if (withICloudSupport) {
         mag.currentStoreType = MAGCoreDataStoreTypeICloud;
-        [options setObject:MAGICloudName forKey:NSPersistentStoreUbiquitousContentNameKey];
+        [options setObject:MAGCoreDataDefaultICloudStoreName forKey:NSPersistentStoreUbiquitousContentNameKey];
         [mag subscribeForICloudNotifications];
     } else {
         mag.currentStoreType = MAGCoreDataStoreTypeLocal;
     }
     
-    BOOL result = [mag makeContextByAddingStoreAtUrl:mag.currentStoreUrl withOptions:options error:error];
-    return result;
+    NSString *configuration = withICloudSupport ? MAGCoreDataStoreICloudConfName : MAGCoreDataStoreLocalConfName;
+    if ([mag.coordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:configuration URL:mag.currentStoreUrl options:options error:error]) {
+        
+        mag.mainContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
+        mag.mainContext.persistentStoreCoordinator = mag.coordinator;
+        
+        return YES;
+    } else  {
+        return NO;
+    }
 }
 
 
@@ -196,7 +221,7 @@ typedef NS_ENUM(NSInteger, MAGCoreDataStoreType) {
     } else {
         return YES;
     }
-
+    
 }
 
 - (void)close {
@@ -237,23 +262,42 @@ typedef NS_ENUM(NSInteger, MAGCoreDataStoreType) {
     return options;
 }
 
-- (BOOL)makeContextByAddingStoreAtUrl:(NSURL *)url withOptions:(NSDictionary *)options error:(NSError **)error {
-    if ([self.coordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:url options:options error:error]) {
-        
-        NSPersistentStore *store = [self.coordinator.persistentStores lastObject];
-        NSLog(@"make persistant store at url: %@\n store was mad at url: %@\n", url, store.URL);
-        
-        self.mainContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
-        self.mainContext.persistentStoreCoordinator = self.coordinator;
-        return YES;
-    } else {
-        self.mainContext = nil;
-        return NO;
-    }
-}
-
 
 #pragma mark - iCloud
+
+// TODO: Check if reall
+// need use #import <CloudKit/CloudKit.h>
+//+ (void)checkICloudDriveEnabledCompletion:(void (^)(BOOL enabled))completion {
+//    if (NSClassFromString(@"CKContainer") != nil) { // iOS 8 required
+//        CKContainer *container = [CKContainer defaultContainer];
+//        [container accountStatusWithCompletionHandler:^(CKAccountStatus accountStatus, NSError *error) {
+//            BOOL isICloudDriveEnabled = NO;
+//            switch (accountStatus) {
+//                case CKAccountStatusCouldNotDetermine:
+//                    isICloudDriveEnabled = NO;
+//                    break;
+//                case CKAccountStatusAvailable:
+//                    isICloudDriveEnabled = YES;
+//                    break;
+//                case CKAccountStatusRestricted:
+//                    isICloudDriveEnabled = NO;
+//                    break;
+//                case CKAccountStatusNoAccount:
+//                    isICloudDriveEnabled = NO;
+//                    break;
+//                default:
+//                    break;
+//            }
+//            if (completion) {
+//                completion(isICloudDriveEnabled);
+//            }
+//        }];
+//    } else {
+//        if (completion) {
+//            completion(NO);
+//        }
+//    }
+//}
 
 + (NSError *)prepareICloudCoreData {
     NSError *error = nil;
@@ -282,8 +326,11 @@ typedef NS_ENUM(NSInteger, MAGCoreDataStoreType) {
         return;
     }
     
+    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+    [nc postNotificationName:MAGGoreDataICloudStoreWillRemovedNotification object:nil userInfo:@{}];
+    
     self.currentStoreType = MAGCoreDataStoreTypeUnknown;
-    self.mainContext = nil;
+    [self saveIfNeededAndResetMainContext];
     [self unsubscribeFromICloudNotifications];
     
     NSMutableDictionary *migrateOptions = [[[self class] defaultStoreOptions] mutableCopy];
@@ -296,7 +343,9 @@ typedef NS_ENUM(NSInteger, MAGCoreDataStoreType) {
         NSPersistentStore *localStore = [coordinator migratePersistentStore:iCloudStore toURL:localStoreUrl options:migrateOptions withType:NSSQLiteStoreType error:&migrationError];
         
         dispatch_async(dispatch_get_main_queue(), ^{
+            BOOL migratedSucceeded = YES;
             if (migrationError) {
+                migratedSucceeded = NO;
                 if (completion) {
                     completion(NO, migrationError);
                 }
@@ -304,7 +353,7 @@ typedef NS_ENUM(NSInteger, MAGCoreDataStoreType) {
                 [coordinator removePersistentStore:localStore error:nil];
                 NSDictionary *localStoreOptions = [[self class] defaultStoreOptions];
                 NSError *addLocalStoreError = nil;
-                if ([self makeContextByAddingStoreAtUrl:localStoreUrl withOptions:localStoreOptions error:&addLocalStoreError]) {
+                if ([coordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:MAGCoreDataStoreLocalConfName URL:localStoreUrl options:localStoreOptions error:&addLocalStoreError]) {
                     
                     self.currentStoreType = MAGCoreDataStoreTypeLocal;
                     
@@ -312,11 +361,17 @@ typedef NS_ENUM(NSInteger, MAGCoreDataStoreType) {
                         completion(YES, nil);
                     }
                 } else {
+                    migratedSucceeded = NO;
                     if (completion) {
                         completion(NO, addLocalStoreError);
                     }
                 }
             }
+            NSString *notification = MAGGoreDataICloudStoreDidRemovedNotification;
+            if (!migratedSucceeded) {
+                notification = MAGGoreDataICloudStoreRemoveFailedNotification;
+            }
+            [nc postNotificationName:notification object:nil];
         });
     }];
 }
@@ -356,12 +411,15 @@ typedef NS_ENUM(NSInteger, MAGCoreDataStoreType) {
         }
     }
     
+    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+    [nc postNotificationName:MAGGoreDataICloudStoreWillAddedNotification object:nil userInfo:@{}];
+    
     self.currentStoreType = MAGCoreDataStoreTypeUnknown;
-    self.mainContext = nil;
+    [self saveIfNeededAndResetMainContext];
     [self subscribeForICloudNotifications];
     
     NSMutableDictionary *iCloudOptions = [[[self class] defaultStoreOptions] mutableCopy];
-    [iCloudOptions setObject:self.currentStoreName forKey:NSPersistentStoreUbiquitousContentNameKey];
+    [iCloudOptions setObject:MAGCoreDataDefaultICloudStoreName forKey:NSPersistentStoreUbiquitousContentNameKey];
     
     [self.cloudMigrationsQueue addOperationWithBlock:^{
         
@@ -369,27 +427,34 @@ typedef NS_ENUM(NSInteger, MAGCoreDataStoreType) {
         NSPersistentStore *iCloudStore = [coordinator migratePersistentStore:localStore toURL:url options:iCloudOptions withType:NSSQLiteStoreType error:&migrationError];
         
         dispatch_async(dispatch_get_main_queue(), ^{
-            [coordinator removePersistentStore:localStore error:nil];
+            BOOL migratedSucceeded = YES;
             if (migrationError) {
+                migratedSucceeded = NO;
                 if (completion) {
                     completion(NO, migrationError);
                 }
             }  else {
                 [coordinator removePersistentStore:iCloudStore error:nil];
                 NSError *addStoreError = nil;
-                if ([self makeContextByAddingStoreAtUrl:url withOptions:iCloudOptions error:&addStoreError]) {
+                if ([coordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:MAGCoreDataStoreICloudConfName URL:url options:iCloudOptions error:&addStoreError]) {
                     
-                    self.currentStoreType = MAGCoreDataStoreTypeLocal;
+                    self.currentStoreType = MAGCoreDataStoreTypeICloud;
                     
                     if (completion) {
                         completion(YES, nil);
                     }
                 } else {
+                    migratedSucceeded = NO;
                     if (completion) {
                         completion(NO, addStoreError);
                     }
                 }
             }
+            NSString *notification = MAGGoreDataICloudStoreWillAddedNotification;
+            if (!migratedSucceeded) {
+                notification = MAGGoreDataICloudStoreAddFailedNotification;
+            }
+            [nc postNotificationName:notification object:nil];
         });
         
         
@@ -400,14 +465,6 @@ typedef NS_ENUM(NSInteger, MAGCoreDataStoreType) {
     [self migrateFromLocalStoreAtUrl:self.currentStoreUrl toICloud:completion];
 }
 
-static NSString *const MAGGoreDataICloudStoreWillAddedNotification = @"MAGGoreDataICloudStoreWillAddedNotification";
-static NSString *const MAGGoreDataICloudStoreWillRemovedNotification = @"MAGGoreDataICloudStoreWillRemovedNotification";
-static NSString *const MAGGoreDataICloudStoreWillCleanedNotification = @"MAGGoreDataICloudStoreWillCleanedNotification";
-static NSString *const MAGGoreDataICloudStoreWillSwitchedToICloudNotification = @"MAGGoreDataICloudStoreWillSwitchedToICloudNotification";
-static NSString *const MAGGoreDataICloudStoreDidAddNotification = @"MAGGoreDataICloudStoreDidAddNotification";
-static NSString *const MAGGoreDataICloudStoreDidRemovedNotification = @"MAGGoreDataICloudStoreDidRemovedNotification";
-static NSString *const MAGGoreDataICloudStoreDidCleanNotification = @"MAGGoreDataICloudStoreDidCleanNotification";
-static NSString *const MAGGoreDataICloudStoreDidSwitchToICloudNotification = @"MAGGoreDataICloudStoreDidSwitchToICloudNotification";
 
 
 - (void)iCloudStoresWillChange:(NSNotification *)n {
@@ -425,22 +482,14 @@ static NSString *const MAGGoreDataICloudStoreDidSwitchToICloudNotification = @"M
                 notificationName = MAGGoreDataICloudStoreWillCleanedNotification;
                 break;
             case NSPersistentStoreUbiquitousTransitionTypeInitialImportCompleted:
-                notificationName = MAGGoreDataICloudStoreWillSwitchedToICloudNotification;
+                notificationName = MAGGoreDataICloudStoreWillAddedNotification;
                 break;
         }
         if (notificationName) {
             [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:self userInfo:@{}];
         }
+        [self saveIfNeededAndResetMainContext];
     }
-    
-    NSManagedObjectContext *mainContext = self.mainContext;
-    [mainContext performBlockAndWait:^{
-        NSError *error = nil;
-        if ([mainContext hasChanges]) {
-            [mainContext save:&error];
-        }
-        [mainContext reset];
-    }];
 }
 
 
@@ -449,6 +498,7 @@ static NSString *const MAGGoreDataICloudStoreDidSwitchToICloudNotification = @"M
     [mainCountext performBlock:^{
         [mainCountext mergeChangesFromContextDidSaveNotification:n];
     }];
+    // TODO: add iCloud data changed notification
 }
 
 
@@ -467,7 +517,7 @@ static NSString *const MAGGoreDataICloudStoreDidSwitchToICloudNotification = @"M
                 notificationName = MAGGoreDataICloudStoreDidCleanNotification;
                 break;
             case NSPersistentStoreUbiquitousTransitionTypeInitialImportCompleted:
-                notificationName = MAGGoreDataICloudStoreDidSwitchToICloudNotification;
+                notificationName = MAGGoreDataICloudStoreDidAddNotification;
                 break;
         }
         if (notificationName) {
@@ -483,7 +533,6 @@ static NSString *const MAGGoreDataICloudStoreDidSwitchToICloudNotification = @"M
     }
     
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
-    
     self.iCloudStoresWillChangeObserver = [nc addObserverForName:NSPersistentStoreCoordinatorStoresWillChangeNotification object:self.coordinator queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
         
         [self iCloudStoresWillChange:note];
@@ -494,7 +543,7 @@ static NSString *const MAGGoreDataICloudStoreDidSwitchToICloudNotification = @"M
     }];
     
     self.iCloudContentChangeObserver = [nc addObserverForName:NSPersistentStoreDidImportUbiquitousContentChangesNotification object:self.coordinator queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
-       
+        
         [self iCloudContentChanged:note];
     }];
 }
@@ -512,6 +561,17 @@ static NSString *const MAGGoreDataICloudStoreDidSwitchToICloudNotification = @"M
 
 
 #pragma mark - Help
+
+- (void)saveIfNeededAndResetMainContext {
+    NSManagedObjectContext *mainContext = self.mainContext;
+    [mainContext performBlockAndWait:^{
+        NSError *error = nil;
+        if ([mainContext hasChanges]) {
+            [mainContext save:&error];
+        }
+        [mainContext reset];
+    }];
+}
 
 + (NSError *)errorWithMessage:(NSString *)errorMessage {
     if (!errorMessage) {
