@@ -60,7 +60,7 @@ extension NSManagedObject {
         objc_setAssociatedObject(self, &AssociatedKey.DefaultDateFormat, dateFormat, UInt(OBJC_ASSOCIATION_COPY_NONATOMIC))
     }
     
-    class func primaryKeyName() -> String? { // FIXME: Тип переменной, судя по ее названию, должен быть String
+    class func primaryKeyName() -> String? {
         return objc_getAssociatedObject(self, &AssociatedKey.PrimaryKeyName) as? String
     }
     
@@ -81,7 +81,7 @@ extension NSManagedObject {
     }
     
     func safeSetValuesForKeys(keyedValues: [String: AnyObject]) {
-        
+        safeSetValuesForKeysWithKeyedValues(keyedValues, inContext: MAGCoreData.context())
     }
     
     class func dateFromObject(object: AnyObject, forAttribute attribute: AnyObject) -> NSDate? {
@@ -124,15 +124,15 @@ extension NSManagedObject {
         let mapping = self.dynamicType.keyMapping()
         
         if shouldUpdateForKeyedValues(keyedValues) {
-            for attribute in entity.attributesByName {
-                if let attributeKey = attribute.0 as? String {
+            for (key, value) in entity.attributesByName {
+                if let attributeKey = key as? String {
                     var keyForKeyedValue = attributeKey
                     if let mapping = mapping, mappingForAttribute = mapping[attributeKey] as? String {
                         keyForKeyedValue = mappingForAttribute
                     }
                     
                     if let keyedValue: AnyObject = keyedValues[attributeKey] { // FIXME AnyObject
-                        let safeValue: AnyObject? = self.dynamicType.safeValueMappedFromKeyedValue(keyedValue, attribute: attributeKey, attributeType: attribute.1.attributeType)
+                        let safeValue: AnyObject? = self.dynamicType.safeValueMappedFromKeyedValue(keyedValue, attribute: attributeKey, attributeType: value.attributeType)
                         setValue(safeValue, forKey: attributeKey)
                     }
                 }
@@ -140,8 +140,8 @@ extension NSManagedObject {
         }
         
         if let relationClasses = self.dynamicType.relationClasses() {
-            for relationClass in relationClasses {
-                var relationKey = relationClass.0
+            for (key, value) in relationClasses {
+                var relationKey = key
                 if let mapping = mapping, mappingForRelationKey = mapping[relationKey] as? String {
                     relationKey = mappingForRelationKey
                 }
@@ -149,7 +149,7 @@ extension NSManagedObject {
                 if let value = keyedValues[relationKey] as? [String: AnyObject] {
                     // FIXME: createRelationshipToManyForRelationName
                 } else if let value = keyedValues[relationKey] as? [AnyObject] {
-                    // FIXME: createRelationshipToManyForRelationName
+                    createRelationshipToManyForRelationName(key, relationKey: relationKey, value: value, inContext: context)
                 }
             }
         }
@@ -177,7 +177,15 @@ extension NSManagedObject {
     }
     
     func createRelationshipToManyForRelationName(relationName: String, relationKey: String, value: AnyObject, inContext context: NSManagedObjectContext) {
-        // FIXME:
+        setObject(nil, forRelation: relationName)
+        
+        
+    }
+    
+    func createRelationshipForRelationName(relationName: String, relationKey: String, value: AnyObject, inContext context: NSManagedObjectContext) {
+        if let relationshipDescription = entity.relationshipsByName[relationName] as? NSRelationshipDescription, relationClasses = self.dynamicType.relationClasses {
+            let objectClass = relationClasses[relationName]
+        }
     }
     
     private func stringByFirstLetterCap(string: String) -> String {
@@ -187,14 +195,20 @@ extension NSManagedObject {
     func addObject(object: NSManagedObjectContext, toRelation relation: String) {
         if let set = valueForKey(relation) as? NSSet {
             if !set.containsObject(object) {
-                // FIXME:
+                // FIXME: performSelector
     
             }
         } else if let set = valueForKey(relation) as? NSOrderedSet {
             if !set.containsObject(object) {
-                // FIXME:
+                // FIXME: performSelector
 
             }
+        }
+    }
+    
+    func setObject(object: NSManagedObject?, forRelation relation: String) {
+        if let valueForRelationKey = valueForKey(relation) as? NSManagedObject where valueForRelationKey != object {
+            
         }
     }
     
@@ -204,6 +218,16 @@ extension NSManagedObject {
     
     class func createInContext(context: NSManagedObjectContext) -> NSManagedObject {
         return NSEntityDescription.insertNewObjectForEntityForName(entityName(), inManagedObjectContext: context) as! NSManagedObject
+    }
+    
+    class func createWithKeyedValues(keyedValues: [String: AnyObject]) -> NSManagedObject {
+        return createWithKeyedValues(keyedValues, inContext: MAGCoreData.context())
+    }
+    
+    class func createWithKeyedValues(keyedValues: [String: AnyObject], inContext context: NSManagedObjectContext) -> NSManagedObject {
+        var object = createInContext(context)
+        object.safeSetValuesForKeys(keyedValues)
+        return object
     }
     
     class func all(error: NSErrorPointer) -> [NSManagedObject] {
@@ -265,13 +289,65 @@ extension NSManagedObject {
         
         return []
     }
-        
-    class func deleteAll() {
-        
+    
+    class func first(error: NSErrorPointer) -> NSManagedObject? {
+        return firstInContext(MAGCoreData.context(), error: error)
     }
     
-    class func deleteAllInContext(context: NSManagedObjectContext) {
+    class func firstWithKey(key: String, value: AnyObject, error: NSErrorPointer) -> NSManagedObject? {
+        return firstWithKey(key, value: value, inContext: MAGCoreData.context(), error: error)
+    }
+    
+    class func firstForPredicate(predicate: NSPredicate, orderedBy orderingKey: String, ascending: Bool, error: NSErrorPointer) -> NSManagedObject? {
+        return firstForPredicate(predicate, orderedBy: orderingKey, ascending: ascending, inContext: MAGCoreData.context(), error: error)
+    }
+    
+    class func firstForPredicate(predicate: NSPredicate, orderedBy orderingKey: String, ascending: Bool, inContext context: NSManagedObjectContext, error: NSErrorPointer) -> NSManagedObject? {
+        let sortDescriptor = NSSortDescriptor(key: orderingKey, ascending: ascending)
+        let request = NSFetchRequest(entityName: entityName())
+        request.fetchLimit = 1
+        request.predicate = predicate
+        request.sortDescriptors = [sortDescriptor]
         
+        if let objects = context.executeFetchRequest(request, error: error) as? [NSManagedObject] {
+            return objects.first
+        }
+        
+        return nil
+    }
+    
+    class func firstInContext(context: NSManagedObjectContext, error: NSErrorPointer) -> NSManagedObject? {
+        let request = NSFetchRequest(entityName: entityName())
+        request.fetchLimit = 1
+        
+        if let objects = context.executeFetchRequest(request, error: error) as? [NSManagedObject] {
+            return objects.first
+        }
+        
+        return nil
+    }
+    
+    class func firstWithKey(key: String, value: AnyObject, inContext context: NSManagedObjectContext, error: NSErrorPointer) -> NSManagedObject? {
+        let predicate = NSPredicate(format: "%K == %@", key, value as! NSObject) // NSObject??
+        let request = NSFetchRequest(entityName: entityName())
+        request.fetchLimit = 1
+        request.predicate = predicate
+        
+        if let objects = context.executeFetchRequest(request, error: error) as? [NSManagedObject] {
+            return objects.first
+        }
+        
+        return nil
+    }
+        
+    class func deleteAll(error: NSErrorPointer) {
+        deleteAllInContext(MAGCoreData.context(), error: error)
+    }
+    
+    class func deleteAllInContext(context: NSManagedObjectContext, error: NSErrorPointer) {
+        for object in allInContext(context, error: error) {
+            object.delete()
+        }
     }
     
     func delete() {
@@ -286,10 +362,3 @@ extension NSManagedObject {
         }
     }
 }
-
-
-
-
-
-
-
