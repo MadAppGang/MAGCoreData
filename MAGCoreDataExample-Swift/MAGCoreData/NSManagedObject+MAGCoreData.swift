@@ -72,6 +72,10 @@ extension NSManagedObject {
         return objc_getAssociatedObject(self, &AssociatedKey.UpdateDate) as? String
     }
     
+    private class func entityName() -> String {
+        return NSStringFromClass(self)
+    }
+    
     class func setUpdateDateKeyName(updateDateKeyName: String) {
         objc_setAssociatedObject(self, &AssociatedKey.UpdateDate, updateDateKeyName, UInt(OBJC_ASSOCIATION_COPY_NONATOMIC))
     }
@@ -173,7 +177,7 @@ extension NSManagedObject {
     }
     
     func createRelationshipToManyForRelationName(relationName: String, relationKey: String, value: AnyObject, inContext context: NSManagedObjectContext) {
-        
+        // FIXME:
     }
     
     private func stringByFirstLetterCap(string: String) -> String {
@@ -181,20 +185,87 @@ extension NSManagedObject {
     }
     
     func addObject(object: NSManagedObjectContext, toRelation relation: String) {
-        let set = valueForKey(relation) as? NSSet
-        
-        var shouldPerformAddObjectSelector = false
-        
-        if shouldPerformAddObjectSelector {
-            
+        if let set = valueForKey(relation) as? NSSet {
+            if !set.containsObject(object) {
+                // FIXME:
+    
+            }
+        } else if let set = valueForKey(relation) as? NSOrderedSet {
+            if !set.containsObject(object) {
+                // FIXME:
+
+            }
         }
     }
     
-//    class func firstWithKey(key: String, value: AnyObject, inContext context: NSManagedObjectContext) -> dynamicType {
-//        let predicate = NSPredicate(format: "%K == %@", key, value)
-//        return nil
-//    }
+    class func create() -> NSManagedObject {
+        return createInContext(MAGCoreData.context())
+    }
     
+    class func createInContext(context: NSManagedObjectContext) -> NSManagedObject {
+        return NSEntityDescription.insertNewObjectForEntityForName(entityName(), inManagedObjectContext: context) as! NSManagedObject
+    }
+    
+    class func all(error: NSErrorPointer) -> [NSManagedObject] {
+        return allInContext(MAGCoreData.context(), error: error)
+    }
+    
+    class func allForPredicate(predicate: NSPredicate, error: NSErrorPointer) -> [NSManagedObject] {
+        return allForPredicate(predicate, inContext: MAGCoreData.context(), error: error)
+    }
+    
+    class func allForPredicate(predicate: NSPredicate, orderedByKey orderingKey: String, ascending: Bool, error: NSErrorPointer) -> [NSManagedObject] {
+        return allForPredicate(predicate, orderedByKey: orderingKey, ascending: ascending, inContext: MAGCoreData.context(), error: error)
+    }
+    
+    class func allOrderedBy(orderingKey: String, ascending: Bool, error: NSErrorPointer) -> [NSManagedObject] {
+        return allOrderedBy(orderingKey, ascending: ascending, inContext: MAGCoreData.context(), error: error)
+    }
+    
+    class func allInContext(context: NSManagedObjectContext, error: NSErrorPointer) -> [NSManagedObject] {
+        let request = NSFetchRequest(entityName: entityName())
+        
+        if let elements = context.executeFetchRequest(request, error: error) as? [NSManagedObject] {
+            return elements
+        }
+        
+        return []
+    }
+    
+    class func allOrderedBy(orderingKey: String, ascending: Bool, inContext context: NSManagedObjectContext, error: NSErrorPointer) -> [NSManagedObject] {
+        let request = NSFetchRequest(entityName: entityName())
+        request.sortDescriptors = [NSSortDescriptor(key: orderingKey, ascending: ascending)]
+        
+        if let elements = context.executeFetchRequest(request, error: error) as? [NSManagedObject] {
+            return elements
+        }
+        
+        return []
+    }
+    
+    class func allForPredicate(predicate: NSPredicate, inContext context: NSManagedObjectContext, error: NSErrorPointer) -> [NSManagedObject] {
+        let request = NSFetchRequest(entityName: entityName())
+        request.predicate = predicate
+        
+        if let elements = context.executeFetchRequest(request, error: error) as? [NSManagedObject] {
+            return elements
+        }
+        
+        return []
+    }
+    
+    class func allForPredicate(predicate: NSPredicate, orderedByKey orderingKey: String, ascending: Bool, inContext context: NSManagedObjectContext, error: NSErrorPointer) -> [NSManagedObject] {
+        let request = NSFetchRequest(entityName: entityName())
+        request.sortDescriptors = [NSSortDescriptor(key: orderingKey, ascending: ascending)]
+        request.predicate = predicate
+        
+        if let elements = context.executeFetchRequest(request, error: error) as? [NSManagedObject] {
+            return elements
+        }
+        
+        return []
+    }
+        
     class func deleteAll() {
         
     }
