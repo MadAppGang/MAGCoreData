@@ -56,6 +56,7 @@ class MAGCoreData: NSObject {
         
         if let magCoreDataInstanceModel = magCoreDataInstance.model {
             let persistentStore = NSPersistentStoreCoordinator(managedObjectModel: magCoreDataInstanceModel)
+            magCoreDataInstance.persistentStore = persistentStore
             let options = [NSMigratePersistentStoresAutomaticallyOption: true, NSInferMappingModelAutomaticallyOption: true]
             
             if let newPersistentStore = persistentStore.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: defaultStorageURLWithName(storageName), options: options, error: error) {

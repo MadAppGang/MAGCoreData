@@ -13,13 +13,6 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        var error: NSError?
-        MAGCoreData.prepareCoreData(&error)
-        if let error = error {
-            println("MAGCoreDataTestCase \(error)")
-        } else {
-            println("MAGCoreData was prepared.")
-        }
     }
     
     override func didReceiveMemoryWarning() {

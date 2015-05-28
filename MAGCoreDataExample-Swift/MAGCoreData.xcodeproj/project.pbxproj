@@ -33,13 +33,11 @@
 		18B47B961B138D7A00019DF9 /* NSManagedObject+MAGCoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B47B951B138D7A00019DF9 /* NSManagedObject+MAGCoreData.swift */; };
 		18B47B971B13A36700019DF9 /* NSManagedObject+MAGCoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B47B951B138D7A00019DF9 /* NSManagedObject+MAGCoreData.swift */; };
 		18B94F421B17238B00FCD17F /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 18B94F401B17238B00FCD17F /* Model.xcdatamodeld */; };
-		18EEA9EA1B15C4FD0048C440 /* MAGCoreDataTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EEA9E91B15C4FD0048C440 /* MAGCoreDataTestCase.swift */; };
 		18EEA9F01B15D1250048C440 /* MAGCoreDataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EEA9EF1B15D1250048C440 /* MAGCoreDataTests.swift */; };
 		18EEAA0B1B15E0FF0048C440 /* TestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EEAA081B15E0FF0048C440 /* TestModel.swift */; };
 		18EEAA0C1B15E0FF0048C440 /* _TestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EEAA0A1B15E0FF0048C440 /* _TestModel.swift */; };
 		18EEAA0D1B15E1350048C440 /* _TestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EEAA0A1B15E0FF0048C440 /* _TestModel.swift */; };
 		18EEAA0E1B15E1390048C440 /* TestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EEAA081B15E0FF0048C440 /* TestModel.swift */; };
-		18EEAA101B15E61D0048C440 /* NSManagedObjectExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EEAA0F1B15E61D0048C440 /* NSManagedObjectExtensionTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,12 +65,11 @@
 		18B47B951B138D7A00019DF9 /* NSManagedObject+MAGCoreData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSManagedObject+MAGCoreData.swift"; sourceTree = "<group>"; };
 		18B94F411B17238B00FCD17F /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		18BF21371B14CD6A00CB70A0 /* NSManagedObject+MAGCoreData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObject+MAGCoreData.m"; sourceTree = "<group>"; };
-		18EEA9E91B15C4FD0048C440 /* MAGCoreDataTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MAGCoreDataTestCase.swift; sourceTree = "<group>"; };
+		18E454751B1795D2004FB6D3 /* MAGCoreData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAGCoreData.m; sourceTree = "<group>"; };
 		18EEA9EF1B15D1250048C440 /* MAGCoreDataTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MAGCoreDataTests.swift; sourceTree = "<group>"; };
 		18EEAA061B15E0350048C440 /* MAGCoreData-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MAGCoreData-Bridging-Header.h"; sourceTree = "<group>"; };
 		18EEAA081B15E0FF0048C440 /* TestModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestModel.swift; sourceTree = "<group>"; };
 		18EEAA0A1B15E0FF0048C440 /* _TestModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = _TestModel.swift; sourceTree = "<group>"; };
-		18EEAA0F1B15E61D0048C440 /* NSManagedObjectExtensionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSManagedObjectExtensionTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,8 +111,8 @@
 		185E51DA1B13267000C23281 /* MAGCoreData */ = {
 			isa = PBXGroup;
 			children = (
-				18EEA9FB1B15DE800048C440 /* MAGCoreData */,
 				18EEA9FA1B15DE5D0048C440 /* Models */,
+				18EEA9FB1B15DE800048C440 /* MAGCoreData */,
 				185E51DF1B13267000C23281 /* ViewController.swift */,
 				185E51DD1B13267000C23281 /* AppDelegate.swift */,
 				185E51E11B13267000C23281 /* Main.storyboard */,
@@ -138,9 +135,7 @@
 		185E51F01B13267000C23281 /* MAGCoreDataTests */ = {
 			isa = PBXGroup;
 			children = (
-				18EEA9E91B15C4FD0048C440 /* MAGCoreDataTestCase.swift */,
 				18EEA9EF1B15D1250048C440 /* MAGCoreDataTests.swift */,
-				18EEAA0F1B15E61D0048C440 /* NSManagedObjectExtensionTests.swift */,
 				185E51F11B13267000C23281 /* Supporting Files */,
 			);
 			path = MAGCoreDataTests;
@@ -170,6 +165,7 @@
 				185E51FD1B1326A600C23281 /* MAGCoreData.swift */,
 				18B47B921B137E0500019DF9 /* FetchedResultsControllerManager.swift */,
 				18B47B951B138D7A00019DF9 /* NSManagedObject+MAGCoreData.swift */,
+				18E454751B1795D2004FB6D3 /* MAGCoreData.m */,
 				18BF21371B14CD6A00CB70A0 /* NSManagedObject+MAGCoreData.m */,
 			);
 			name = MAGCoreData;
@@ -331,10 +327,8 @@
 				18B47B971B13A36700019DF9 /* NSManagedObject+MAGCoreData.swift in Sources */,
 				18B47B941B13847E00019DF9 /* FetchedResultsControllerManager.swift in Sources */,
 				186CE08B1B1330FF00A46DC7 /* MAGCoreData.swift in Sources */,
-				18EEAA101B15E61D0048C440 /* NSManagedObjectExtensionTests.swift in Sources */,
 				18EEAA0E1B15E1390048C440 /* TestModel.swift in Sources */,
 				18EEAA0D1B15E1350048C440 /* _TestModel.swift in Sources */,
-				18EEA9EA1B15C4FD0048C440 /* MAGCoreDataTestCase.swift in Sources */,
 				18EEA9F01B15D1250048C440 /* MAGCoreDataTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
