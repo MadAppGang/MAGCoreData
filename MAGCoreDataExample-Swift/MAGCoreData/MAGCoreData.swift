@@ -15,6 +15,11 @@ class MAGCoreData: NSObject {
     // MARK: Public
     
     static let instance = MAGCoreData()
+    static var context: NSManagedObjectContext {
+        get {
+            return instance.mainContext
+        }
+    }
     
     var autoMergeFromChildContexts = false {
         didSet {
@@ -43,7 +48,7 @@ class MAGCoreData: NSObject {
     class func prepareCoreDataWithModelName(modelName: String?, storageName: String?, error: NSErrorPointer) -> Bool {
         let magCoreDataInstance = MAGCoreData.instance
 
-        if let modelName = modelName, modelURL = NSBundle.mainBundle().URLForResource(modelName, withExtension: "momd") {
+        if let modelName = modelName, modelURL = NSBundle(forClass: self).URLForResource(modelName, withExtension: "momd") {
             magCoreDataInstance.model = NSManagedObjectModel(contentsOfURL: modelURL)
         } else {
             magCoreDataInstance.model = NSManagedObjectModel.mergedModelFromBundles(nil)
@@ -54,7 +59,10 @@ class MAGCoreData: NSObject {
             let options = [NSMigratePersistentStoresAutomaticallyOption: true, NSInferMappingModelAutomaticallyOption: true]
             
             if let newPersistentStore = persistentStore.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: defaultStorageURLWithName(storageName), options: options, error: error) {
+                magCoreDataInstance.mainContext = NSManagedObjectContext(concurrencyType: .MainQueueConcurrencyType)
                 magCoreDataInstance.mainContext.persistentStoreCoordinator = newPersistentStore.persistentStoreCoordinator
+                
+                return true
             }
             
             return false
@@ -65,10 +73,6 @@ class MAGCoreData: NSObject {
     
     //  MARK: ManagementObjectContext
     
-    class func context() -> NSManagedObjectContext {
-        return MAGCoreData.instance.mainContext
-    }
-    
     class func createPrivateContext() -> NSManagedObjectContext {
         let privateContext = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
         privateContext.persistentStoreCoordinator = MAGCoreData.instance.persistentStore
@@ -78,7 +82,7 @@ class MAGCoreData: NSObject {
     // MARK: Saving
     
     class func save(error: NSErrorPointer) -> Bool {
-        return MAGCoreData.saveContext(MAGCoreData.context(), error: error)
+        return MAGCoreData.saveContext(MAGCoreData.context, error: error)
     }
     
     class func saveContext(context: NSManagedObjectContext, error: NSErrorPointer) -> Bool {
@@ -92,6 +96,7 @@ class MAGCoreData: NSObject {
     // MARK: Resetting
     
     class func close() {
+        MAGCoreData.instance.mainContext = NSManagedObjectContext(concurrencyType: .MainQueueConcurrencyType)
         MAGCoreData.instance.model = nil
         MAGCoreData.instance.persistentStore = nil
     }

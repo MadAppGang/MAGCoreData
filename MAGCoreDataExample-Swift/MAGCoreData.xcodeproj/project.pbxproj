@@ -32,9 +32,9 @@
 		18B47B941B13847E00019DF9 /* FetchedResultsControllerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B47B921B137E0500019DF9 /* FetchedResultsControllerManager.swift */; };
 		18B47B961B138D7A00019DF9 /* NSManagedObject+MAGCoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B47B951B138D7A00019DF9 /* NSManagedObject+MAGCoreData.swift */; };
 		18B47B971B13A36700019DF9 /* NSManagedObject+MAGCoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B47B951B138D7A00019DF9 /* NSManagedObject+MAGCoreData.swift */; };
+		18B94F421B17238B00FCD17F /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 18B94F401B17238B00FCD17F /* Model.xcdatamodeld */; };
 		18EEA9EA1B15C4FD0048C440 /* MAGCoreDataTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EEA9E91B15C4FD0048C440 /* MAGCoreDataTestCase.swift */; };
 		18EEA9F01B15D1250048C440 /* MAGCoreDataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EEA9EF1B15D1250048C440 /* MAGCoreDataTests.swift */; };
-		18EEA9F31B15D1840048C440 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 18EEA9F11B15D1840048C440 /* Model.xcdatamodeld */; };
 		18EEAA0B1B15E0FF0048C440 /* TestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EEAA081B15E0FF0048C440 /* TestModel.swift */; };
 		18EEAA0C1B15E0FF0048C440 /* _TestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EEAA0A1B15E0FF0048C440 /* _TestModel.swift */; };
 		18EEAA0D1B15E1350048C440 /* _TestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EEAA0A1B15E0FF0048C440 /* _TestModel.swift */; };
@@ -65,10 +65,10 @@
 		185E51FD1B1326A600C23281 /* MAGCoreData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MAGCoreData.swift; sourceTree = "<group>"; };
 		18B47B921B137E0500019DF9 /* FetchedResultsControllerManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchedResultsControllerManager.swift; sourceTree = "<group>"; };
 		18B47B951B138D7A00019DF9 /* NSManagedObject+MAGCoreData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSManagedObject+MAGCoreData.swift"; sourceTree = "<group>"; };
+		18B94F411B17238B00FCD17F /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		18BF21371B14CD6A00CB70A0 /* NSManagedObject+MAGCoreData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObject+MAGCoreData.m"; sourceTree = "<group>"; };
 		18EEA9E91B15C4FD0048C440 /* MAGCoreDataTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MAGCoreDataTestCase.swift; sourceTree = "<group>"; };
 		18EEA9EF1B15D1250048C440 /* MAGCoreDataTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MAGCoreDataTests.swift; sourceTree = "<group>"; };
-		18EEA9F21B15D1840048C440 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		18EEAA061B15E0350048C440 /* MAGCoreData-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MAGCoreData-Bridging-Header.h"; sourceTree = "<group>"; };
 		18EEAA081B15E0FF0048C440 /* TestModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestModel.swift; sourceTree = "<group>"; };
 		18EEAA0A1B15E0FF0048C440 /* _TestModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = _TestModel.swift; sourceTree = "<group>"; };
@@ -159,7 +159,7 @@
 			children = (
 				18EEAA091B15E0FF0048C440 /* MachineModel */,
 				18EEAA071B15E0FF0048C440 /* HumanModel */,
-				18EEA9F11B15D1840048C440 /* Model.xcdatamodeld */,
+				18B94F401B17238B00FCD17F /* Model.xcdatamodeld */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -315,8 +315,8 @@
 			files = (
 				18B47B931B137E0500019DF9 /* FetchedResultsControllerManager.swift in Sources */,
 				18B47B961B138D7A00019DF9 /* NSManagedObject+MAGCoreData.swift in Sources */,
-				18EEA9F31B15D1840048C440 /* Model.xcdatamodeld in Sources */,
 				18EEAA0C1B15E0FF0048C440 /* _TestModel.swift in Sources */,
+				18B94F421B17238B00FCD17F /* Model.xcdatamodeld in Sources */,
 				18EEAA0B1B15E0FF0048C440 /* TestModel.swift in Sources */,
 				185E51E01B13267000C23281 /* ViewController.swift in Sources */,
 				185E51FE1B1326A600C23281 /* MAGCoreData.swift in Sources */,
@@ -562,17 +562,19 @@
 				18EEA9FF1B15DED50048C440 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		18EEA9F11B15D1840048C440 /* Model.xcdatamodeld */ = {
+		18B94F401B17238B00FCD17F /* Model.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				18EEA9F21B15D1840048C440 /* Model.xcdatamodel */,
+				18B94F411B17238B00FCD17F /* Model.xcdatamodel */,
 			);
-			currentVersion = 18EEA9F21B15D1840048C440 /* Model.xcdatamodel */;
-			path = Model.xcdatamodeld;
+			currentVersion = 18B94F411B17238B00FCD17F /* Model.xcdatamodel */;
+			name = Model.xcdatamodeld;
+			path = Models/Model.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};

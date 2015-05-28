@@ -19,5 +19,19 @@ class MAGCoreDataTests: MAGCoreDataTestCase {
         super.tearDown()
     }
 
+    func testThatMAGCoreDataIsSingletone() {
+        XCTAssertEqual(MAGCoreData.instance, MAGCoreData.instance)
+    }
     
+    func testThatMAGCoreDataPreparedCorrectly() {
+        MAGCoreData.close()
+        
+        var error: NSError?
+        XCTAssertTrue(MAGCoreData.prepareCoreData(&error))
+        XCTAssertNil(error, "Should be nil.")
+    }
+    
+    func testThatMainAndPrivateContextsAreDifferent() {
+        XCTAssertNotEqual(MAGCoreData.context, MAGCoreData.createPrivateContext())
+    }
 }
