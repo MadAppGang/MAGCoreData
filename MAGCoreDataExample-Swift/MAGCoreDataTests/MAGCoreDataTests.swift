@@ -52,14 +52,14 @@ class MAGCoreDataTests: XCTestCase {
         
         var error: NSError?
         XCTAssertTrue(MAGCoreData.prepareCoreData(&error))
-        XCTAssertNil(error, "Should be nil.")
+        XCTAssertNil(error, "Preparing error.")
     }
     
     func testThatMainAndPrivateContextsAreDifferent() {
         XCTAssertNotEqual(MAGCoreData.context, MAGCoreData.createPrivateContext())
     }
     
-    func testThatMAGCoreDataSavesData() {
+    func testThatMAGCoreDataSavesAndReturnsData() {
         var testInstance = TestModel.create() as TestModel
         testInstance.entityId = NSUUID().UUIDString
         testInstance.string = testString
@@ -68,15 +68,12 @@ class MAGCoreDataTests: XCTestCase {
 
         var error: NSError?
         MAGCoreData.save(&error)
-        XCTAssertNil(error)
-        
-        println(TestModel.firstForAttribute("string", attributeValue: testString, error: &error) as? TestModel)
+        XCTAssertNil(error, "Saving error.")
         
         error = nil
-        if let savedTestInstance = TestModel.firstForAttribute("string", attributeValue: testString, error: &error) {
-            println("oudnierubfiuerbgiuegoiwu")
-        } else {
-            XCTFail("Test instance wasn't saved.")
+        var returnedTestInstance = TestModel.firstForAttribute("string", attributeValue: testString, error: &error) as TestModel?
+        if returnedTestInstance == nil || error != nil {
+            XCTFail("Test instance wasn't saved or returned.")
         }
     }
 }
