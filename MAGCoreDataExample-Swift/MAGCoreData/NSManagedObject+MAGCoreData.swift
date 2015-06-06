@@ -104,40 +104,40 @@ extension NSManagedObject {
         return dateFormatter.dateFromString(string)
     }
     
-    func shouldUpdateWithAttributes(remoteObjectAttributes: [String: AnyObject]) -> Bool {
+    func shouldUpdateWithAttributes(attributesForUpdate: [String: AnyObject]) -> Bool {
         if let attributesNamesMap = self.dynamicType.attributesNamesMap,
             dateUpdatedAttributeName = self.dynamicType.dateUpdatedAttributeName,
-            remoteDateUpdatedAttributeName = attributesNamesMap[dateUpdatedAttributeName],
-            remoteDateUpdatedAttributeValue = remoteObjectAttributes[remoteDateUpdatedAttributeName] as? String,
-            remoteDateUpdated = self.dynamicType.dateFromString(remoteDateUpdatedAttributeValue, forAttribute: dateUpdatedAttributeName),
-            localDateUpdated = valueForKey(dateUpdatedAttributeName) as? NSDate where localDateUpdated.compare(remoteDateUpdated) != .OrderedAscending {
+            dateUpdatedAttributeForUpdateName = attributesNamesMap[dateUpdatedAttributeName],
+            dateUpdatedAttributeForUpdateValue = attributesForUpdate[dateUpdatedAttributeForUpdateName] as? String,
+            dateUpdatedForUpdate = self.dynamicType.dateFromString(dateUpdatedAttributeForUpdateValue, forAttribute: dateUpdatedAttributeName),
+            dateUpdatedToUpdate = valueForKey(dateUpdatedAttributeName) as? NSDate where dateUpdatedToUpdate.compare(dateUpdatedForUpdate) != .OrderedAscending {
                 return false
         }
         
         return true
     }
 
-    class func safeValueMappedFromKeyedValue(keyedValue: AnyObject, attribute: String, attributeType: NSAttributeType) -> AnyObject? {
-        if let valueTransformers = attributesValuesTransformers, valueTransaformerForAttribute: AnyObject = valueTransformers[attribute], transformer = valueTransaformerForAttribute as? (AnyObject) -> (AnyObject) {
-            return transformer(keyedValue)
-        } else if let keyedValue = keyedValue as? NSNumber where attributeType == .StringAttributeType {
-            return keyedValue.stringValue
-        } else if let keyedValue = keyedValue as? String where attributeType == .Integer16AttributeType || attributeType == .Integer32AttributeType || attributeType == .Integer64AttributeType || attributeType == .BooleanAttributeType {
-            if let keyedValueNumber = NSNumberFormatter().numberFromString(keyedValue) {
-                return keyedValueNumber.integerValue
+    class func typedAttributeValue(attributeValue: AnyObject, attributeName: String, attributeType: NSAttributeType) -> AnyObject? {
+        if let valueTransformers = attributesValuesTransformers, valueTransaformerForAttribute = valueTransformers[attributeName] as? (AnyObject) -> (AnyObject) {
+            return valueTransaformerForAttribute(attributeValue)
+        } else if let attributeValueNumber = attributeValue as? NSNumber where attributeType == .StringAttributeType {
+            return attributeValueNumber.stringValue
+        } else if let attributeValue = attributeValue as? String where attributeType == .Integer16AttributeType || attributeType == .Integer32AttributeType || attributeType == .Integer64AttributeType || attributeType == .BooleanAttributeType {
+            if let attributeValueNumber = NSNumberFormatter().numberFromString(attributeValue) {
+                return attributeValueNumber.integerValue
             }
-        } else if let keyedValue = keyedValue as? String where attributeType == .FloatAttributeType || attributeType == .DoubleAttributeType {
-            if let keyedValueNumber = NSNumberFormatter().numberFromString(keyedValue) {
-                return keyedValueNumber.doubleValue
+        } else if let attributeValue = attributeValue as? String where attributeType == .FloatAttributeType || attributeType == .DoubleAttributeType {
+            if let attributeValueNumber = NSNumberFormatter().numberFromString(attributeValue) {
+                return attributeValueNumber.doubleValue
             }
-        } else if let keyedValue = keyedValue as? String where attributeType == .DateAttributeType {
-//            return dateFromObject(keyedValue, forAttribute: attribute) // FIXME:
+        } else if let attributeValue = attributeValue as? String where attributeType == .DateAttributeType {
+            return dateFromString(attributeValue, forAttribute: attributeName)
         }
         
         return nil
     }
     
-    private func stringByFirstCharUppercased(string: String) -> String { // FIXME:
+    func stringByFirstCharUppercased(string: String) -> String { // FIXME:
         return string.stringByReplacingCharactersInRange(string.startIndex...string.startIndex, withString: String(string[string.startIndex]).uppercaseString)
     }
 
@@ -155,9 +155,9 @@ extension NSManagedObject {
         }
     }
     
-    func setObject(object: NSManagedObject?, forRelation relation: String) { // FIXME:
-        if let valueForRelationKey = valueForKey(relation) as? NSManagedObject where valueForRelationKey != object {
-            
+    func setManagedObject(managedObject: NSManagedObject?, forRelation relation: String) { // FIXME:
+        if let valueForRelationKey = valueForKey(relation) as? NSManagedObject where valueForRelationKey != managedObject {
+            // FIXME: performSelector
         }
     }
 
@@ -165,40 +165,40 @@ extension NSManagedObject {
         managedObjectContext?.refreshObject(self, mergeChanges: shouldMerge)
     }
     
-    func safeSetValuesForKeys(keyedValues: [String: AnyObject]) {
-        safeSetValuesForKeysWithKeyedValues(keyedValues, inContext: MAGCoreData.context)
+    func setAttributes(attributesForSet: [String: AnyObject]) {
+        setAttributes(attributesForSet, inContext: MAGCoreData.context)
     }
     
-    func safeSetValuesForKeysWithKeyedValues(keyedValues: [String: AnyObject], inContext context: NSManagedObjectContext) { // FIXME:
-        let mapping = self.dynamicType.attributesNamesMap
+    func setAttributes(attributesForSet: [String: AnyObject], inContext context: NSManagedObjectContext) {
+        let attributesNamesMap = self.dynamicType.attributesNamesMap
         
-        if shouldUpdateWithAttributes(keyedValues) {
-            for (attributeKey, attributeValue) in entity.attributesByName {
-                if let attributeKey = attributeKey as? String {
-                    var keyForKeyedValue = attributeKey
-                    if let mapping = mapping, mappingForAttribute = mapping[attributeKey] {
-                        keyForKeyedValue = mappingForAttribute
+        if shouldUpdateWithAttributes(attributesForSet) {
+            for (currentAttributeName, currentAttributeValue) in entity.attributesByName {
+                if let currentAttributeName = currentAttributeName as? String {
+                    var nameForAttribute = currentAttributeName
+                    if let attributesNamesMap = attributesNamesMap, mappedNameForAttribute = attributesNamesMap[currentAttributeName] {
+                        nameForAttribute = mappedNameForAttribute
                     }
                     
-                    if let keyedValue: AnyObject = keyedValues[attributeKey] { // FIXME AnyObject
-                        let safeValue: AnyObject? = self.dynamicType.safeValueMappedFromKeyedValue(keyedValue, attribute: attributeKey, attributeType: attributeValue.attributeType)
-                        setValue(safeValue, forKey: attributeKey)
+                    if let attributeForSetValue: AnyObject = attributesForSet[nameForAttribute] {
+                        let typedValue: AnyObject? = self.dynamicType.typedAttributeValue(attributeForSetValue, attributeName: currentAttributeName, attributeType: currentAttributeValue.attributeType)
+                        setValue(typedValue, forKey: currentAttributeName)
                     }
                 }
             }
         }
         
         if let relationClasses = self.dynamicType.relationClasses {
-            for (relationName, value) in relationClasses {
-                var relationKey = relationName
-                if let mapping = mapping, mappingForRelationKey = mapping[relationKey] {
-                    relationKey = mappingForRelationKey
+            for (relationClassName, relationClassValue) in relationClasses {
+                var relationName = relationClassName
+                if let attributesNamesMap = attributesNamesMap, mappedAttributeName = attributesNamesMap[relationName] {
+                    relationName = mappedAttributeName
                 }
                 
-                if let attributes = keyedValues[relationKey] as? [String: AnyObject] {
-                    createRelationshipToOneForRelationName(relationName, relationKey: relationKey, attributes: attributes, inContext: context)
-                } else if let value = keyedValues[relationKey] as? [AnyObject] {
-                    createRelationshipToManyForRelationName(relationName, relationKey: relationKey, value: value, inContext: context)
+                if let attributes = attributesForSet[relationName] as? [String: AnyObject] {
+                    createRelationshipToOneForRelationName(relationClassName, relationKey: relationName, attributes: attributes, inContext: context)
+                } else if let attributesArray = attributesForSet[relationName] as? [[String: AnyObject]] {
+                    createRelationshipToManyForRelationName(relationClassName, relationKey: relationName, attributesArray: attributesArray, inContext: context)
                 }
             }
         }
@@ -206,28 +206,31 @@ extension NSManagedObject {
         
     // MARK: relationship creating.
     
-    func createRelationshipToOneForRelationName(relationName: String, relationKey: String, attributes: [String: AnyObject], inContext context: NSManagedObjectContext) { // FIXME:
+    func createRelationshipToOneForRelationName(relationName: String, relationKey: String, attributes: [String: AnyObject], inContext context: NSManagedObjectContext) {
         if let relationshipDescription = entity.relationshipsByName[relationName] as? NSRelationshipDescription, relationClasses = self.dynamicType.relationClasses, objectClass: AnyClass = relationClasses[relationName] {
             if let managedObject = objectClass.safeCreateOrUpdateWithAttributes(attributes, inContext: context) {
                 if relationshipDescription.toMany {
                     addManagedObject(managedObject, toRelation: relationName)
                 } else {
-                    setObject(managedObject, forRelation: relationName)
+                    setManagedObject(managedObject, forRelation: relationName)
                 }
             }
         }
     }
 
-    func createRelationshipToManyForRelationName(relationName: String, relationKey: String, value: AnyObject, inContext context: NSManagedObjectContext) { // FIXME:
-        setObject(nil, forRelation: relationName)
+    func createRelationshipToManyForRelationName(relationName: String, relationKey: String, attributesArray: [[String: AnyObject]], inContext context: NSManagedObjectContext) {
+        setManagedObject(nil, forRelation: relationName)
         
+        for attributesItem in attributesArray {
+            createRelationshipToOneForRelationName(relationName, relationKey: relationKey, attributes: attributesItem, inContext: context)
+        }
     }
     
-    class func objectForPrimaryKey(primaryKey: AnyObject, error: NSErrorPointer) -> AnyObject? {
+    class func objectForPrimaryKey(primaryKey: AnyObject, error: NSErrorPointer) -> NSManagedObject? {
         return objectForPrimaryKey(primaryKey, inContext: MAGCoreData.context, error: error)
     }
     
-    class func objectForPrimaryKey(primaryKey: AnyObject, inContext context: NSManagedObjectContext, error: NSErrorPointer) -> AnyObject? {
+    class func objectForPrimaryKey(primaryKey: AnyObject, inContext context: NSManagedObjectContext, error: NSErrorPointer) -> NSManagedObject? {
         if let primaryKeyName = primaryKeyName {
             return firstForAttribute(primaryKeyName, attributeValue: primaryKey, inContext: context, error: error)
         }
@@ -235,11 +238,11 @@ extension NSManagedObject {
         return nil
     }
     
-    class func getOrCreateObjectForPrimaryKey(primaryKey: AnyObject, error: NSErrorPointer) -> AnyObject? {
+    class func getOrCreateObjectForPrimaryKey(primaryKey: AnyObject, error: NSErrorPointer) -> NSManagedObject? {
         return getOrCreateObjectForPrimaryKey(primaryKey, inContext: MAGCoreData.context, error: error)
     }
     
-    class func getOrCreateObjectForPrimaryKey(primaryKey: AnyObject, inContext context: NSManagedObjectContext, error: NSErrorPointer) -> AnyObject? {
+    class func getOrCreateObjectForPrimaryKey(primaryKey: AnyObject, inContext context: NSManagedObjectContext, error: NSErrorPointer) -> NSManagedObject? {
         if let primaryKeyName = primaryKeyName {
             if let managedObject = firstForAttribute(primaryKeyName, attributeValue: primaryKey, inContext: context, error: error) {
                 return managedObject
@@ -255,16 +258,20 @@ extension NSManagedObject {
         return safeCreateOrUpdateWithAttributes(attributes, inContext: MAGCoreData.context)
     }
     
-    class func safeCreateOrUpdateWithAttributes(attributes: [String: AnyObject], inContext context: NSManagedObjectContext) -> NSManagedObject? { // FIXME: NSManagedObject????
-        if let keyMapping = attributesNamesMap,
+    class func safeCreateOrUpdateWithAttributes(attributes: [String: AnyObject], inContext context: NSManagedObjectContext) -> NSManagedObject? {
+        if let attributesNamesMap = attributesNamesMap,
             primaryKeyName = primaryKeyName,
             entityDescription = NSEntityDescription.entityForName(entityName(), inManagedObjectContext: context),
             primaryKeyAttributeDescription: AnyObject = entityDescription.attributesByName[primaryKeyName] {
                 let attributeType = primaryKeyAttributeDescription.attributeType
-                if let mappedPrimaryKey = keyMapping[primaryKeyName], primaryKeyValue: AnyObject = attributes[mappedPrimaryKey] {
-                    let safePrimaryKeyValue: AnyObject? = safeValueMappedFromKeyedValue(primaryKeyName, attribute: primaryKeyName, attributeType: attributeType)
+                if let mappedPrimaryKey = attributesNamesMap[primaryKeyName], primaryKeyValue: AnyObject = attributes[mappedPrimaryKey] {
+                    if let typedPrimaryValue: AnyObject = typedAttributeValue(primaryKeyValue, attributeName: primaryKeyName, attributeType: attributeType) {
+                        var error: NSError?
+                        let selfManagedObject = getOrCreateObjectForPrimaryKey(typedPrimaryValue, inContext: context, error: &error)
+                        selfManagedObject?.setAttributes(attributes, inContext: context)
+                        return selfManagedObject
+                    }
                 }
-                
         }
         
         return nil
@@ -286,7 +293,7 @@ extension NSManagedObject {
     
     class func createWithAttributes<T: NSManagedObject>(attributes: [String: AnyObject], inContext context: NSManagedObjectContext) -> T {
         var managedObject = createInContext(context)
-        managedObject.safeSetValuesForKeys(attributes)
+        managedObject.setAttributes(attributes)
         return managedObject as! T
     }
     
