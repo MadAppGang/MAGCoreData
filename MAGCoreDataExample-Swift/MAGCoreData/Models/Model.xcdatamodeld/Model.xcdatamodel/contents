@@ -5,7 +5,7 @@
         <attribute name="boolValue" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="date" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="doubleValue" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="entityId" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="entityId" attributeType="String" defaultValueString="Default" indexed="YES" syncable="YES"/>
         <attribute name="intValue" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="string" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="tranformable" optional="YES" attributeType="Transformable" syncable="YES"/>

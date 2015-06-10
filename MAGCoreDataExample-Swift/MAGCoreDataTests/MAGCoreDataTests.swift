@@ -58,22 +58,51 @@ class MAGCoreDataTests: XCTestCase {
     func testThatMainAndPrivateContextsAreDifferent() {
         XCTAssertNotEqual(MAGCoreData.context, MAGCoreData.createPrivateContext())
     }
-    
+        
     func testThatMAGCoreDataSavesAndReturnsData() {
         var testInstance = TestModel.create() as TestModel
-        testInstance.entityId = NSUUID().UUIDString
-        testInstance.string = testString
-        testInstance.doubleValue = testDouble
-        testInstance.date = testDate
+        let testId = NSUUID().UUIDString
+        testInstance.entityId = testId
 
         var error: NSError?
         MAGCoreData.save(&error)
         XCTAssertNil(error, "Saving error.")
         
         error = nil
-        var returnedTestInstance = TestModel.firstForAttribute("string", attributeValue: testString, error: &error) as TestModel?
+        let returnedTestInstance = TestModel.firstForAttribute("entityId", attributeValue: testId, error: &error) as TestModel?
         if returnedTestInstance == nil || error != nil {
             XCTFail("Test instance wasn't saved or returned.")
         }
     }
+    
+    func testThatDateUpdatedAttributeNameSetsAndGets() {
+        let dateUpdatedAttributeName = "dateUpdated"
+        TestModel.dateUpdatedAttributeName = dateUpdatedAttributeName
+        if let testModeldateUpdatedAttributeName = TestModel.dateUpdatedAttributeName {
+            XCTAssertEqual(dateUpdatedAttributeName, testModeldateUpdatedAttributeName, "Saving/getting error.")
+        } else {
+            XCTFail("Saving/getting error.")
+        }
+    }
+    
+    func testThatAttributesSetFromCollections() {
+        var testInstance = TestModel.create() as TestModel
+        let testId = NSUUID().UUIDString
+        let testAttributes: [String: AnyObject] = ["entityId": testId, "string": testString, "doubleValue": testDouble]
+        testInstance.setAttributes(testAttributes)
+        XCTAssertEqual(testInstance.entityId, testId, "Attributes setting error.")
+        
+        if let testInstanceString = testInstance.string {
+            XCTAssertEqual(testInstanceString, testString, "Attributes setting error.")
+        } else {
+            XCTFail("Attributes setting error.")
+        }
+        
+        if let testInstanceDoubleValueNumber = testInstance.doubleValue {
+            XCTAssertEqual(testInstanceDoubleValueNumber.doubleValue, testDouble, "Attributes setting error.")
+        } else {
+            XCTFail("Attributes setting error.")
+        }
+    }
+    
 }
