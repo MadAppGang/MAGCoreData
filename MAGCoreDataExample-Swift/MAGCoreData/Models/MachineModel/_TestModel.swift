@@ -19,7 +19,7 @@ class _TestModel: NSManagedObject {
 
     // MARK: - Class methods
 
-    class func entityName() -> String {
+    class func entityName () -> String {
         return "TestModel"
     }
 

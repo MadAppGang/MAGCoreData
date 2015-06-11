@@ -22,22 +22,22 @@ class MAGCoreDataTests: XCTestCase {
         super.setUp()
         
         var error: NSError?
-        MAGCoreData.prepareCoreData(&error)
+        MAGCoreData.prepareCoreData(error: &error)
         if let error = error {
             println("MAGCoreDataTestCase \(error)")
         } else {
-            println("MAGCoreData was prepared.")
+//            println("MAGCoreData was prepared.")
         }
     }
     
     override func tearDown() {
         var error: NSError?
-        MAGCoreData.deleteAll(&error)
-        MAGCoreData.save(&error)
+        MAGCoreData.deleteAll(error: &error)
+        MAGCoreData.save(error: &error)
         if let error = error {
             println("MAGCoreDataTestCase \(error)")
         } else {
-            println("MAGCoreData was closed.")
+//            println("MAGCoreData was closed.")
         }
         
         super.tearDown()
@@ -51,7 +51,7 @@ class MAGCoreDataTests: XCTestCase {
         MAGCoreData.close()
         
         var error: NSError?
-        XCTAssertTrue(MAGCoreData.prepareCoreData(&error))
+        XCTAssertTrue(MAGCoreData.prepareCoreData(error: &error))
         XCTAssertNil(error, "Preparing error.")
     }
     
@@ -65,11 +65,11 @@ class MAGCoreDataTests: XCTestCase {
         testInstance.entityId = testId
 
         var error: NSError?
-        MAGCoreData.save(&error)
+        MAGCoreData.save(error: &error)
         XCTAssertNil(error, "Saving error.")
         
         error = nil
-        let returnedTestInstance = TestModel.firstForAttribute("entityId", attributeValue: testId, error: &error) as TestModel?
+        let returnedTestInstance = TestModel.firstWithKey("entityId", value: testId, error: &error) as TestModel?
         if returnedTestInstance == nil || error != nil {
             XCTFail("Test instance wasn't saved or returned.")
         }
@@ -77,8 +77,8 @@ class MAGCoreDataTests: XCTestCase {
     
     func testThatDateUpdatedAttributeNameSetsAndGets() {
         let dateUpdatedAttributeName = "dateUpdated"
-        TestModel.dateUpdatedAttributeName = dateUpdatedAttributeName
-        if let testModeldateUpdatedAttributeName = TestModel.dateUpdatedAttributeName {
+        TestModel.updateDateKeyName = dateUpdatedAttributeName
+        if let testModeldateUpdatedAttributeName = TestModel.updateDateKeyName {
             XCTAssertEqual(dateUpdatedAttributeName, testModeldateUpdatedAttributeName, "Saving/getting error.")
         } else {
             XCTFail("Saving/getting error.")
@@ -89,7 +89,7 @@ class MAGCoreDataTests: XCTestCase {
         var testInstance = TestModel.create() as TestModel
         let testId = NSUUID().UUIDString
         let testAttributes: [String: AnyObject] = ["entityId": testId, "string": testString, "doubleValue": testDouble]
-        testInstance.setAttributes(testAttributes)
+        testInstance.safeSetValuesForKeysWithDictionary(testAttributes)
         XCTAssertEqual(testInstance.entityId, testId, "Attributes setting error.")
         
         if let testInstanceString = testInstance.string {
@@ -105,4 +105,21 @@ class MAGCoreDataTests: XCTestCase {
         }
     }
     
+    func testThatAllModelInstancesReturn() {
+        var testInstance = TestModel.create() as TestModel
+        let testId = NSUUID().UUIDString
+        testInstance.entityId = testId
+        
+        MAGCoreData.save()
+
+//        var error: NSError?
+//        println("WVUYWEYE \(TestModel.all(error: &error) as? [TestModel])")
+//        XCTAssertNil(error, "Saving error.")
+        
+        let fetchRequest = NSFetchRequest(entityName: TestModel.entityName())
+        let managedObjects = MAGCoreData.context.executeFetchRequest(fetchRequest, error: nil)
+        if let managedObjects = managedObjects as? [TestModel] {
+            println(managedObjects)
+        }        
+    }
 }

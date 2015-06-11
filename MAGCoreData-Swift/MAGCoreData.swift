@@ -16,9 +16,7 @@ class MAGCoreData: NSObject {
     
     static let instance = MAGCoreData()
     static var context: NSManagedObjectContext {
-        get {
-            return instance.mainContext
-        }
+        return instance.mainContext
     }
     
     var autoMergeFromChildContexts = false {
@@ -37,21 +35,22 @@ class MAGCoreData: NSObject {
     
     // MARK: Preparations
     
-    class func prepareCoreData(error: NSErrorPointer) -> Bool {
+    class func prepareCoreData(error: NSErrorPointer = nil) -> Bool {
         return prepareCoreDataWithModelName(nil, error: error)
     }
   
-    class func prepareCoreDataWithModelName(modelName: String?, error: NSErrorPointer) -> Bool {
+    class func prepareCoreDataWithModelName(modelName: String?, error: NSErrorPointer = nil) -> Bool {
         return prepareCoreDataWithModelName(modelName, storageName: nil, error: error)
     }
     
-    class func prepareCoreDataWithModelName(modelName: String?, storageName: String?, error: NSErrorPointer) -> Bool {
+    class func prepareCoreDataWithModelName(modelName: String?, storageName: String?, error: NSErrorPointer = nil) -> Bool {
         let magCoreDataInstance = MAGCoreData.instance
 
         if let modelName = modelName, modelURL = NSBundle(forClass: self).URLForResource(modelName, withExtension: "momd") {
             magCoreDataInstance.model = NSManagedObjectModel(contentsOfURL: modelURL)
         } else {
-            magCoreDataInstance.model = NSManagedObjectModel.mergedModelFromBundles(nil)
+            let model = NSManagedObjectModel.mergedModelFromBundles(nil)
+            magCoreDataInstance.model = model
         }
         
         if let magCoreDataInstanceModel = magCoreDataInstance.model {
@@ -82,11 +81,11 @@ class MAGCoreData: NSObject {
     
     // MARK: Saving
     
-    class func save(error: NSErrorPointer) -> Bool {
+    class func save(error: NSErrorPointer = nil) -> Bool {
         return MAGCoreData.saveContext(MAGCoreData.context, error: error)
     }
     
-    class func saveContext(context: NSManagedObjectContext, error: NSErrorPointer) -> Bool {
+    class func saveContext(context: NSManagedObjectContext, error: NSErrorPointer = nil) -> Bool {
         if context.hasChanges && !context.save(error) {
             return false
         }
@@ -104,7 +103,7 @@ class MAGCoreData: NSObject {
     
     // MARK: Removing
     
-    class func deleteAll(error: NSErrorPointer) -> Bool {
+    class func deleteAll(error: NSErrorPointer = nil) -> Bool {
         if let persistentStores = MAGCoreData.instance.persistentStore?.persistentStores as? [NSPersistentStore] {
             MAGCoreData.close()
             
@@ -120,7 +119,7 @@ class MAGCoreData: NSObject {
         return false
     }
     
-    class func deleteStorageWithName(storageName: String?, error: NSErrorPointer) -> Bool {
+    class func deleteStorageWithName(storageName: String?, error: NSErrorPointer = nil) -> Bool {
         MAGCoreData.close()
         
         if let defaultStorageURL = defaultStorageURLWithName(storageName) {
@@ -150,15 +149,15 @@ class MAGCoreData: NSObject {
     
     private func didSetAutoMergeFromChildContexts() {
         if autoMergeFromChildContexts {
-            NSNotificationCenter.defaultCenter().addObserverForName(NSManagedObjectContextDidSaveNotification, object: nil, queue: nil, usingBlock: { (notification) -> Void in
+            NSNotificationCenter.defaultCenter().addObserverForName(NSManagedObjectContextDidSaveNotification, object: nil, queue: nil) { notification in
                 if let context = notification.object as? NSManagedObjectContext {
                     if context != self.mainContext && context.persistentStoreCoordinator == self.persistentStore {
-                        self.mainContext.performBlock({ () -> Void in
+                        self.mainContext.performBlock {
                             self.mainContext.mergeChangesFromContextDidSaveNotification(notification)
-                        })
+                        }
                     }
                 }
-            })
+            }
         } else {
             NSNotificationCenter.defaultCenter().removeObserver(self)
         }

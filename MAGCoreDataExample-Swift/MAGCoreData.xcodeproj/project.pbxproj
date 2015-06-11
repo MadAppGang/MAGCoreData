@@ -24,6 +24,9 @@
 		180A2E641B286B8E00B676EC /* FetchedResultsControllerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180A2E611B286B8E00B676EC /* FetchedResultsControllerManager.swift */; };
 		180A2E651B286B8E00B676EC /* MAGCoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180A2E621B286B8E00B676EC /* MAGCoreData.swift */; };
 		180A2E661B286B8E00B676EC /* NSManagedObject+MAGCoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180A2E631B286B8E00B676EC /* NSManagedObject+MAGCoreData.swift */; };
+		180A2E671B286C8800B676EC /* NSManagedObject+MAGCoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180A2E631B286B8E00B676EC /* NSManagedObject+MAGCoreData.swift */; };
+		180A2E681B286C8B00B676EC /* FetchedResultsControllerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180A2E611B286B8E00B676EC /* FetchedResultsControllerManager.swift */; };
+		180A2E691B286C8E00B676EC /* MAGCoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180A2E621B286B8E00B676EC /* MAGCoreData.swift */; };
 		18317BE01B27099D0070803F /* TestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EEAA081B15E0FF0048C440 /* TestModel.swift */; };
 		185E51DE1B13267000C23281 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185E51DD1B13267000C23281 /* AppDelegate.swift */; };
 		185E51E01B13267000C23281 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185E51DF1B13267000C23281 /* ViewController.swift */; };
@@ -31,6 +34,7 @@
 		185E51E51B13267000C23281 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 185E51E41B13267000C23281 /* Images.xcassets */; };
 		185E51E81B13267000C23281 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 185E51E61B13267000C23281 /* LaunchScreen.xib */; };
 		18B94F421B17238B00FCD17F /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 18B94F401B17238B00FCD17F /* Model.xcdatamodeld */; };
+		18E5306E1B29BB3F00C18972 /* Model.xcdatamodeld in Resources */ = {isa = PBXBuildFile; fileRef = 18B94F401B17238B00FCD17F /* Model.xcdatamodeld */; };
 		18EEA9F01B15D1250048C440 /* MAGCoreDataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EEA9EF1B15D1250048C440 /* MAGCoreDataTests.swift */; };
 		18EEAA0B1B15E0FF0048C440 /* TestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EEAA081B15E0FF0048C440 /* TestModel.swift */; };
 		18EEAA0C1B15E0FF0048C440 /* _TestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EEAA0A1B15E0FF0048C440 /* _TestModel.swift */; };
@@ -280,6 +284,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				18E5306E1B29BB3F00C18972 /* Model.xcdatamodeld in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -321,9 +326,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				180A2E671B286C8800B676EC /* NSManagedObject+MAGCoreData.swift in Sources */,
 				18317BE01B27099D0070803F /* TestModel.swift in Sources */,
 				18EEAA0D1B15E1350048C440 /* _TestModel.swift in Sources */,
 				18EEA9F01B15D1250048C440 /* MAGCoreDataTests.swift in Sources */,
+				180A2E691B286C8E00B676EC /* MAGCoreData.swift in Sources */,
+				180A2E681B286C8B00B676EC /* FetchedResultsControllerManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
