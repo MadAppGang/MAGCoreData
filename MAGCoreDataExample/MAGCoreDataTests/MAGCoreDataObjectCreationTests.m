@@ -69,7 +69,7 @@
     [[MAGCoreData instance] close];
     expect([MAGCoreData prepareCoreDataWithModelName:nil andStorageName:NSStringFromClass([self class]) error:nil]).to.beTruthy();
     
-    Weather *storedWeather = [[Weather all] firstObject];
+    Weather *storedWeather = [Weather all].firstObject;
     expect(storedWeather).toNot.beNil();
     
     NSLog(@"array %d", [Weather all].count);

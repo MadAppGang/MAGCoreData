@@ -63,7 +63,7 @@
 }
 
 + (NSURL *)defaultStorageURLWithName:(NSString *)storageName {
-    NSURL *docDir = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
+    NSURL *docDir = [[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask].lastObject;
     NSURL *storeURL = storageName ? [docDir URLByAppendingPathComponent:[NSString stringWithFormat:@"%@.sqlite",storageName]] : [docDir URLByAppendingPathComponent:@"MAGStore.sqlite"];
     return storeURL;
 }
@@ -80,7 +80,7 @@
 }
 
 + (BOOL)prepareCoreDataWithModelName:(NSString *)modelName andStorageName:(NSString *)storageName error:(NSError **)error {
-    if ([[MAGCoreData instance] mainContext]) return NO;
+    if ([MAGCoreData instance].mainContext) return NO;
 
     MAGCoreData *mag = [MAGCoreData instance];
     if (modelName) {
@@ -109,14 +109,14 @@
 }
 
 + (NSManagedObjectContext *)context {
-    return [[MAGCoreData instance] mainContext];
+    return [MAGCoreData instance].mainContext;
 }
 
 + (NSManagedObjectContext *)createPrivateContext {
     if (![MAGCoreData instance].mainContext) return nil;
     
     NSManagedObjectContext *moc = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
-    moc.persistentStoreCoordinator = [[MAGCoreData instance] persistentStore];
+    moc.persistentStoreCoordinator = [MAGCoreData instance].persistentStore;
     return moc;
 }
 
@@ -126,8 +126,8 @@
 
 + (BOOL)saveContext:(NSManagedObjectContext *)context {
     NSError *error = nil;
-    if ([context hasChanges] && ![context save:&error]) {
-        NSArray *detailedErrors = [error userInfo][NSDetailedErrorsKey];
+    if (context.hasChanges && ![context save:&error]) {
+        NSArray *detailedErrors = error.userInfo[NSDetailedErrorsKey];
         if (detailedErrors.count) {
             for (NSError *detailedError in detailedErrors) {
                 NSLog(@"MAGCoreData DetailedError: %@", detailedError.userInfo);
@@ -159,7 +159,7 @@
 
 + (BOOL)deleteAll {
     //assume we use only one persistent store
-    NSURL *storeURL = [[[[MAGCoreData instance] persistentStore] persistentStores][0] URL];
+    NSURL *storeURL = ([MAGCoreData instance].persistentStore.persistentStores[0]).URL;
     [[MAGCoreData instance] close];
     return [MAGCoreData removeStoreAtPath:storeURL];
 }

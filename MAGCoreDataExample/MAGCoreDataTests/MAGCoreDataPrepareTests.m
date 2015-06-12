@@ -15,7 +15,7 @@
 @implementation MAGCoreDataPrepareTests
 
 - (void)testCoreDataCreationAndDeletion {
-    NSURL *docDir = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
+    NSURL *docDir = [[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask].lastObject;
     NSURL *storeURL = [docDir URLByAppendingPathComponent:[NSString stringWithFormat:@"%@.sqlite", kStorageName]];
     
     [MAGCoreData deleteAllInStorageWithName:kStorageName];

@@ -140,7 +140,7 @@ static NSString const * kValueTransformersKey = @"NSManagedObjectValueTransforme
     
     if (keyedValue == nil) {
         safeValue = nil;
-    } else if ([valueTransformers objectForKey:attribute]) {
+    } else if (valueTransformers[attribute]) {
         //if we have custom value transformer - apply it
         id(^transformer)(id value) = valueTransformers[attribute];
         safeValue = transformer(keyedValue);
@@ -163,7 +163,7 @@ static NSString const * kValueTransformersKey = @"NSManagedObjectValueTransforme
 
 - (void)safeSetValuesForKeysWithDictionary:(NSDictionary *)keyedValues inContext:(NSManagedObjectContext *)context {
     //fill attributes
-    NSDictionary *attributes = [[self entity] attributesByName];
+    NSDictionary *attributes = self.entity.attributesByName;
     NSDictionary *mapping = [[self class] keyMapping];
     NSDictionary *valueTransformers = [[self class] valueTransformers];
 
@@ -184,7 +184,7 @@ static NSString const * kValueTransformersKey = @"NSManagedObjectValueTransforme
     }
 
     NSDictionary *relationsClasses = [[self class] relationClasses];
-    for (NSString *relationName in [relationsClasses allKeys]) {
+    for (NSString *relationName in relationsClasses.allKeys) {
         NSString *relationKey = mapping?mapping[relationName]:relationName;
         id value = keyedValues[relationKey];
         if (value && [value isKindOfClass:[NSDictionary class]]) {
@@ -217,7 +217,7 @@ static NSString const * kValueTransformersKey = @"NSManagedObjectValueTransforme
 }
 
 - (NSString *)firstLetterCap:(NSString*)string {
-    NSString *firstCapChar = [[string substringToIndex:1] capitalizedString];
+    NSString *firstCapChar = [string substringToIndex:1].capitalizedString;
     NSString *cappedString = [string stringByReplacingCharactersInRange:NSMakeRange(0,1) withString:firstCapChar];
     return cappedString;
 }
@@ -248,7 +248,7 @@ static NSString const * kValueTransformersKey = @"NSManagedObjectValueTransforme
 
 - (void)createRelationshipForRelationName:(id)relationName relationKey:(id)relationKey withValue:(id)value inContext:(NSManagedObjectContext*)context {
     NSDictionary *relationsClasses = [[self class] relationClasses];
-    NSRelationshipDescription *relationshipDescription = [[self entity] relationshipsByName][relationName];
+    NSRelationshipDescription *relationshipDescription = self.entity.relationshipsByName[relationName];
     if (relationshipDescription) {
         Class objectClass = relationsClasses[relationName];
         //fill with recursion from dictionary
@@ -305,9 +305,9 @@ static NSString const * kValueTransformersKey = @"NSManagedObjectValueTransforme
     id primaryKeyName = [self primaryKeyName];
     
     NSEntityDescription *entityDescription = [NSEntityDescription entityForName:[self entityName] inManagedObjectContext:context];
-    NSDictionary *attributes = [entityDescription attributesByName];
-    NSAttributeDescription *primaryKeyAttributeDescription = [attributes objectForKey:primaryKeyName];
-    NSAttributeType primaryKeyAttributeType = [primaryKeyAttributeDescription attributeType];
+    NSDictionary *attributes = entityDescription.attributesByName;
+    NSAttributeDescription *primaryKeyAttributeDescription = attributes[primaryKeyName];
+    NSAttributeType primaryKeyAttributeType = primaryKeyAttributeDescription.attributeType;
     
     NSString *mappedPrimaryKey = primaryKeyName ? [self keyMapping][primaryKeyName] : nil;
     id primaryKeyValue = mappedPrimaryKey ? keyedValues[mappedPrimaryKey] : nil;
@@ -369,7 +369,7 @@ static NSString const * kValueTransformersKey = @"NSManagedObjectValueTransforme
 
 + (NSArray *)allForPredicate:(NSPredicate *)predicate inContext:(NSManagedObjectContext *)context {
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:[self entityName]];
-    [request setPredicate:predicate];
+    request.predicate = predicate;
     __block NSArray *ret = nil;
     ret = [context executeFetchRequest:request error:nil];
     return ret;
@@ -378,8 +378,8 @@ static NSString const * kValueTransformersKey = @"NSManagedObjectValueTransforme
 + (NSArray *)allForPredicate:(NSPredicate *)predicate orderBy:(NSString *)key ascending:(BOOL)ascending inContext:(NSManagedObjectContext *)context {
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:[self entityName]];
     NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:key ascending:ascending];
-    [request setPredicate:predicate];
-    [request setSortDescriptors:@[sortDescriptor]];
+    request.predicate = predicate;
+    request.sortDescriptors = @[sortDescriptor];
     __block NSArray *ret = nil;
     ret = [context executeFetchRequest:request error:nil];
     return ret;
@@ -388,7 +388,7 @@ static NSString const * kValueTransformersKey = @"NSManagedObjectValueTransforme
 + (NSArray *)allOrderedBy:(NSString *)key ascending:(BOOL)ascending inContext:(NSManagedObjectContext *)context {
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:[self entityName]];
     NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:key ascending:ascending];
-    [request setSortDescriptors:@[sortDescriptor]];
+    request.sortDescriptors = @[sortDescriptor];
     __block NSArray *ret = nil;
     ret = [context executeFetchRequest:request error:nil];
     return ret;
@@ -410,13 +410,13 @@ static NSString const * kValueTransformersKey = @"NSManagedObjectValueTransforme
 
 + (id)firstForPredicate:(NSPredicate *)predicate orderBy:(NSString *)key ascending:(BOOL)ascending inContext:(NSManagedObjectContext *)context{
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:[self entityName]];
-    [request setFetchLimit:1];
+    request.fetchLimit = 1;
     NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:key ascending:ascending];
-    [request setPredicate:predicate];
-    [request setSortDescriptors:@[sortDescriptor]];
+    request.predicate = predicate;
+    request.sortDescriptors = @[sortDescriptor];
     __block NSArray *ret = nil;
     ret = [context executeFetchRequest:request error:nil];
-    if ([ret count]>0) {
+    if (ret.count>0) {
         return ret[0];
     }
     return nil;
@@ -426,7 +426,7 @@ static NSString const * kValueTransformersKey = @"NSManagedObjectValueTransforme
 
 + (id)firstInContext:(NSManagedObjectContext *)context {
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:[self entityName]];
-    [request setFetchLimit:1];
+    request.fetchLimit = 1;
     __block NSArray *values = nil;
     values = [context executeFetchRequest:request error:nil];
     if (values.count > 0) {
@@ -438,8 +438,8 @@ static NSString const * kValueTransformersKey = @"NSManagedObjectValueTransforme
 + (id)firstWithKey:(NSString *)key value:(id)value inContext:(NSManagedObjectContext *)context {
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@", key, value];
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:[self entityName]];
-    [request setFetchLimit:1];
-    [request setPredicate:predicate];
+    request.fetchLimit = 1;
+    request.predicate = predicate;
     __block NSArray *values = nil;
     values = [context executeFetchRequest:request error:nil];
     if (values.count) {
