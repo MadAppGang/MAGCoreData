@@ -266,23 +266,23 @@ static NSString const * kValueTransformersKey = @"NSManagedObjectValueTransforme
 }
 
 
-#pragma mark - easy object manipulation
-+ (NSManagedObject *)objectForPrimaryKey:(id)primaryKey inContext:(NSManagedObjectContext *)context {
+#pragma mark - Easy object manipulation
++ (__kindof NSManagedObject *)objectForPrimaryKey:(id)primaryKey inContext:(NSManagedObjectContext *)context {
     if (primaryKey) {
         return [self firstWithKey:[self primaryKeyName] value:primaryKey inContext:context];
     }
     return nil;
 }
 
-+ (NSManagedObject *)objectForPrimaryKey:(id)primaryKey {
++ (__kindof NSManagedObject *)objectForPrimaryKey:(id)primaryKey {
     return [self objectForPrimaryKey:primaryKey inContext:[MAGCoreData context]];
 }
 
-+ (NSManagedObject *)getOrCreateObjectForPrimaryKey:(id)primaryKey {
++ (__kindof NSManagedObject *)getOrCreateObjectForPrimaryKey:(id)primaryKey {
     return [self getOrCreateObjectForPrimaryKey:primaryKey inContext:[MAGCoreData context]];
 }
 
-+ (NSManagedObject *)getOrCreateObjectForPrimaryKey:(id)primaryKeyValue inContext:(NSManagedObjectContext *)context {
++ (__kindof NSManagedObject *)getOrCreateObjectForPrimaryKey:(id)primaryKeyValue inContext:(NSManagedObjectContext *)context {
     NSManagedObject *object = nil;
     if (primaryKeyValue) object = [self firstWithKey:[self primaryKeyName] value:primaryKeyValue inContext:context];
     if (object) {
@@ -293,13 +293,12 @@ static NSString const * kValueTransformersKey = @"NSManagedObjectValueTransforme
 }
 
 
-+ (NSManagedObject *)safeCreateOrUpdateWithDictionary:(NSDictionary *)keyedValues {
++ (__kindof NSManagedObject *)safeCreateOrUpdateWithDictionary:(NSDictionary *)keyedValues {
     return [self safeCreateOrUpdateWithDictionary:keyedValues inContext:[MAGCoreData context]];
-
 }
 
 
-+ (NSManagedObject *)safeCreateOrUpdateWithDictionary:(NSDictionary *)keyedValues inContext:(NSManagedObjectContext *)context {
++ (__kindof NSManagedObject *)safeCreateOrUpdateWithDictionary:(NSDictionary *)keyedValues inContext:(NSManagedObjectContext *)context {
     //createOrUpdate
     
     id primaryKeyName = [self primaryKeyName];
@@ -320,54 +319,54 @@ static NSString const * kValueTransformersKey = @"NSManagedObjectValueTransforme
 }
 
 
-+ (NSManagedObject *)create {
++ (__kindof NSManagedObject *)create {
     return [self createInContext:[MAGCoreData context]];
 }
 
-+ (NSManagedObject *)createInContext:(NSManagedObjectContext *)context {
++ (__kindof NSManagedObject *)createInContext:(NSManagedObjectContext *)context {
     NSParameterAssert(context);
     NSManagedObject *object = nil;
     object =  [NSEntityDescription insertNewObjectForEntityForName:[self entityName] inManagedObjectContext:context];
     return object;
 }
 
-+ (NSManagedObject *)createFromDictionary:(NSDictionary *)dictionary {
++ (__kindof NSManagedObject *)createFromDictionary:(NSDictionary *)dictionary {
     return [self createFromDictionary:dictionary inContext:[MAGCoreData context]];
 }
 
-+ (NSManagedObject *)createFromDictionary:(NSDictionary *)dictionary inContext:(NSManagedObjectContext *)context {
++ (__kindof NSManagedObject *)createFromDictionary:(NSDictionary *)dictionary inContext:(NSManagedObjectContext *)context {
     NSParameterAssert(context);
     NSManagedObject * object = [self createInContext:context];
     [object safeSetValuesForKeysWithDictionary:dictionary];
     return object;
 }
 
-#pragma mark - fetching objects
+#pragma mark - Fetching objects
 
-+ (NSArray<NSManagedObjectContext*> *)all {
++ (NSArray<__kindof NSManagedObjectContext*> *)all {
     return [self allInContext:[MAGCoreData context]];
 }
 
-+ (NSArray<NSManagedObjectContext*> *)allForPredicate:(NSPredicate *)predicate {
++ (NSArray<__kindof NSManagedObjectContext*> *)allForPredicate:(NSPredicate *)predicate {
     return [self allForPredicate:predicate inContext:[MAGCoreData context]];
 }
 
-+ (NSArray<NSManagedObjectContext*> *)allForPredicate:(NSPredicate *)predicate orderBy:(NSString *)key ascending:(BOOL)ascending {
++ (NSArray<__kindof NSManagedObjectContext*> *)allForPredicate:(NSPredicate *)predicate orderBy:(NSString *)key ascending:(BOOL)ascending {
     return [self allForPredicate:predicate orderBy:key ascending:ascending inContext:[MAGCoreData context]];
 }
 
-+ (NSArray<NSManagedObjectContext*> *)allOrderedBy:(NSString *)key ascending:(BOOL)ascending {
++ (NSArray<__kindof NSManagedObjectContext*> *)allOrderedBy:(NSString *)key ascending:(BOOL)ascending {
     return [self allOrderedBy:key ascending:ascending inContext:[MAGCoreData context]];
 }
 
-+ (NSArray<NSManagedObjectContext*> *)allInContext:(NSManagedObjectContext *)context {
++ (NSArray<__kindof NSManagedObjectContext*> *)allInContext:(NSManagedObjectContext *)context {
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:[self entityName]];
     __block NSArray *ret = nil;
     ret = [context executeFetchRequest:request error:nil];
     return ret;
 }
 
-+ (NSArray<NSManagedObjectContext*> *)allForPredicate:(NSPredicate *)predicate inContext:(NSManagedObjectContext *)context {
++ (NSArray<__kindof NSManagedObjectContext*> *)allForPredicate:(NSPredicate *)predicate inContext:(NSManagedObjectContext *)context {
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:[self entityName]];
     request.predicate = predicate;
     __block NSArray *ret = nil;
@@ -375,7 +374,7 @@ static NSString const * kValueTransformersKey = @"NSManagedObjectValueTransforme
     return ret;
 }
 
-+ (NSArray<NSManagedObjectContext*> *)allForPredicate:(NSPredicate *)predicate orderBy:(NSString *)key ascending:(BOOL)ascending inContext:(NSManagedObjectContext *)context {
++ (NSArray<__kindof NSManagedObjectContext*> *)allForPredicate:(NSPredicate *)predicate orderBy:(NSString *)key ascending:(BOOL)ascending inContext:(NSManagedObjectContext *)context {
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:[self entityName]];
     NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:key ascending:ascending];
     request.predicate = predicate;
@@ -385,7 +384,7 @@ static NSString const * kValueTransformersKey = @"NSManagedObjectValueTransforme
     return ret;
 }
 
-+ (NSArray<NSManagedObjectContext*> *)allOrderedBy:(NSString *)key ascending:(BOOL)ascending inContext:(NSManagedObjectContext *)context {
++ (NSArray<__kindof NSManagedObjectContext*> *)allOrderedBy:(NSString *)key ascending:(BOOL)ascending inContext:(NSManagedObjectContext *)context {
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:[self entityName]];
     NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:key ascending:ascending];
     request.sortDescriptors = @[sortDescriptor];
@@ -395,20 +394,20 @@ static NSString const * kValueTransformersKey = @"NSManagedObjectValueTransforme
 
 }
 
-+ (NSManagedObject *)first {
++ (__kindof NSManagedObject *)first {
     return  [self firstInContext:[MAGCoreData context]];
 }
 
-+ (NSManagedObject *)firstWithKey:(NSString *)key value:(id)value {
++ (__kindof NSManagedObject *)firstWithKey:(NSString *)key value:(id)value {
     return [self firstWithKey:key value:value inContext:[MAGCoreData context]];
 }
 
 
-+ (NSManagedObject *)firstForPredicate:(NSPredicate *)predicate orderBy:(NSString *)key ascending:(BOOL)ascending {
++ (__kindof NSManagedObject *)firstForPredicate:(NSPredicate *)predicate orderBy:(NSString *)key ascending:(BOOL)ascending {
     return [self firstForPredicate:predicate orderBy:key ascending:ascending inContext:[MAGCoreData context]];
 }
 
-+ (NSManagedObject *)firstForPredicate:(NSPredicate *)predicate orderBy:(NSString *)key ascending:(BOOL)ascending inContext:(NSManagedObjectContext *)context{
++ (__kindof NSManagedObject *)firstForPredicate:(NSPredicate *)predicate orderBy:(NSString *)key ascending:(BOOL)ascending inContext:(NSManagedObjectContext *)context{
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:[self entityName]];
     request.fetchLimit = 1;
     NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:key ascending:ascending];
@@ -416,7 +415,7 @@ static NSString const * kValueTransformersKey = @"NSManagedObjectValueTransforme
     request.sortDescriptors = @[sortDescriptor];
     __block NSArray *ret = nil;
     ret = [context executeFetchRequest:request error:nil];
-    if (ret.count>0) {
+    if (ret.count > 0) {
         return ret[0];
     }
     return nil;
@@ -424,18 +423,18 @@ static NSString const * kValueTransformersKey = @"NSManagedObjectValueTransforme
 
 
 
-+ (NSManagedObject *)firstInContext:(NSManagedObjectContext *)context {
++ (__kindof NSManagedObject *)firstInContext:(NSManagedObjectContext *)context {
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:[self entityName]];
     request.fetchLimit = 1;
     __block NSArray *values = nil;
     values = [context executeFetchRequest:request error:nil];
     if (values.count > 0) {
-        return (NSManagedObject *)values[0];
+        return values[0];
     }
     return nil;
 }
 
-+ (NSManagedObject *)firstWithKey:(NSString *)key value:(id)value inContext:(NSManagedObjectContext *)context {
++ (__kindof NSManagedObject *)firstWithKey:(NSString *)key value:(id)value inContext:(NSManagedObjectContext *)context {
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@", key, value];
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:[self entityName]];
     request.fetchLimit = 1;
@@ -443,12 +442,12 @@ static NSString const * kValueTransformersKey = @"NSManagedObjectValueTransforme
     __block NSArray *values = nil;
     values = [context executeFetchRequest:request error:nil];
     if (values.count) {
-        return (NSManagedObject *)values[0];
+        return values[0];
     }
     return nil;
 }
 
-#pragma mark - deleting objects
+#pragma mark - Deleting objects
 
 + (void)deleteAll {
     [self deleteAllInContext:[MAGCoreData context]];
@@ -456,15 +455,16 @@ static NSString const * kValueTransformersKey = @"NSManagedObjectValueTransforme
 
 + (void)deleteAllInContext:(NSManagedObjectContext *)context {
     NSArray *objects = [self allInContext:context];
-    for (NSManagedObject *object in objects)
+    for (NSManagedObject *object in objects) {
         [context deleteObject:object];
+    }
 }
 
 - (void)delete {
     [self.managedObjectContext deleteObject:self];
 }
 
-#pragma mark - refreshing object
+#pragma mark - Refreshing object
 
 - (void)refreshMerging:(BOOL)merging {
     [self.managedObjectContext refreshObject:self mergeChanges:merging];

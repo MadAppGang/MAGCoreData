@@ -11,8 +11,8 @@
 @interface NSManagedObject (MAGCoreData)
 
 //Key mapping of local names and web service names, key of dictionary is local name and value is web service name
-+ (NSDictionary *)keyMapping;
-+ (void)setKeyMapping:(NSDictionary*)mapping;
++ (NSDictionary * __nullable)keyMapping;
++ (void)setKeyMapping:(NSDictionary *)mapping;
 //Inline relation classes for recursive instantiation
 + (NSDictionary *)relationClasses;
 + (void)setRelationClasses:(NSDictionary *)newRelationClasses;
@@ -46,40 +46,41 @@
 - (void)safeSetValuesForKeysWithDictionary:(NSDictionary *)keyedValues;
 - (void)safeSetValuesForKeysWithDictionary:(NSDictionary *)keyedValues inContext:(NSManagedObjectContext *)context;
 
+NS_ASSUME_NONNULL_BEGIN
++ (__kindof NSManagedObject *)objectForPrimaryKey:(id)primaryKey inContext:(NSManagedObjectContext *)context;
++ (__kindof NSManagedObject *)objectForPrimaryKey:(id)primaryKey;
 
-+ (NSManagedObject *)objectForPrimaryKey:(id)primaryKey inContext:(NSManagedObjectContext *)context;
-+ (NSManagedObject *)objectForPrimaryKey:(id)primaryKey;
++ (__kindof NSManagedObject *)getOrCreateObjectForPrimaryKey:(id)primaryKey;
++ (__kindof NSManagedObject *)getOrCreateObjectForPrimaryKey:(id)primaryKey inContext:(NSManagedObjectContext *)context;
 
-+ (NSManagedObject *)getOrCreateObjectForPrimaryKey:(id)primaryKey;
-+ (NSManagedObject *)getOrCreateObjectForPrimaryKey:(id)primaryKey inContext:(NSManagedObjectContext *)context;
-
-+ (NSManagedObject *)safeCreateOrUpdateWithDictionary:(NSDictionary *)keyedValues;
-+ (NSManagedObject *)safeCreateOrUpdateWithDictionary:(NSDictionary *)keyedValues inContext:(NSManagedObjectContext *)context;
++ (__kindof NSManagedObject *)safeCreateOrUpdateWithDictionary:(NSDictionary *)keyedValues;
++ (__kindof NSManagedObject *)safeCreateOrUpdateWithDictionary:(NSDictionary *)keyedValues inContext:(NSManagedObjectContext *)context;
 
 
-+ (NSManagedObject *)create;
-+ (NSManagedObject *)createInContext:(NSManagedObjectContext *)context;
-+ (NSManagedObject *)createFromDictionary:(NSDictionary *)dictionary;
-+ (NSManagedObject *)createFromDictionary:(NSDictionary *)dictionary inContext:(NSManagedObjectContext *)context;
++ (__kindof NSManagedObject *)create;
++ (__kindof NSManagedObject *)createInContext:(NSManagedObjectContext *)context;
++ (__kindof NSManagedObject *)createFromDictionary:(NSDictionary *)dictionary;
++ (__kindof NSManagedObject *)createFromDictionary:(NSDictionary *)dictionary inContext:(NSManagedObjectContext *)context;
+
 
 #pragma mark - fetching objects
-+ (NSArray<NSManagedObjectContext*> *)all;
-+ (NSArray<NSManagedObjectContext*> *)allForPredicate:(NSPredicate *)predicate;
-+ (NSArray<NSManagedObjectContext*> *)allForPredicate:(NSPredicate *)predicate orderBy:(NSString *)key ascending:(BOOL)ascending;
-+ (NSArray<NSManagedObjectContext*> *)allOrderedBy:(NSString *)key ascending:(BOOL)ascending;
-+ (NSArray<NSManagedObjectContext*> *)allInContext:(NSManagedObjectContext*)context;
-+ (NSArray<NSManagedObjectContext*> *)allForPredicate:(NSPredicate *)predicate inContext:(NSManagedObjectContext *)context;
-+ (NSArray<NSManagedObjectContext*> *)allForPredicate:(NSPredicate *)predicate orderBy:(NSString *)key ascending:(BOOL)ascending inContext:(NSManagedObjectContext *)context;
-+ (NSArray<NSManagedObjectContext*> *)allOrderedBy:(NSString *)key ascending:(BOOL)ascending inContext:(NSManagedObjectContext *)context;
++ (NSArray<__kindof NSManagedObjectContext*> * __nullable)all;
++ (NSArray<__kindof NSManagedObjectContext*> * __nullable)allForPredicate:(NSPredicate *)predicate;
++ (NSArray<__kindof NSManagedObjectContext*> * __nullable)allForPredicate:(NSPredicate *)predicate orderBy:(NSString *)key ascending:(BOOL)ascending;
++ (NSArray<__kindof NSManagedObjectContext*> * __nullable)allOrderedBy:(NSString *)key ascending:(BOOL)ascending;
++ (NSArray<__kindof NSManagedObjectContext*> * __nullable)allInContext:(NSManagedObjectContext*)context;
++ (NSArray<__kindof NSManagedObjectContext*> * __nullable)allForPredicate:(NSPredicate *)predicate inContext:(NSManagedObjectContext *)context;
++ (NSArray<__kindof NSManagedObjectContext*> * __nullable)allForPredicate:(NSPredicate *)predicate orderBy:(NSString *)key ascending:(BOOL)ascending inContext:(NSManagedObjectContext *)context;
++ (NSArray<__kindof NSManagedObjectContext*> * __nullable)allOrderedBy:(NSString *)key ascending:(BOOL)ascending inContext:(NSManagedObjectContext *)context;
 
-+ (NSManagedObject *)first;
-+ (NSManagedObject *)firstWithKey:(NSString *)key value:(id)value;
-+ (NSManagedObject *)firstForPredicate:(NSPredicate *)predicate orderBy:(NSString *)key ascending:(BOOL)ascending;
-+ (NSManagedObject *)firstForPredicate:(NSPredicate *)predicate orderBy:(NSString *)key ascending:(BOOL)ascending inContext:(NSManagedObjectContext *)context;
++ (__kindof NSManagedObject * __nullable)first;
++ (__kindof NSManagedObject * __nullable)firstWithKey:(NSString *)key value:(id)value;
++ (__kindof NSManagedObject * __nullable)firstForPredicate:(NSPredicate *)predicate orderBy:(NSString *)key ascending:(BOOL)ascending;
++ (__kindof NSManagedObject * __nullable)firstForPredicate:(NSPredicate *)predicate orderBy:(NSString *)key ascending:(BOOL)ascending inContext:(NSManagedObjectContext *)context;
 
 
-+ (NSManagedObject *)firstInContext:(NSManagedObjectContext *)context;
-+ (NSManagedObject *)firstWithKey:(NSString *)key value:(id)value inContext:(NSManagedObjectContext *)context;
++ (__kindof NSManagedObject * __nullable)firstInContext:(NSManagedObjectContext *)context;
++ (__kindof NSManagedObject * __nullable)firstWithKey:(NSString *)key value:(id)value inContext:(NSManagedObjectContext * __nullable)context;
 
 #pragma mark - deleting objects
 + (void)deleteAll;
@@ -90,3 +91,5 @@
 - (void)refreshMerging:(BOOL)merging;
 
 @end
+
+NS_ASSUME_NONNULL_END

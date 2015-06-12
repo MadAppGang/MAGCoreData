@@ -43,6 +43,7 @@
 		FA80B3BD1933485D00BCC225 /* Weather+Initialization.m in Sources */ = {isa = PBXBuildFile; fileRef = FA80B3BC1933485D00BCC225 /* Weather+Initialization.m */; };
 		FA80B3C3193348EF00BCC225 /* Weather.m in Sources */ = {isa = PBXBuildFile; fileRef = FA80B3C2193348EF00BCC225 /* Weather.m */; };
 		FAD99EC718ACCB2600896266 /* ISO8601DateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = FAD99EC418ACCB2600896266 /* ISO8601DateFormatter.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		FAF3E0EC1B2B1F05003CBB5A /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FAF3E0EB1B2B1F05003CBB5A /* Storyboard.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -103,6 +104,7 @@
 		FA9153DE193DEE320043851B /* MAGCoreDataExample-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MAGCoreDataExample-Bridging-Header.h"; sourceTree = "<group>"; };
 		FAD99EC318ACCB2600896266 /* ISO8601DateFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISO8601DateFormatter.h; sourceTree = "<group>"; };
 		FAD99EC418ACCB2600896266 /* ISO8601DateFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISO8601DateFormatter.m; sourceTree = "<group>"; };
+		FAF3E0EB1B2B1F05003CBB5A /* Storyboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Storyboard.storyboard; path = ../Storyboard.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -181,6 +183,7 @@
 				FA46F1CD1932420A009FF04B /* DataModel */,
 				BDD82FB517CE409C00F1CD8D /* MAGAppDelegate.h */,
 				BDD82FB617CE409C00F1CD8D /* MAGAppDelegate.m */,
+				FAF3E0EB1B2B1F05003CBB5A /* Storyboard.storyboard */,
 				BDD82FAD17CE409C00F1CD8D /* Supporting Files */,
 			);
 			path = MAGCoreDataExample;
@@ -363,6 +366,7 @@
 				BDD82FB917CE409C00F1CD8D /* Default.png in Resources */,
 				BDD82FBB17CE409C00F1CD8D /* Default@2x.png in Resources */,
 				BDD82FBD17CE409C00F1CD8D /* Default-568h@2x.png in Resources */,
+				FAF3E0EC1B2B1F05003CBB5A /* Storyboard.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
