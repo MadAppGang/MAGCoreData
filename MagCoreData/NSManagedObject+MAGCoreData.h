@@ -47,39 +47,39 @@
 - (void)safeSetValuesForKeysWithDictionary:(NSDictionary *)keyedValues inContext:(NSManagedObjectContext *)context;
 
 
-+ (instancetype)objectForPrimaryKey:(id)primaryKey inContext:(NSManagedObjectContext *)context;
-+ (instancetype)objectForPrimaryKey:(id)primaryKey;
++ (NSManagedObject *)objectForPrimaryKey:(id)primaryKey inContext:(NSManagedObjectContext *)context;
++ (NSManagedObject *)objectForPrimaryKey:(id)primaryKey;
 
-+ (instancetype)getOrCreateObjectForPrimaryKey:(id)primaryKey;
-+ (instancetype)getOrCreateObjectForPrimaryKey:(id)primaryKey inContext:(NSManagedObjectContext *)context;
++ (NSManagedObject *)getOrCreateObjectForPrimaryKey:(id)primaryKey;
++ (NSManagedObject *)getOrCreateObjectForPrimaryKey:(id)primaryKey inContext:(NSManagedObjectContext *)context;
 
-+ (instancetype)safeCreateOrUpdateWithDictionary:(NSDictionary *)keyedValues;
-+ (instancetype)safeCreateOrUpdateWithDictionary:(NSDictionary *)keyedValues inContext:(NSManagedObjectContext *)context;
++ (NSManagedObject *)safeCreateOrUpdateWithDictionary:(NSDictionary *)keyedValues;
++ (NSManagedObject *)safeCreateOrUpdateWithDictionary:(NSDictionary *)keyedValues inContext:(NSManagedObjectContext *)context;
 
 
-+ (instancetype)create;
-+ (instancetype)createInContext:(NSManagedObjectContext *)context;
-+ (instancetype)createFromDictionary:(NSDictionary *)dictionary;
-+ (instancetype)createFromDictionary:(NSDictionary *)dictionary inContext:(NSManagedObjectContext *)context;
++ (NSManagedObject *)create;
++ (NSManagedObject *)createInContext:(NSManagedObjectContext *)context;
++ (NSManagedObject *)createFromDictionary:(NSDictionary *)dictionary;
++ (NSManagedObject *)createFromDictionary:(NSDictionary *)dictionary inContext:(NSManagedObjectContext *)context;
 
 #pragma mark - fetching objects
-+ (NSArray *)all;
-+ (NSArray *)allForPredicate:(NSPredicate *)predicate;
-+ (NSArray *)allForPredicate:(NSPredicate *)predicate orderBy:(NSString *)key ascending:(BOOL)ascending;
-+ (NSArray *)allOrderedBy:(NSString *)key ascending:(BOOL)ascending;
-+ (NSArray *)allInContext:(NSManagedObjectContext*)context;
-+ (NSArray *)allForPredicate:(NSPredicate *)predicate inContext:(NSManagedObjectContext *)context;
-+ (NSArray *)allForPredicate:(NSPredicate *)predicate orderBy:(NSString *)key ascending:(BOOL)ascending inContext:(NSManagedObjectContext *)context;
-+ (NSArray *)allOrderedBy:(NSString *)key ascending:(BOOL)ascending inContext:(NSManagedObjectContext *)context;
++ (NSArray<NSManagedObjectContext*> *)all;
++ (NSArray<NSManagedObjectContext*> *)allForPredicate:(NSPredicate *)predicate;
++ (NSArray<NSManagedObjectContext*> *)allForPredicate:(NSPredicate *)predicate orderBy:(NSString *)key ascending:(BOOL)ascending;
++ (NSArray<NSManagedObjectContext*> *)allOrderedBy:(NSString *)key ascending:(BOOL)ascending;
++ (NSArray<NSManagedObjectContext*> *)allInContext:(NSManagedObjectContext*)context;
++ (NSArray<NSManagedObjectContext*> *)allForPredicate:(NSPredicate *)predicate inContext:(NSManagedObjectContext *)context;
++ (NSArray<NSManagedObjectContext*> *)allForPredicate:(NSPredicate *)predicate orderBy:(NSString *)key ascending:(BOOL)ascending inContext:(NSManagedObjectContext *)context;
++ (NSArray<NSManagedObjectContext*> *)allOrderedBy:(NSString *)key ascending:(BOOL)ascending inContext:(NSManagedObjectContext *)context;
 
-+ (id)first;
-+ (id)firstWithKey:(NSString *)key value:(id)value;
-+ (id)firstForPredicate:(NSPredicate *)predicate orderBy:(NSString *)key ascending:(BOOL)ascending;
-+ (id)firstForPredicate:(NSPredicate *)predicate orderBy:(NSString *)key ascending:(BOOL)ascending inContext:(NSManagedObjectContext *)context;
++ (NSManagedObject *)first;
++ (NSManagedObject *)firstWithKey:(NSString *)key value:(id)value;
++ (NSManagedObject *)firstForPredicate:(NSPredicate *)predicate orderBy:(NSString *)key ascending:(BOOL)ascending;
++ (NSManagedObject *)firstForPredicate:(NSPredicate *)predicate orderBy:(NSString *)key ascending:(BOOL)ascending inContext:(NSManagedObjectContext *)context;
 
 
-+ (id)firstInContext:(NSManagedObjectContext *)context;
-+ (id)firstWithKey:(NSString *)key value:(id)value inContext:(NSManagedObjectContext *)context;
++ (NSManagedObject *)firstInContext:(NSManagedObjectContext *)context;
++ (NSManagedObject *)firstWithKey:(NSString *)key value:(id)value inContext:(NSManagedObjectContext *)context;
 
 #pragma mark - deleting objects
 + (void)deleteAll;
