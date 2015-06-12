@@ -90,29 +90,28 @@ extension NSManagedObject {
     
     // MARK: ManagedObject creating
     
-    class func create<T where T: NSManagedObject>() -> T {
+    class func create() -> NSManagedObject {
         return createInContext(MAGCoreData.context)
     }
     
-    class func createInContext<T: NSManagedObject>(context: NSManagedObjectContext) -> T {
-        return NSEntityDescription.insertNewObjectForEntityForName(entityName(), inManagedObjectContext: context) as! T
+    class func createInContext(context: NSManagedObjectContext) -> NSManagedObject {
+        return NSEntityDescription.insertNewObjectForEntityForName(entityName(), inManagedObjectContext: context) as! NSManagedObject
     }
     
-    class func createFromDictionary<T: NSManagedObject>(dictionary: [String: AnyObject]) -> T {
+    class func createFromDictionary(dictionary: [String: AnyObject]) -> NSManagedObject {
         return createFromDictionary(dictionary, inContext: MAGCoreData.context)
     }
     
-    class func createFromDictionary<T: NSManagedObject>(dictionary: [String: AnyObject], inContext context: NSManagedObjectContext) -> T {
+    class func createFromDictionary(dictionary: [String: AnyObject], inContext context: NSManagedObjectContext) -> NSManagedObject {
         var managedObject = createInContext(context)
         managedObject.safeSetValuesForKeysWithDictionary(dictionary, inContext: context)
-        return managedObject as! T
+        return managedObject
     }
     
     // MARK: ManagedObjects receiving
     
     class func all(error: NSErrorPointer = nil) -> [NSManagedObject] {
-        return [TestModel.create()]
-//        return allInContext(MAGCoreData.context, error: error)
+        return allInContext(MAGCoreData.context, error: error)
     }
     
     class func allInContext(context: NSManagedObjectContext, error: NSErrorPointer = nil) -> [NSManagedObject] {
@@ -173,50 +172,50 @@ extension NSManagedObject {
     
     // MARK: First ManagedObject receiving
     
-    class func first<T: NSManagedObject>(error: NSErrorPointer = nil) -> T? {
+    class func first(error: NSErrorPointer = nil) -> NSManagedObject? {
         return firstInContext(MAGCoreData.context, error: error)
     }
     
-    class func firstInContext<T: NSManagedObject>(context: NSManagedObjectContext, error: NSErrorPointer = nil) -> T? {
+    class func firstInContext(context: NSManagedObjectContext, error: NSErrorPointer = nil) -> NSManagedObject? {
         let fetchRequest = NSFetchRequest(entityName: entityName())
         fetchRequest.fetchLimit = 1
         
-        if let managedObjects = context.executeFetchRequest(fetchRequest, error: error) as? [T] {
+        if let managedObjects = context.executeFetchRequest(fetchRequest, error: error) as? [NSManagedObject] {
             return managedObjects.first
         }
         
         return nil
     }
     
-    class func firstForPredicate<T: NSManagedObject>(predicate: NSPredicate, orderedBy orderingKey: String, ascending: Bool, error: NSErrorPointer = nil) -> T? {
+    class func firstForPredicate(predicate: NSPredicate, orderedBy orderingKey: String, ascending: Bool, error: NSErrorPointer = nil) -> NSManagedObject? {
         return firstForPredicate(predicate, orderedBy: orderingKey, ascending: ascending, inContext: MAGCoreData.context, error: error)
     }
     
-    class func firstForPredicate<T: NSManagedObject>(predicate: NSPredicate, orderedBy orderingKey: String, ascending: Bool, inContext context: NSManagedObjectContext, error: NSErrorPointer = nil) -> T? {
+    class func firstForPredicate(predicate: NSPredicate, orderedBy orderingKey: String, ascending: Bool, inContext context: NSManagedObjectContext, error: NSErrorPointer = nil) -> NSManagedObject? {
         let fetchRequest = NSFetchRequest(entityName: entityName())
         fetchRequest.fetchLimit = 1
         fetchRequest.predicate = predicate
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: orderingKey, ascending: ascending)]
         
-        if let managedObjects = context.executeFetchRequest(fetchRequest, error: error) as? [T] {
+        if let managedObjects = context.executeFetchRequest(fetchRequest, error: error) as? [NSManagedObject] {
             return managedObjects.first
         }
         
         return nil
     }
     
-    class func firstWithKey<T: NSManagedObject>(key: String, value: AnyObject, error: NSErrorPointer = nil) -> T? {
-        return firstWithKey(key, value: value, inContext: MAGCoreData.context, error: error) as? T
+    class func firstWithKey(key: String, value: AnyObject, error: NSErrorPointer = nil) -> NSManagedObject? {
+        return firstWithKey(key, value: value, inContext: MAGCoreData.context, error: error)
     }
     
-    class func firstWithKey<T: NSManagedObject>(key: String, value: AnyObject, inContext context: NSManagedObjectContext, error: NSErrorPointer = nil) -> T? {
+    class func firstWithKey(key: String, value: AnyObject, inContext context: NSManagedObjectContext, error: NSErrorPointer = nil) -> NSManagedObject? {
         let fetchRequest = NSFetchRequest(entityName: entityName())
         fetchRequest.fetchLimit = 1
         
         let predicate = NSPredicate(format: "%K == %@", key, value as! NSObject) // NSObject??
         fetchRequest.predicate = predicate
         
-        if let managedObjects = context.executeFetchRequest(fetchRequest, error: error) as? [T] {
+        if let managedObjects = context.executeFetchRequest(fetchRequest, error: error) as? [NSManagedObject] {
             return managedObjects.first
         }
         

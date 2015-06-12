@@ -14,30 +14,18 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        var error: NSError?
-//        MAGCoreData.prepareCoreData(error: &error)
-//        if let error = error {
-//            println("MAGCoreDataTestCase \(error)")
-//        } else {
-//            //            println("MAGCoreData was prepared.")
-//        }
-//        
-//        var testInstance = TestModel.create() as TestModel
-//        let testId = NSUUID().UUIDString
-//        testInstance.entityId = testId
+        MAGCoreData.prepareCoreData()
+        
+//        TestModel.create() as! TestModel
+//        TestModel.create() as! TestModel
+//        TestModel.create() as! TestModel
+//        TestModel.create() as! TestModel
+//        TestModel.create() as! TestModel
+//
 //        
 //        MAGCoreData.save()
-//        
-////        println("WVUYWEYE \(TestModel.all(error: &error) as? [TestModel])")
-//        
-//        error = nil
-//        MAGCoreData.deleteAll(error: &error)
-//        MAGCoreData.save(error: &error)
-//        if let error = error {
-//            println("MAGCoreDataTestCase \(error)")
-//        } else {
-//            //            println("MAGCoreData was closed.")
-//        }
+        
+        println("Models: \(TestModel.all().count)")
     }
     
     override func didReceiveMemoryWarning() {

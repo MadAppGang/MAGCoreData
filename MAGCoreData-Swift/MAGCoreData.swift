@@ -29,7 +29,7 @@ class MAGCoreData: NSObject {
     
     private var mainContext = NSManagedObjectContext(concurrencyType: .MainQueueConcurrencyType)
     private var model: NSManagedObjectModel?
-    private var persistentStore: NSPersistentStoreCoordinator?
+    private var persistentStoreCoordinator: NSPersistentStoreCoordinator?
 
     // MARK: - Public methods
     
@@ -44,28 +44,23 @@ class MAGCoreData: NSObject {
     }
     
     class func prepareCoreDataWithModelName(modelName: String?, storageName: String?, error: NSErrorPointer = nil) -> Bool {
-        let magCoreDataInstance = MAGCoreData.instance
-
         if let modelName = modelName, modelURL = NSBundle(forClass: self).URLForResource(modelName, withExtension: "momd") {
-            magCoreDataInstance.model = NSManagedObjectModel(contentsOfURL: modelURL)
+            instance.model = NSManagedObjectModel(contentsOfURL: modelURL)
         } else {
-            let model = NSManagedObjectModel.mergedModelFromBundles(nil)
-            magCoreDataInstance.model = model
+            instance.model = NSManagedObjectModel.mergedModelFromBundles(NSBundle.allBundles())
         }
         
-        if let magCoreDataInstanceModel = magCoreDataInstance.model {
-            let persistentStore = NSPersistentStoreCoordinator(managedObjectModel: magCoreDataInstanceModel)
-            magCoreDataInstance.persistentStore = persistentStore
+        if let model = instance.model {
+            let persistentStoreCoordinator = NSPersistentStoreCoordinator(managedObjectModel: model)
             let options = [NSMigratePersistentStoresAutomaticallyOption: true, NSInferMappingModelAutomaticallyOption: true]
             
-            if let newPersistentStore = persistentStore.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: defaultStorageURLWithName(storageName), options: options, error: error) {
-                magCoreDataInstance.mainContext = NSManagedObjectContext(concurrencyType: .MainQueueConcurrencyType)
-                magCoreDataInstance.mainContext.persistentStoreCoordinator = newPersistentStore.persistentStoreCoordinator
-                
+            if let persistentStore = persistentStoreCoordinator.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: defaultStorageURLWithName(storageName), options: options, error: error) {
+                instance.mainContext = NSManagedObjectContext(concurrencyType: .MainQueueConcurrencyType)
+                instance.mainContext.persistentStoreCoordinator = persistentStore.persistentStoreCoordinator
+                instance.persistentStoreCoordinator = persistentStore.persistentStoreCoordinator
+
                 return true
             }
-            
-            return false
         }
         
         return false
@@ -75,14 +70,14 @@ class MAGCoreData: NSObject {
     
     class func createPrivateContext() -> NSManagedObjectContext {
         let privateContext = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
-        privateContext.persistentStoreCoordinator = MAGCoreData.instance.persistentStore
+        privateContext.persistentStoreCoordinator = instance.persistentStoreCoordinator
         return privateContext
     }
     
     // MARK: Saving
     
     class func save(error: NSErrorPointer = nil) -> Bool {
-        return MAGCoreData.saveContext(MAGCoreData.context, error: error)
+        return saveContext(MAGCoreData.context, error: error)
     }
     
     class func saveContext(context: NSManagedObjectContext, error: NSErrorPointer = nil) -> Bool {
@@ -96,19 +91,19 @@ class MAGCoreData: NSObject {
     // MARK: Resetting
     
     class func close() {
-        MAGCoreData.instance.mainContext = NSManagedObjectContext(concurrencyType: .MainQueueConcurrencyType)
-        MAGCoreData.instance.model = nil
-        MAGCoreData.instance.persistentStore = nil
+        instance.mainContext = NSManagedObjectContext(concurrencyType: .MainQueueConcurrencyType)
+        instance.model = nil
+        instance.persistentStoreCoordinator = nil
     }
     
     // MARK: Removing
     
     class func deleteAll(error: NSErrorPointer = nil) -> Bool {
-        if let persistentStores = MAGCoreData.instance.persistentStore?.persistentStores as? [NSPersistentStore] {
-            MAGCoreData.close()
+        if let persistentStores = instance.persistentStoreCoordinator?.persistentStores as? [NSPersistentStore] {
+            close()
             
             for persistentStore in persistentStores {
-                if let persistentStoreURL = persistentStore.URL where !MAGCoreData.removeStoreWithURL(persistentStoreURL, error: error) {
+                if let persistentStoreURL = persistentStore.URL where !removeStoreWithURL(persistentStoreURL, error: error) {
                     return false
                 }
             }
@@ -120,10 +115,10 @@ class MAGCoreData: NSObject {
     }
     
     class func deleteStorageWithName(storageName: String?, error: NSErrorPointer = nil) -> Bool {
-        MAGCoreData.close()
+        close()
         
         if let defaultStorageURL = defaultStorageURLWithName(storageName) {
-            return MAGCoreData.removeStoreWithURL(defaultStorageURL, error: error)
+            return removeStoreWithURL(defaultStorageURL, error: error)
         }
         
         return false
@@ -136,7 +131,7 @@ class MAGCoreData: NSObject {
             if let storageName = storageName {
                 return documentDirectory.URLByAppendingPathComponent("\(storageName).sqlite")
             } else {
-                return documentDirectory.URLByAppendingPathComponent("MAGStore.sqlite")
+                return documentDirectory.URLByAppendingPathComponent("MAGCoreDataDefaultStorage.sqlite")
             }
         }
         
@@ -151,7 +146,7 @@ class MAGCoreData: NSObject {
         if autoMergeFromChildContexts {
             NSNotificationCenter.defaultCenter().addObserverForName(NSManagedObjectContextDidSaveNotification, object: nil, queue: nil) { notification in
                 if let context = notification.object as? NSManagedObjectContext {
-                    if context != self.mainContext && context.persistentStoreCoordinator == self.persistentStore {
+                    if context != self.mainContext && context.persistentStoreCoordinator == self.persistentStoreCoordinator {
                         self.mainContext.performBlock {
                             self.mainContext.mergeChangesFromContextDidSaveNotification(notification)
                         }

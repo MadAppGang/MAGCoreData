@@ -9,6 +9,7 @@
 import UIKit
 import XCTest
 import CoreData
+import MAGCoreData
 
 class MAGCoreDataTests: XCTestCase {
 
@@ -22,7 +23,7 @@ class MAGCoreDataTests: XCTestCase {
         super.setUp()
         
         var error: NSError?
-        MAGCoreData.prepareCoreData(error: &error)
+        MAGCoreData.prepareCoreData()
         if let error = error {
             println("MAGCoreDataTestCase \(error)")
         } else {
@@ -60,7 +61,7 @@ class MAGCoreDataTests: XCTestCase {
     }
         
     func testThatMAGCoreDataSavesAndReturnsData() {
-        var testInstance = TestModel.create() as TestModel
+        var testInstance = TestModel.create() as! TestModel
         let testId = NSUUID().UUIDString
         testInstance.entityId = testId
 
@@ -69,7 +70,7 @@ class MAGCoreDataTests: XCTestCase {
         XCTAssertNil(error, "Saving error.")
         
         error = nil
-        let returnedTestInstance = TestModel.firstWithKey("entityId", value: testId, error: &error) as TestModel?
+        let returnedTestInstance = TestModel.firstWithKey("entityId", value: testId, error: &error) as? TestModel
         if returnedTestInstance == nil || error != nil {
             XCTFail("Test instance wasn't saved or returned.")
         }
@@ -81,12 +82,12 @@ class MAGCoreDataTests: XCTestCase {
         if let testModeldateUpdatedAttributeName = TestModel.updateDateKeyName {
             XCTAssertEqual(dateUpdatedAttributeName, testModeldateUpdatedAttributeName, "Saving/getting error.")
         } else {
-            XCTFail("Saving/getting error.")
+            XCTFail("Saving/getting error. TestModel's updateDateKeyName: \(TestModel.updateDateKeyName).")
         }
     }
     
     func testThatAttributesSetFromCollections() {
-        var testInstance = TestModel.create() as TestModel
+        var testInstance = TestModel.create() as! TestModel
         let testId = NSUUID().UUIDString
         let testAttributes: [String: AnyObject] = ["entityId": testId, "string": testString, "doubleValue": testDouble]
         testInstance.safeSetValuesForKeysWithDictionary(testAttributes)
@@ -106,20 +107,17 @@ class MAGCoreDataTests: XCTestCase {
     }
     
     func testThatAllModelInstancesReturn() {
-        var testInstance = TestModel.create() as TestModel
+        var testInstance = TestModel.create() as! TestModel
         let testId = NSUUID().UUIDString
         testInstance.entityId = testId
         
         MAGCoreData.save()
 
-//        var error: NSError?
-//        println("WVUYWEYE \(TestModel.all(error: &error) as? [TestModel])")
-//        XCTAssertNil(error, "Saving error.")
-        
-        let fetchRequest = NSFetchRequest(entityName: TestModel.entityName())
-        let managedObjects = MAGCoreData.context.executeFetchRequest(fetchRequest, error: nil)
-        if let managedObjects = managedObjects as? [TestModel] {
-            println(managedObjects)
-        }        
+        var error: NSError?
+        if let firstTestInstance = TestModel.all(error: &error).first as? TestModel {
+            XCTAssertEqual(firstTestInstance.entityId, testId, "Setted and getted entityId's are different.")
+        } else {
+            XCTFail("Saving/getting error.")
+        }
     }
 }

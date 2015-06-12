@@ -15,7 +15,7 @@ enum TestModelAttributes: String {
 }
 
 @objc
-class _TestModel: NSManagedObject {
+public class _TestModel: NSManagedObject {
 
     // MARK: - Class methods
 

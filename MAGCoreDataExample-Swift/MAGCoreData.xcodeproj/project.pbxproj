@@ -112,6 +112,7 @@
 		185E51DA1B13267000C23281 /* MAGCoreData */ = {
 			isa = PBXGroup;
 			children = (
+				18D307641B2AE88900867FD5 /* Objc MAGCoreData */,
 				18EEA9FA1B15DE5D0048C440 /* Models */,
 				18EEA9FB1B15DE800048C440 /* MAGCoreData */,
 				185E51DF1B13267000C23281 /* ViewController.swift */,
@@ -150,6 +151,15 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		18D307641B2AE88900867FD5 /* Objc MAGCoreData */ = {
+			isa = PBXGroup;
+			children = (
+				18E454751B1795D2004FB6D3 /* MAGCoreData.m */,
+				18BF21371B14CD6A00CB70A0 /* NSManagedObject+MAGCoreData.m */,
+			);
+			name = "Objc MAGCoreData";
+			sourceTree = "<group>";
+		};
 		18EEA9FA1B15DE5D0048C440 /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -166,8 +176,6 @@
 				180A2E621B286B8E00B676EC /* MAGCoreData.swift */,
 				180A2E611B286B8E00B676EC /* FetchedResultsControllerManager.swift */,
 				180A2E631B286B8E00B676EC /* NSManagedObject+MAGCoreData.swift */,
-				18E454751B1795D2004FB6D3 /* MAGCoreData.m */,
-				18BF21371B14CD6A00CB70A0 /* NSManagedObject+MAGCoreData.m */,
 			);
 			name = MAGCoreData;
 			sourceTree = "<group>";
@@ -242,7 +250,6 @@
 					};
 					185E51EC1B13267000C23281 = {
 						CreatedOnToolsVersion = 6.3.2;
-						TestTargetID = 185E51D71B13267000C23281;
 					};
 					18EEA9FC1B15DED50048C440 = {
 						CreatedOnToolsVersion = 6.3.2;
@@ -476,7 +483,6 @@
 		185E51FB1B13267000C23281 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -488,14 +494,12 @@
 				INFOPLIST_FILE = MAGCoreDataTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MAGCoreData.app/MAGCoreData";
 			};
 			name = Debug;
 		};
 		185E51FC1B13267000C23281 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -503,7 +507,6 @@
 				INFOPLIST_FILE = MAGCoreDataTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MAGCoreData.app/MAGCoreData";
 			};
 			name = Release;
 		};
