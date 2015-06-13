@@ -27,18 +27,21 @@
 		180A2E671B286C8800B676EC /* NSManagedObject+MAGCoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180A2E631B286B8E00B676EC /* NSManagedObject+MAGCoreData.swift */; };
 		180A2E681B286C8B00B676EC /* FetchedResultsControllerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180A2E611B286B8E00B676EC /* FetchedResultsControllerManager.swift */; };
 		180A2E691B286C8E00B676EC /* MAGCoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180A2E621B286B8E00B676EC /* MAGCoreData.swift */; };
-		18317BE01B27099D0070803F /* TestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EEAA081B15E0FF0048C440 /* TestModel.swift */; };
 		185E51DE1B13267000C23281 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185E51DD1B13267000C23281 /* AppDelegate.swift */; };
 		185E51E01B13267000C23281 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185E51DF1B13267000C23281 /* ViewController.swift */; };
 		185E51E31B13267000C23281 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 185E51E11B13267000C23281 /* Main.storyboard */; };
 		185E51E51B13267000C23281 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 185E51E41B13267000C23281 /* Images.xcassets */; };
 		185E51E81B13267000C23281 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 185E51E61B13267000C23281 /* LaunchScreen.xib */; };
-		18B94F421B17238B00FCD17F /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 18B94F401B17238B00FCD17F /* Model.xcdatamodeld */; };
-		18E5306E1B29BB3F00C18972 /* Model.xcdatamodeld in Resources */ = {isa = PBXBuildFile; fileRef = 18B94F401B17238B00FCD17F /* Model.xcdatamodeld */; };
+		18B02B1D1B2C5697001B5CF4 /* PersonModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E6DF221B2B399B001BF623 /* PersonModel.swift */; };
+		18B02B1E1B2C569A001B5CF4 /* CarModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E6DF211B2B399B001BF623 /* CarModel.swift */; };
+		18B02B1F1B2C569E001B5CF4 /* _PersonModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E6DF261B2B39A5001BF623 /* _PersonModel.swift */; };
+		18B02B201B2C56A0001B5CF4 /* _CarModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E6DF251B2B39A5001BF623 /* _CarModel.swift */; };
+		18E6DF231B2B399B001BF623 /* CarModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E6DF211B2B399B001BF623 /* CarModel.swift */; };
+		18E6DF241B2B399B001BF623 /* PersonModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E6DF221B2B399B001BF623 /* PersonModel.swift */; };
+		18E6DF271B2B39A5001BF623 /* _CarModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E6DF251B2B39A5001BF623 /* _CarModel.swift */; };
+		18E6DF281B2B39A5001BF623 /* _PersonModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E6DF261B2B39A5001BF623 /* _PersonModel.swift */; };
 		18EEA9F01B15D1250048C440 /* MAGCoreDataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EEA9EF1B15D1250048C440 /* MAGCoreDataTests.swift */; };
-		18EEAA0B1B15E0FF0048C440 /* TestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EEAA081B15E0FF0048C440 /* TestModel.swift */; };
-		18EEAA0C1B15E0FF0048C440 /* _TestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EEAA0A1B15E0FF0048C440 /* _TestModel.swift */; };
-		18EEAA0D1B15E1350048C440 /* _TestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EEAA0A1B15E0FF0048C440 /* _TestModel.swift */; };
+		18FDDE671B2B2B1800DDCA67 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 18FDDE651B2B2B1800DDCA67 /* Model.xcdatamodeld */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,13 +67,13 @@
 		185E51E71B13267000C23281 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		185E51ED1B13267000C23281 /* MAGCoreDataTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MAGCoreDataTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		185E51F21B13267000C23281 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		18B94F411B17238B00FCD17F /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
-		18BF21371B14CD6A00CB70A0 /* NSManagedObject+MAGCoreData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObject+MAGCoreData.m"; sourceTree = "<group>"; };
-		18E454751B1795D2004FB6D3 /* MAGCoreData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAGCoreData.m; sourceTree = "<group>"; };
+		18E6DF211B2B399B001BF623 /* CarModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarModel.swift; sourceTree = "<group>"; };
+		18E6DF221B2B399B001BF623 /* PersonModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersonModel.swift; sourceTree = "<group>"; };
+		18E6DF251B2B39A5001BF623 /* _CarModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = _CarModel.swift; sourceTree = "<group>"; };
+		18E6DF261B2B39A5001BF623 /* _PersonModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = _PersonModel.swift; sourceTree = "<group>"; };
 		18EEA9EF1B15D1250048C440 /* MAGCoreDataTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MAGCoreDataTests.swift; sourceTree = "<group>"; };
 		18EEAA061B15E0350048C440 /* MAGCoreData-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MAGCoreData-Bridging-Header.h"; sourceTree = "<group>"; };
-		18EEAA081B15E0FF0048C440 /* TestModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestModel.swift; sourceTree = "<group>"; };
-		18EEAA0A1B15E0FF0048C440 /* _TestModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = _TestModel.swift; sourceTree = "<group>"; };
+		18FDDE661B2B2B1800DDCA67 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,7 +115,6 @@
 		185E51DA1B13267000C23281 /* MAGCoreData */ = {
 			isa = PBXGroup;
 			children = (
-				18D307641B2AE88900867FD5 /* Objc MAGCoreData */,
 				18EEA9FA1B15DE5D0048C440 /* Models */,
 				18EEA9FB1B15DE800048C440 /* MAGCoreData */,
 				185E51DF1B13267000C23281 /* ViewController.swift */,
@@ -151,21 +153,12 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		18D307641B2AE88900867FD5 /* Objc MAGCoreData */ = {
-			isa = PBXGroup;
-			children = (
-				18E454751B1795D2004FB6D3 /* MAGCoreData.m */,
-				18BF21371B14CD6A00CB70A0 /* NSManagedObject+MAGCoreData.m */,
-			);
-			name = "Objc MAGCoreData";
-			sourceTree = "<group>";
-		};
 		18EEA9FA1B15DE5D0048C440 /* Models */ = {
 			isa = PBXGroup;
 			children = (
 				18EEAA091B15E0FF0048C440 /* MachineModel */,
 				18EEAA071B15E0FF0048C440 /* HumanModel */,
-				18B94F401B17238B00FCD17F /* Model.xcdatamodeld */,
+				18FDDE651B2B2B1800DDCA67 /* Model.xcdatamodeld */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -183,7 +176,8 @@
 		18EEAA071B15E0FF0048C440 /* HumanModel */ = {
 			isa = PBXGroup;
 			children = (
-				18EEAA081B15E0FF0048C440 /* TestModel.swift */,
+				18E6DF211B2B399B001BF623 /* CarModel.swift */,
+				18E6DF221B2B399B001BF623 /* PersonModel.swift */,
 			);
 			name = HumanModel;
 			path = Models/HumanModel;
@@ -192,7 +186,8 @@
 		18EEAA091B15E0FF0048C440 /* MachineModel */ = {
 			isa = PBXGroup;
 			children = (
-				18EEAA0A1B15E0FF0048C440 /* _TestModel.swift */,
+				18E6DF251B2B39A5001BF623 /* _CarModel.swift */,
+				18E6DF261B2B39A5001BF623 /* _PersonModel.swift */,
 			);
 			name = MachineModel;
 			path = Models/MachineModel;
@@ -291,7 +286,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				18E5306E1B29BB3F00C18972 /* Model.xcdatamodeld in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -318,14 +312,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				18EEAA0C1B15E0FF0048C440 /* _TestModel.swift in Sources */,
 				180A2E641B286B8E00B676EC /* FetchedResultsControllerManager.swift in Sources */,
-				18B94F421B17238B00FCD17F /* Model.xcdatamodeld in Sources */,
-				18EEAA0B1B15E0FF0048C440 /* TestModel.swift in Sources */,
+				18E6DF231B2B399B001BF623 /* CarModel.swift in Sources */,
 				185E51E01B13267000C23281 /* ViewController.swift in Sources */,
 				180A2E651B286B8E00B676EC /* MAGCoreData.swift in Sources */,
+				18E6DF241B2B399B001BF623 /* PersonModel.swift in Sources */,
 				185E51DE1B13267000C23281 /* AppDelegate.swift in Sources */,
+				18E6DF281B2B39A5001BF623 /* _PersonModel.swift in Sources */,
 				180A2E661B286B8E00B676EC /* NSManagedObject+MAGCoreData.swift in Sources */,
+				18E6DF271B2B39A5001BF623 /* _CarModel.swift in Sources */,
+				18FDDE671B2B2B1800DDCA67 /* Model.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -333,10 +329,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				18B02B201B2C56A0001B5CF4 /* _CarModel.swift in Sources */,
 				180A2E671B286C8800B676EC /* NSManagedObject+MAGCoreData.swift in Sources */,
-				18317BE01B27099D0070803F /* TestModel.swift in Sources */,
-				18EEAA0D1B15E1350048C440 /* _TestModel.swift in Sources */,
 				18EEA9F01B15D1250048C440 /* MAGCoreDataTests.swift in Sources */,
+				18B02B1E1B2C569A001B5CF4 /* CarModel.swift in Sources */,
+				18B02B1D1B2C5697001B5CF4 /* PersonModel.swift in Sources */,
+				18B02B1F1B2C569E001B5CF4 /* _PersonModel.swift in Sources */,
 				180A2E691B286C8E00B676EC /* MAGCoreData.swift in Sources */,
 				180A2E681B286C8B00B676EC /* FetchedResultsControllerManager.swift in Sources */,
 			);
@@ -566,12 +564,12 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		18B94F401B17238B00FCD17F /* Model.xcdatamodeld */ = {
+		18FDDE651B2B2B1800DDCA67 /* Model.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				18B94F411B17238B00FCD17F /* Model.xcdatamodel */,
+				18FDDE661B2B2B1800DDCA67 /* Model.xcdatamodel */,
 			);
-			currentVersion = 18B94F411B17238B00FCD17F /* Model.xcdatamodel */;
+			currentVersion = 18FDDE661B2B2B1800DDCA67 /* Model.xcdatamodel */;
 			name = Model.xcdatamodeld;
 			path = Models/Model.xcdatamodeld;
 			sourceTree = "<group>";

@@ -13,12 +13,6 @@ import MAGCoreData
 
 class MAGCoreDataTests: XCTestCase {
 
-    let testString = "MAGCoreDataTestString"
-    let testInt = 42239
-    let testBool = true
-    let testDouble = 3230423.5
-    let testDate = NSDate(timeIntervalSinceNow: 6000)
-    
     override func setUp() {
         super.setUp()
         
@@ -61,63 +55,48 @@ class MAGCoreDataTests: XCTestCase {
     }
         
     func testThatMAGCoreDataSavesAndReturnsData() {
-        var testInstance = TestModel.create() as! TestModel
-        let testId = NSUUID().UUIDString
-        testInstance.entityId = testId
+        var person = PersonModel.create() as! PersonModel
+        let entityId = NSUUID().UUIDString
+        person.entityId = entityId
 
         var error: NSError?
         MAGCoreData.save(error: &error)
         XCTAssertNil(error, "Saving error.")
         
         error = nil
-        let returnedTestInstance = TestModel.firstWithKey("entityId", value: testId, error: &error) as? TestModel
-        if returnedTestInstance == nil || error != nil {
+        let returnedPerson = PersonModel.firstWithKey("entityId", value: entityId, error: &error) as? PersonModel
+        if returnedPerson == nil || error != nil {
             XCTFail("Test instance wasn't saved or returned.")
         }
     }
     
     func testThatDateUpdatedAttributeNameSetsAndGets() {
         let dateUpdatedAttributeName = "dateUpdated"
-        TestModel.updateDateKeyName = dateUpdatedAttributeName
-        if let testModeldateUpdatedAttributeName = TestModel.updateDateKeyName {
+        PersonModel.updateDateKeyName = dateUpdatedAttributeName
+        if let testModeldateUpdatedAttributeName = PersonModel.updateDateKeyName {
             XCTAssertEqual(dateUpdatedAttributeName, testModeldateUpdatedAttributeName, "Saving/getting error.")
         } else {
-            XCTFail("Saving/getting error. TestModel's updateDateKeyName: \(TestModel.updateDateKeyName).")
+            XCTFail("Saving/getting error. TestModel's updateDateKeyName: \(PersonModel.updateDateKeyName).")
         }
     }
     
     func testThatAttributesSetFromCollections() {
-        var testInstance = TestModel.create() as! TestModel
-        let testId = NSUUID().UUIDString
-        let testAttributes: [String: AnyObject] = ["entityId": testId, "string": testString, "doubleValue": testDouble]
-        testInstance.safeSetValuesForKeysWithDictionary(testAttributes)
-        XCTAssertEqual(testInstance.entityId, testId, "Attributes setting error.")
+        var person = PersonModel.create() as! PersonModel
+        let entityId = NSUUID().UUIDString
+        let name = "Dave"
+        let age = 10
+        let attributes: [String: AnyObject] = ["entityId": entityId, "name": name, "age": age]
+        person.safeSetValuesForKeysWithDictionary(attributes)
         
-        if let testInstanceString = testInstance.string {
-            XCTAssertEqual(testInstanceString, testString, "Attributes setting error.")
-        } else {
-            XCTFail("Attributes setting error.")
-        }
         
-        if let testInstanceDoubleValueNumber = testInstance.doubleValue {
-            XCTAssertEqual(testInstanceDoubleValueNumber.doubleValue, testDouble, "Attributes setting error.")
-        } else {
-            XCTFail("Attributes setting error.")
-        }
-    }
-    
-    func testThatAllModelInstancesReturn() {
-        var testInstance = TestModel.create() as! TestModel
-        let testId = NSUUID().UUIDString
-        testInstance.entityId = testId
-        
-        MAGCoreData.save()
+        XCTAssertEqual(person.entityId, entityId, "Attributes setting error.")
+        XCTAssertEqual(person.name, name, "Attributes setting error.")
+        XCTAssertEqual(person.name, name, "Attributes setting error.")
 
-        var error: NSError?
-        if let firstTestInstance = TestModel.all(error: &error).first as? TestModel {
-            XCTAssertEqual(firstTestInstance.entityId, testId, "Setted and getted entityId's are different.")
+        if let ageNumber = person.age {
+            XCTAssertEqual(ageNumber.integerValue, age, "Attributes setting error.")
         } else {
-            XCTFail("Saving/getting error.")
+            XCTFail("Attributes setting error.")
         }
-    }
+    }    
 }

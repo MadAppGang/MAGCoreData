@@ -13,19 +13,7 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        MAGCoreData.prepareCoreData()
-        
-//        TestModel.create() as! TestModel
-//        TestModel.create() as! TestModel
-//        TestModel.create() as! TestModel
-//        TestModel.create() as! TestModel
-//        TestModel.create() as! TestModel
-//
-//        
-//        MAGCoreData.save()
-        
-        println("Models: \(TestModel.all().count)")
+         
     }
     
     override func didReceiveMemoryWarning() {
