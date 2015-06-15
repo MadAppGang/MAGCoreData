@@ -89,8 +89,8 @@
 //    
 //    expect(saveSuccess).will.beTruthy();
 //    
-//    NSLog(@"Weather in main:%d", [Weather all].count);
-//    NSLog(@"Weather in cntx:%d", [Weather allInContext:context].count);
+//    MAGCoreDataLog(@"Weather in main:%d", [Weather all].count);
+//    MAGCoreDataLog(@"Weather in cntx:%d", [Weather allInContext:context].count);
 //    
 //    [MAGCoreData deleteAllInStorageWithName:kStorageName];
 //}

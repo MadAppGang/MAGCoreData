@@ -63,16 +63,16 @@
     expect(weather).toNot.beNil();
     expect([MAGCoreData saveContext:privateContext]).to.beTruthy();
     
-    NSLog(@"hasChanges");
-    NSLog(@"array %d", [Weather all].count);
+    MAGCoreDataLog(@"hasChanges");
+    MAGCoreDataLog(@"array %d", [Weather all].count);
     
     [[MAGCoreData instance] close];
     expect([MAGCoreData prepareCoreDataWithModelName:nil andStorageName:NSStringFromClass([self class]) error:nil]).to.beTruthy();
     
     Weather *storedWeather = [Weather all].firstObject;
     expect(storedWeather).toNot.beNil();
-    
-    NSLog(@"array %d", [Weather all].count);
+//    /Users/alex/workspace/office/MAGCoreData/MAGCoreDataExample/MAGCoreDataTests/MAGCoreDataObjectCreationTests.m:72:14: Incompatible pointer types initializing 'Weather *' with an expression of type '__kindof NSManagedObjectContext * __nullable'
+    MAGCoreDataLog(@"array %d", [Weather all].count);
     
     BOOL same = [weather.objectID.URIRepresentation isEqual:storedWeather.objectID.URIRepresentation];
     expect(same).to.beTruthy();

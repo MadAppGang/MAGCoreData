@@ -8,45 +8,48 @@
 
 #import <CoreData/CoreData.h>
 
-@interface NSManagedObject (MAGCoreData)
+NS_ASSUME_NONNULL_BEGIN
 
-//Key mapping of local names and web service names, key of dictionary is local name and value is web service name
+@interface NSManagedObject (MAGCoreData)
+// Key mapping of local names and web service names, key of dictionary is local name and value is web service name
 + (NSDictionary * __nullable)keyMapping;
 + (void)setKeyMapping:(NSDictionary *)mapping;
-//Inline relation classes for recursive instantiation
-+ (NSDictionary *)relationClasses;
+
+// Inline relation classes for recursive instantiation
++ (NSDictionary * __nullable)relationClasses;
 + (void)setRelationClasses:(NSDictionary *)newRelationClasses;
-//DefaultDateFormat
-//regarding:
+
+// DefaultDateFormat
+// regarding:
 //https://developer.apple.com/library/ios/documentation/cocoa/Conceptual/DataFormatting/Articles/dfDateFormatting10_4.html#//apple_ref/doc/uid/TP40002369-SW1
 //http://www.unicode.org/reports/tr35/tr35-25.html#Date_Format_Patterns for iOS6
 //http://www.unicode.org/reports/tr35/tr35-19.html#Date_Format_Patterns for iOS6
 //http://www.unicode.org/reports/tr35/tr35-17.html#Date_Format_Patterns for iOS4.3
-+ (NSString *)defaultDateFormat;
++ (NSString * __nullable)defaultDateFormat;
 + (void)setDefaultDateFormat:(NSString *)dateFormat;
-//DateFormatForEveryField
-+ (NSDictionary *)dateFormats;
+
+// DateFormatForEveryField
++ (NSDictionary * __nullable)dateFormats;
 + (void)setDateFormats:(NSDictionary *)datesFormat;
 
-//Object unique of external data format
-//When it found an object in local model, the object edited instead of inserting,
-//if no object found - new object creating
-+ (id)primaryKeyName;
-+ (void)setPrimaryKeyName:(id)primaryKey;
+// Object unique of external data format
+// When it found an object in local model, the object edited instead of inserting,
+// if no object found - new object creating
++ (NSString * __nullable)primaryKeyName;
++ (void)setPrimaryKeyName:(NSString *)primaryKey;
 
-+ (id)updateDateKeyName;
++ (id __nullable)updateDateKeyName;
 + (void)setUpdateDateKeyName:(id)updateKeyName;
 
-//custom values transformers
-+ (NSDictionary *)valueTransformers;
+// Custom values transformers
++ (NSDictionary * __nullable)valueTransformers;
 + (void)setValueTransformers:(NSDictionary *)valueTransformers;
-
 
 
 - (void)safeSetValuesForKeysWithDictionary:(NSDictionary *)keyedValues;
 - (void)safeSetValuesForKeysWithDictionary:(NSDictionary *)keyedValues inContext:(NSManagedObjectContext *)context;
 
-NS_ASSUME_NONNULL_BEGIN
+
 + (__kindof NSManagedObject *)objectForPrimaryKey:(id)primaryKey inContext:(NSManagedObjectContext *)context;
 + (__kindof NSManagedObject *)objectForPrimaryKey:(id)primaryKey;
 

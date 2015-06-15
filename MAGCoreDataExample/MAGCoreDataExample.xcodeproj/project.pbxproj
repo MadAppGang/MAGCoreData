@@ -81,19 +81,19 @@
 		E3E85F6A1A03BAD300CD7F4C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E3E85F6B1A03BAD300CD7F4C /* MAGCoreDataTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MAGCoreDataTests.m; sourceTree = "<group>"; };
 		E3E85F721A03BAFC00CD7F4C /* MAGCoreDataFetchingObjectsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAGCoreDataFetchingObjectsTests.m; sourceTree = "<group>"; };
-		E3E85F731A03BAFC00CD7F4C /* MAGCoreDataObjectCreationTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAGCoreDataObjectCreationTests.m; sourceTree = "<group>"; };
+		E3E85F731A03BAFC00CD7F4C /* MAGCoreDataObjectCreationTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = MAGCoreDataObjectCreationTests.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		E3E85F741A03BAFC00CD7F4C /* MAGCoreDataPrepareTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAGCoreDataPrepareTests.m; sourceTree = "<group>"; };
 		E3E85F751A03BAFC00CD7F4C /* MAGCoreDataSingletonTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAGCoreDataSingletonTests.m; sourceTree = "<group>"; };
-		E3E85F761A03BAFC00CD7F4C /* MAGCoreDataTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAGCoreDataTest.m; sourceTree = "<group>"; };
+		E3E85F761A03BAFC00CD7F4C /* MAGCoreDataTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = MAGCoreDataTest.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		E3E85F781A03BAFC00CD7F4C /* MAGCoreDataTestCase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAGCoreDataTestCase.h; sourceTree = "<group>"; };
 		E3E85F791A03BAFC00CD7F4C /* MAGCoreDataTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAGCoreDataTestCase.m; sourceTree = "<group>"; };
 		EE8DFD64A438E4826DC5398B /* Pods-MAGCoreDataExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MAGCoreDataExample.release.xcconfig"; path = "Pods/Target Support Files/Pods-MAGCoreDataExample/Pods-MAGCoreDataExample.release.xcconfig"; sourceTree = "<group>"; };
-		FA38F0D618ACC5F700332A34 /* MAGCoreData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MAGCoreData.h; path = ../../MagCoreData/MAGCoreData.h; sourceTree = "<group>"; };
-		FA38F0D718ACC5F700332A34 /* MAGCoreData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MAGCoreData.m; path = ../../MagCoreData/MAGCoreData.m; sourceTree = "<group>"; };
+		FA38F0D618ACC5F700332A34 /* MAGCoreData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = MAGCoreData.h; path = ../../MagCoreData/MAGCoreData.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		FA38F0D718ACC5F700332A34 /* MAGCoreData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = MAGCoreData.m; path = ../../MagCoreData/MAGCoreData.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		FA38F0D818ACC5F700332A34 /* MAGSimpleFetchedResultsControllerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MAGSimpleFetchedResultsControllerManager.h; path = ../../MagCoreData/MAGSimpleFetchedResultsControllerManager.h; sourceTree = "<group>"; };
 		FA38F0D918ACC5F700332A34 /* MAGSimpleFetchedResultsControllerManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MAGSimpleFetchedResultsControllerManager.m; path = ../../MagCoreData/MAGSimpleFetchedResultsControllerManager.m; sourceTree = "<group>"; };
 		FA38F0DA18ACC5F700332A34 /* NSManagedObject+MAGCoreData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSManagedObject+MAGCoreData.h"; path = "../../MagCoreData/NSManagedObject+MAGCoreData.h"; sourceTree = "<group>"; };
-		FA38F0DB18ACC5F700332A34 /* NSManagedObject+MAGCoreData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSManagedObject+MAGCoreData.m"; path = "../../MagCoreData/NSManagedObject+MAGCoreData.m"; sourceTree = "<group>"; };
+		FA38F0DB18ACC5F700332A34 /* NSManagedObject+MAGCoreData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = "NSManagedObject+MAGCoreData.m"; path = "../../MagCoreData/NSManagedObject+MAGCoreData.m"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		FA38F0DC18ACC5F700332A34 /* NSManagedObjectContext+MAGCoreData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSManagedObjectContext+MAGCoreData.h"; path = "../../MagCoreData/NSManagedObjectContext+MAGCoreData.h"; sourceTree = "<group>"; };
 		FA38F0DD18ACC5F700332A34 /* NSManagedObjectContext+MAGCoreData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSManagedObjectContext+MAGCoreData.m"; path = "../../MagCoreData/NSManagedObjectContext+MAGCoreData.m"; sourceTree = "<group>"; };
 		FA46F1CF19324218009FF04B /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
@@ -103,7 +103,7 @@
 		FA80B3C2193348EF00BCC225 /* Weather.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Weather.m; sourceTree = "<group>"; };
 		FA9153DE193DEE320043851B /* MAGCoreDataExample-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MAGCoreDataExample-Bridging-Header.h"; sourceTree = "<group>"; };
 		FAD99EC318ACCB2600896266 /* ISO8601DateFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISO8601DateFormatter.h; sourceTree = "<group>"; };
-		FAD99EC418ACCB2600896266 /* ISO8601DateFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISO8601DateFormatter.m; sourceTree = "<group>"; };
+		FAD99EC418ACCB2600896266 /* ISO8601DateFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = ISO8601DateFormatter.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		FAF3E0EB1B2B1F05003CBB5A /* Storyboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Storyboard.storyboard; path = ../Storyboard.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -330,7 +330,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = MAG;
-				LastUpgradeCheck = 0460;
+				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = MadAppGang;
 				TargetAttributes = {
 					E3E85F661A03BAD200CD7F4C = {
@@ -519,6 +519,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -568,6 +569,11 @@
 				CLANG_ENABLE_MODULES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MAGCoreDataExample/MAGCoreDataExample-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"COCOAPODS=1",
+					"MAGCOREDATA_LOGGING_ENABLED=1",
+				);
 				INFOPLIST_FILE = "MAGCoreDataExample/MAGCoreDataExample-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -575,6 +581,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/MAGCoreDataExample/Vendors/OCMock",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.madappgang.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "MAGCoreDataExample/MAGCoreDataExample-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -596,6 +603,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/MAGCoreDataExample/Vendors/OCMock",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.madappgang.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "MAGCoreDataExample/MAGCoreDataExample-Bridging-Header.h";
 				WRAPPER_EXTENSION = app;
@@ -630,6 +638,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "MAG.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MAGCoreDataExample.app/MAGCoreDataExample";
 			};
@@ -660,6 +669,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = "MAG.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MAGCoreDataExample.app/MAGCoreDataExample";
 			};

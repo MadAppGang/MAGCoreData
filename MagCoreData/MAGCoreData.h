@@ -16,6 +16,9 @@
 #define MAGCoreDataLog(frmt, ...) ((void)0)
 #endif
 
+
+NS_ASSUME_NONNULL_BEGIN
+
 @interface MAGCoreData : NSObject
 
 + (instancetype)instance;
@@ -23,13 +26,13 @@
 @property (nonatomic, assign) BOOL autoMergeFromChildContexts; //default is NO
 
 #pragma mark - Initialisation
-+ (NSError *)prepareCoreData;
-+ (BOOL)prepareCoreDataWithModelName:(NSString *)modelName error:(NSError **)error;
-+ (BOOL)prepareCoreDataWithModelName:(NSString *)modelName andStorageName:(NSString *)storageName error:(NSError **)error;
++ (NSError * __nullable)prepareCoreData;
++ (BOOL)prepareCoreDataWithModelName:(NSString * __nullable)modelName error:(NSError ** __nullable)error;
++ (BOOL)prepareCoreDataWithModelName:(NSString * __nullable)modelName andStorageName:(NSString * __nullable)storageName error:(NSError ** __nullable)error;
 
 #pragma mark - Management Object Context
-+ (NSManagedObjectContext *)context; // Main Context
-+ (NSManagedObjectContext *)createPrivateContext;
++ (NSManagedObjectContext * __nullable)context; // Main Context
++ (NSManagedObjectContext * __nullable)createPrivateContext;
 
 #pragma mark - Saving
 + (BOOL)save; // Save main context
@@ -44,3 +47,5 @@
 #pragma mark - Fetching managed objects
 
 @end
+
+NS_ASSUME_NONNULL_END

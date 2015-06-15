@@ -108,7 +108,7 @@ static NSString const * kValueTransformersKey = @"NSManagedObjectValueTransforme
         }
     }  else {
         //prevent from crash
-        NSLog(@"Unable to parse date (no date format specified):%@",object);
+        MAGCoreDataLog(@"Unable to parse date (no date format specified):%@",object);
         return nil;
     }
 
@@ -174,7 +174,7 @@ static NSString const * kValueTransformersKey = @"NSManagedObjectValueTransforme
             id keyedValue = [keyedValues valueForKeyPath:attributeKey];
             if (keyedValue == nil) {
                 // Don't attempt to set nil, or you'll overwrite values in self that aren't present in keyedValues
-                //                NSLog(@"MAGCoreData+NSManagedObjectContext: mapping lost for attribute:%@ for class %@",attribute, [self class]);
+                //                MAGCoreDataLog(@"MAGCoreData+NSManagedObjectContext: mapping lost for attribute:%@ for class %@",attribute, [self class]);
                 continue;
             }
             NSAttributeType attributeType = [attributes[attribute] attributeType];

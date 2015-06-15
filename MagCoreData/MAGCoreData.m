@@ -99,7 +99,7 @@
                                                      URL:[self defaultStorageURLWithName:storageName]
                                                  options:options
                                                    error:error]) {
-        NSLog(@"MAGCoreData: Error creating persistent store:%@", *error);
+        MAGCoreDataLog(@"MAGCoreData: Error creating persistent store:%@", *error);
         return NO;
     }
     mag.mainContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
@@ -130,10 +130,10 @@
         NSArray *detailedErrors = error.userInfo[NSDetailedErrorsKey];
         if (detailedErrors.count) {
             for (NSError *detailedError in detailedErrors) {
-                NSLog(@"MAGCoreData DetailedError: %@", detailedError.userInfo);
+                MAGCoreDataLog(@"MAGCoreData DetailedError: %@", detailedError.userInfo);
             }
         } else {
-            NSLog(@"MAGCoreData %@", error.userInfo);
+            MAGCoreDataLog(@"MAGCoreData %@", error.userInfo);
         }
         return NO;
     } else {
