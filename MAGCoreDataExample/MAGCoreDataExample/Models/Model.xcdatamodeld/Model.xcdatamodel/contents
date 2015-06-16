@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="7701" systemVersion="14D136" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="CarModel" representedClassName="CarModel" syncable="YES">
+        <attribute name="cost" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="entityId" attributeType="String" defaultValueString="DefaultIdentifier" indexed="YES" syncable="YES"/>
+        <attribute name="name" attributeType="String" defaultValueString="DefaultName" syncable="YES"/>
+        <relationship name="person" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PersonModel" inverseName="cars" inverseEntity="PersonModel" syncable="YES"/>
+    </entity>
+    <entity name="PersonModel" representedClassName="PersonModel" syncable="YES">
+        <attribute name="age" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="entityId" attributeType="String" defaultValueString="DefaultIdentifier" indexed="YES" syncable="YES"/>
+        <attribute name="name" attributeType="String" defaultValueString="DefaultName" syncable="YES"/>
+        <relationship name="cars" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CarModel" inverseName="person" inverseEntity="CarModel" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="CarModel" positionX="-54" positionY="-9" width="128" height="105"/>
+        <element name="PersonModel" positionX="-63" positionY="-18" width="128" height="105"/>
+    </elements>
+</model>
