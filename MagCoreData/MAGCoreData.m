@@ -84,10 +84,10 @@
 
     MAGCoreData *mag = [MAGCoreData instance];
     if (modelName) {
-        NSURL *modelURL = [[NSBundle mainBundle] URLForResource:modelName withExtension:@"momd"];
+        NSURL *modelURL = [[NSBundle bundleForClass:[self class]] URLForResource:modelName withExtension:@"momd"];
         mag.model = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
     }   else {
-        mag.model = [NSManagedObjectModel mergedModelFromBundles:nil];
+        mag.model = [NSManagedObjectModel mergedModelFromBundles:[NSBundle allBundles]];
     }
 
     mag.persistentStore = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:mag.model];
