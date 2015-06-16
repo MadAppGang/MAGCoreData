@@ -27,8 +27,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - Initialisation
 + (NSError * __nullable)prepareCoreData;
-+ (BOOL)prepareCoreDataWithModelName:(NSString * __nullable)modelName error:(NSError ** __nullable)error;
-+ (BOOL)prepareCoreDataWithModelName:(NSString * __nullable)modelName andStorageName:(NSString * __nullable)storageName error:(NSError ** __nullable)error;
++ (BOOL)prepareCoreDataWithModelName:(NSString * __nullable)modelName error:(NSError **)error;
++ (BOOL)prepareCoreDataWithModelName:(NSString * __nullable)modelName andStorageName:(NSString * __nullable)storageName error:(NSError **)error;
 
 #pragma mark - Management Object Context
 + (NSManagedObjectContext * __nullable)context; // Main Context
