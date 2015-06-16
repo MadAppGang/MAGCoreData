@@ -17,7 +17,7 @@ class MAGCoreDataExampleTests: XCTestCase {
         
         var error: NSError?
         MAGCoreData.prepareCoreDataWithModelName("Model", storageName: "TestStorage")
-        if let error = error {
+        if let error = error { // FIXME: error always nil!
             println("MAGCoreDataTestCase \(error)")
         } else {
 //            println("MAGCoreData was prepared.")
