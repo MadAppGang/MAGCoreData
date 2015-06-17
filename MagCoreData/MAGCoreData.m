@@ -24,7 +24,8 @@
     static dispatch_once_t once;
     static MAGCoreData *sharedInstance;
     dispatch_once(&once, ^{
-            sharedInstance = [self new];
+        sharedInstance = [self new];
+        MAGCoreDataLog(@"Singleton instance created");
     });
     return sharedInstance;
 }
@@ -37,7 +38,6 @@
     return self;
 }
 
-
 - (void)setAutoMergeFromChildContexts:(BOOL)autoMergeFromChildContexts {
     if (self.autoMergeFromChildContexts == autoMergeFromChildContexts) return;
     _autoMergeFromChildContexts = autoMergeFromChildContexts;
@@ -45,8 +45,14 @@
         [[NSNotificationCenter defaultCenter] addObserverForName:NSManagedObjectContextDidSaveNotification
                                                           object:nil
                                                            queue:nil
-                                                      usingBlock:^(NSNotification *notification){
-                                                          if (notification.object == self.mainContext) return;
+                                                      usingBlock:^(NSNotification *notification) {
+                                                          
+                                                          NSManagedObjectContext *context = notification.object;
+                                                          
+                                                          if (context == self.mainContext || context.persistentStoreCoordinator != self.persistentStore) {
+                                                                return;   
+                                                          }
+                                                          
                                                           [self.mainContext performBlock:^{
                                                               [self.mainContext mergeChangesFromContextDidSaveNotification:notification];
                                                           }];
@@ -56,9 +62,15 @@
     }
 }
 
++ (NSURL *)defaultStorageURLWithName:(NSString *)storageName {
+    NSURL *docDir = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
+    NSURL *storeURL = storageName ? [docDir URLByAppendingPathComponent:[NSString stringWithFormat:@"%@.sqlite",storageName]] : [docDir URLByAppendingPathComponent:@"MAGStore.sqlite"];
+    return storeURL;
+}
+
 
 + (NSError *)prepareCoreData {
-    NSError *error = nil;
+    NSError *error;
     [self prepareCoreDataWithModelName:nil andStorageName:nil error:&error];
     return error;
 }
@@ -68,33 +80,66 @@
 }
 
 + (BOOL)prepareCoreDataWithModelName:(NSString *)modelName andStorageName:(NSString *)storageName error:(NSError **)error {
-    if ([[MAGCoreData instance] mainContext]) return YES;
+    if ([[MAGCoreData instance] mainContext]) return NO;
 
     MAGCoreData *mag = [MAGCoreData instance];
     if (modelName) {
-        NSURL *modelURL = [[NSBundle mainBundle] URLForResource:storageName withExtension:@"momd"];
+        NSURL *modelURL = [[NSBundle bundleForClass:[self class]] URLForResource:modelName withExtension:@"momd"];
         mag.model = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
     }   else {
-        mag.model = [NSManagedObjectModel mergedModelFromBundles:nil];
+        mag.model = [NSManagedObjectModel mergedModelFromBundles:[NSBundle allBundles]];
     }
 
     mag.persistentStore = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:mag.model];
-    NSURL *docDir = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
-    NSURL *storeURL = storageName?[docDir URLByAppendingPathComponent:[NSString stringWithFormat:@"%@.sqlite",storageName]]:
-                                  [docDir URLByAppendingPathComponent:@"MAGStore.sqlite"];
-    NSDictionary *options = @{  NSMigratePersistentStoresAutomaticallyOption:@(YES),
-                                NSInferMappingModelAutomaticallyOption:@(YES)};
+    
+    NSDictionary *options = @{NSMigratePersistentStoresAutomaticallyOption:@(YES),
+                              NSInferMappingModelAutomaticallyOption:@(YES)};
     if (![mag.persistentStore addPersistentStoreWithType:NSSQLiteStoreType
                                            configuration:nil
-                                                     URL:storeURL
+                                                     URL:[self defaultStorageURLWithName:storageName]
                                                  options:options
                                                    error:error]) {
-        NSLog(@"!!!MAGCoreData: Error creating persistent store:%@",*error);
+        NSLog(@"MAGCoreData: Error creating persistent store:%@", *error);
         return NO;
     }
     mag.mainContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
     mag.mainContext.persistentStoreCoordinator = mag.persistentStore;
+    
     return YES;
+}
+
++ (NSManagedObjectContext *)context {
+    return [[MAGCoreData instance] mainContext];
+}
+
++ (NSManagedObjectContext *)createPrivateContext {
+    if (![MAGCoreData instance].mainContext) return nil;
+    
+    NSManagedObjectContext *moc = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
+    moc.persistentStoreCoordinator = [[MAGCoreData instance] persistentStore];
+    return moc;
+}
+
++ (BOOL)save {
+    return [MAGCoreData saveContext:[MAGCoreData context]];
+}
+
++ (BOOL)saveContext:(NSManagedObjectContext *)context {
+    NSError *error = nil;
+    if ([context hasChanges] && ![context save:&error]) {
+        NSArray *detailedErrors = [error userInfo][NSDetailedErrorsKey];
+        if (detailedErrors.count) {
+            for (NSError *detailedError in detailedErrors) {
+                NSLog(@"MAGCoreData DetailedError: %@", detailedError.userInfo);
+            }
+        } else {
+            NSLog(@"MAGCoreData %@", error.userInfo);
+        }
+        return NO;
+    } else {
+        return YES;
+    }
+
 }
 
 - (void)close {
@@ -103,45 +148,25 @@
     self.persistentStore = nil;
 }
 
-+ (NSManagedObjectContext *)context {
-    return [[MAGCoreData instance] mainContext];
-}
-
-+ (NSManagedObjectContext *)createPrivateContext {
-    NSManagedObjectContext *moc = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
-    moc.persistentStoreCoordinator = [[MAGCoreData instance] persistentStore];
-    return moc;
-}
-
-+ (void)save {
-    [MAGCoreData saveContext:[MAGCoreData context]];
-}
-
-+ (void)saveContext:(NSManagedObjectContext *)context {
-    NSError *error = nil;
-    if ([context hasChanges] && ![context save:&error]) {
-        NSArray* detailedErrors = [error userInfo][NSDetailedErrorsKey];
-        if(detailedErrors != nil && [detailedErrors count] > 0) {
-            for(NSError* detailedError in detailedErrors) {
-                NSLog(@"MAGCoreData  DetailedError: %@", [detailedError userInfo]);
-            }
-        }
-        else {
-            NSLog(@"MAGCoreData %@", [error userInfo]);
-        }
++ (BOOL)removeStoreAtPath:(NSURL *)storeURL {
+    @try {
+        [[NSFileManager defaultManager] removeItemAtPath:storeURL.path error:nil];
+        return YES;
+    } @catch (NSException *exception) {
+        return NO;
     }
-
 }
 
-+ (void)deleteAll {
++ (BOOL)deleteAll {
     //assume we use only one persistent store
     NSURL *storeURL = [[[[MAGCoreData instance] persistentStore] persistentStores][0] URL];
     [[MAGCoreData instance] close];
-    @try {
-        [[NSFileManager defaultManager] removeItemAtPath:storeURL.path error:nil];
-    } @catch (NSException *exception) {
-        // ignore, totally normal
-    }
+    return [MAGCoreData removeStoreAtPath:storeURL];
+}
+
++ (BOOL)deleteAllInStorageWithName:(NSString *)storageName {
+    [[MAGCoreData instance] close];
+    return [MAGCoreData removeStoreAtPath:[self defaultStorageURLWithName:storageName]];
 }
 
 

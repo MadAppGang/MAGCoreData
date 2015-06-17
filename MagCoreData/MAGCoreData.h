@@ -7,31 +7,39 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <CoreData/CoreData.h>
+
+
+#ifdef MAGCOREDATA_LOGGING_ENABLED
+#define MAGCoreDataLog(frmt, ...) NSLog(frmt, ##__VA_ARGS__)
+#else
+#define MAGCoreDataLog(frmt, ...) ((void)0)
+#endif
 
 @interface MAGCoreData : NSObject
 
 + (instancetype)instance;
 
-//default is NO
-@property (nonatomic) BOOL autoMergeFromChildContexts;
+@property (nonatomic, assign) BOOL autoMergeFromChildContexts; //default is NO
 
 #pragma mark - Initialisation
 + (NSError *)prepareCoreData;
 + (BOOL)prepareCoreDataWithModelName:(NSString *)modelName error:(NSError **)error;
-+ (BOOL)prepareCoreDataWithModelName:(NSString *)modelName andStorageName:(NSString*)storageName error:(NSError **)error;
-- (void)close;
++ (BOOL)prepareCoreDataWithModelName:(NSString *)modelName andStorageName:(NSString *)storageName error:(NSError **)error;
 
 #pragma mark - Management Object Context
-//Main Context
-+ (NSManagedObjectContext *)context;
++ (NSManagedObjectContext *)context; // Main Context
 + (NSManagedObjectContext *)createPrivateContext;
 
-#pragma mark -  save main context
-+ (void)save;
-+ (void)saveContext:(NSManagedObjectContext*)context;
+#pragma mark - Saving
++ (BOOL)save; // Save main context
++ (BOOL)saveContext:(NSManagedObjectContext *)context;
 
-#pragma mark - Delete all data from first persistent store in persistent store coordinator
-+ (void)deleteAll;
+#pragma mark -
+- (void)close;
++ (BOOL)deleteAll; // Delete all data from first persistent store in persistent store coordinator
++ (BOOL)deleteAllInStorageWithName:(NSString *)string;
+
 
 #pragma mark - Fetching managed objects
 
