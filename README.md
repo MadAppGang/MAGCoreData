@@ -34,19 +34,49 @@ If you need to create a new managed object context for use in non-main threads y
 NSManagedObjectContext *privateContext = MAGCoreData.createPrivateContext;
 ```
 
-### Adding objects / Updating objects
+### Adding objects
 To create and insert a new instance of an Entity in the default context you can use:
 ```objective-c
 Weather *weather = [Weather create];
 Weather *weather = [Weather createFromDictionary:dictionary];
-Weather *weather = [Weather safeCreateOrUpdateWithDictionary:dictionary];
 ```
 
-You can also create and insert an entity into specific context:
+You can also create and insert an object into specific context:
 ```objective-c
 Weather *weather = [Weather createInContext:context];
 Weather *weather = [Weather createFromDictionary:dictionary inContext:context];
+```
+
+### Updating objects
+To update objects you should specify primary key. See ['Mapping'](#mapping) section for additional instructions.
+
+To update or create new object:
+```objective-c
+Weather *weather = [Weather safeCreateOrUpdateWithDictionary:dictionary];
+```
+
+To update or create object in specific context:
+```objective-c
 Weather *weather = [Weather safeCreateOrUpdateWithDictionary:dictionary inContext:context];
+```
+
+To update an object, change the object’s property, primary key value may be updated:
+```objective-c
+[weather safeSetValuesForKeysWithDictionary:dictionary];
+```
+
+### Fetching objects
+```objective-c
+Weather *weather = [Weather objectForPrimaryKey:primaryKey];
+Weather *weather = [Weather getOrCreateObjectForPrimaryKey:primaryKey];
+```
+Also you can use any of these calls with specific context.
+
+### Saving objects
+You probably should save data after any changes you have made, because if application crashes you're going to loss all the changes.
+```objective-c
+[MAGCoreData save];
+[MAGCoreData saveContext:context];
 ```
 
 ### Deleting objects
@@ -66,17 +96,38 @@ To delete all objects in a specific context:
 [Weather deleteAllInContext:context];
 ```
 
-### Fetching objects
+### Mapping
+
+### Relation classes
+
+### Value transformers
+
+### Parsing the date
+
+### Deleting storage
+
+To delete all data from first persistent store in persistent store coordinator:
 ```objective-c
-Weather *weather = [Weather getOrCreateObjectForPrimaryKey:primaryKey];
-Weather *weather = [Weather getOrCreateObjectForPrimaryKey:primaryKey inContext:context];
+[MAGCoreData deleteAll];
 ```
 
-### Mapping
+To drop storage with default name:
+```objective-c
+[MAGCoreData deleteAllInStorageWithName:nil];
+```
+
+To drop storage with specific name:
+```objective-c
+[MAGCoreData deleteAllInStorageWithName:storageName];
+```
 
 ### Logging
 ```
 #ifdef MAGCOREDATA_LOGGING_ENABLED
 ```
+
+## Credits
+MAGCoreData is owned and maintained by the [MadAppGang](http://madappgang.com/).
+
 ## License
 MAGCoreData is released under the MIT license. See LICENSE for details.
