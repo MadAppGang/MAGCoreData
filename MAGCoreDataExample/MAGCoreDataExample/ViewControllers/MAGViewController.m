@@ -8,8 +8,10 @@
 
 #import "MAGViewController.h"
 #import "MAGCoreData.h"
-#import "Weather.h"
 #import "NSManagedObject+MAGCoreData.h"
+#import "Weather.h"
+#import "School.h"
+#import "Student.h"
 
 @interface MAGViewController ()
 
@@ -20,25 +22,35 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-//    [MAGCoreData instance];
+    [self prepareCoreData];
     
-    //    NSString *primaryKey = @"primaryKey";
-    //    NSManagedObjectContext *context = MAGCoreData.context;
-    //    NSDictionary *dictionary = [NSDictionary dictionary];
-    ////    Weather *weather = [Weather createFromDictionary:dictionary inContext:context];
-    //
-    ////    [weather safeSetValuesForKeysWithDictionary:dictionary];
-    //
-    ////    [Weather deleteAllInContext:context];
-    //
-    //    Weather *weather = [Weather objectForPrimaryKey:primaryKey];
-    //
-    //    [MAGCoreData deleteAllInStorageWithName:@"storageName"];
-    //    [MAGCoreData saveContext:context];
-    //    
-    ////    weather
+//    NSString *primaryKey = @"primaryKey";
+//    NSManagedObjectContext *context = MAGCoreData.context;
+//    NSDictionary *dictionary = [NSDictionary dictionary];
+    
+//    Weather *weather = [Weather createFromDictionary:@{@"id": @"1", @"city": @"Glasgow", @"temperature": @"17"}];
+//    NSLog(@"%@", weather.identifier); // 1
+//    NSLog(@"%@", weather.city); // Glasgow
+//    NSLog(@"%@", weather.temperature); // 17
+    
+//    NSDictionary *dictionary = @{@"id": @"1", @"students": @[@{@"id": @"1", @"name": @"Marcus"}, @{@"id": @"2", @"name": @"Livia"}]};
+//    School *school = [School createFromDictionary:dictionary];
+//    NSLog(@"First student's name is %@", ((Student *)school.students.allObjects[0]).name); // Marcus
+//    NSLog(@"Second student's name is %@", ((Student *)school.students.allObjects[1]).name); // Livia
 }
 
+- (void)prepareCoreData {
+    NSError *error;
+    NSString *modelName = @"Model";
+    NSString *storageName = @"MAGCoreDataExampleStorage";
+    [MAGCoreData prepareCoreDataWithModelName:modelName andStorageName:storageName error:&error];
+    if (error) {
+        [MAGCoreData deleteAllInStorageWithName:storageName];
+        [MAGCoreData prepareCoreDataWithModelName:modelName andStorageName:storageName error:nil];
+    }
+    
+    [MAGCoreData instance].autoMergeFromChildContexts = YES;
+}
 
 /*
 #pragma mark - Navigation

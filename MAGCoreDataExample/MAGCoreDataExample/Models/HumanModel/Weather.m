@@ -1,8 +1,7 @@
 #import "Weather.h"
+#import "NSManagedObject+MAGCoreData.h"
 
 @interface Weather ()
-
-
 @end
 
 @implementation Weather

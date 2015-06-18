@@ -100,17 +100,71 @@ To delete all objects in a specific context:
 ```
 
 ### Mapping
+Example of usage:
+```objective-c
+#import "Weather.h"
+#import "NSManagedObject+MAGCoreData.h"
+
+@interface Weather ()
+@end
+
+@implementation Weather
+
++ (void)initialize {
+    [self setKeyMapping:@{
+                          @"identifier"  : @"id",
+                          @"city"        : @"city",
+                          @"temperature" : @"temperature"
+                          }];
+    [self setPrimaryKeyName:@"identifier"];
+}
+
+@end
+
+```
+
+```objective-c
+Weather *weather = [Weather createFromDictionary:@{@"id": @"1", @"city": @"Glasgow", @"temperature": @"17"}];
+NSLog(@"%@", weather.identifier); // 1
+NSLog(@"%@", weather.city); // Glasgow
+NSLog(@"%@", weather.temperature); // 17
+```
 
 ### Relation classes
+
+Example of usage:
+```objective-c
+@implementation School
++ (void)initialize {
+    [self setKeyMapping:@{@"identifier": @"id", @"students": @"students"}];
+    [self setPrimaryKeyName:@"identifier"];
+    
+    [self setRelationClasses:@{@"students": [Student class]}];
+}
+@end
+```
+
+```objective-c
+@implementation Student
++ (void)initialize {
+    [self setKeyMapping:@{@"identifier": @"id", @"name": @"name"}];
+    [self setPrimaryKeyName:@"identifier"];
+}
+@end
+```
+
+```objective-c
+NSDictionary *dictionary = @{@"id": @"1", @"students": @[@{@"id": @"1", @"name": @"Marcus"}, @{@"id": @"2", @"name": @"Livia"}]};
+School *school = [School createFromDictionary:dictionary];
+NSLog(@"First student's name is %@", ((Student *)school.students.allObjects[0]).name); // Marcus
+NSLog(@"Second student's name is %@", ((Student *)school.students.allObjects[1]).name); // Livia
+```
 
 ### Value transformers
 
 ### Parsing the date
 
 ### Deleting storage
-
-### Mogenerator
-We recommend you use [mogenerator](https://github.com/rentzsch/mogenerator). Mogenerator generates the model classes from Core Data model (.xcdatamodel) and adds helper functions for your classes to simplify their usage.
 
 To delete all data from first persistent store in persistent store coordinator:
 ```objective-c
@@ -127,9 +181,18 @@ To drop storage with specific name:
 [MAGCoreData deleteAllInStorageWithName:storageName];
 ```
 
+### autoMergeFromChildContexts
+
 ### Logging
+You can define Preprocessor Macros `MAGCOREDATA_LOGGING_ENABLED` which enable MAGCoreData logging.
+
+
+### Mogenerator
+We recommend you use [mogenerator](https://github.com/rentzsch/mogenerator). Mogenerator generates the model classes from Core Data model (.xcdatamodel) and adds helper functions for your classes to simplify their usage.
+
+Mogenerator script example:
 ```
-#ifdef MAGCOREDATA_LOGGING_ENABLED
+mogenerator -m "${PROJECT_DIR}/MAGCoreDataExample/Models/Model.xcdatamodeld/Model.xcdatamodel" -M "${PROJECT_DIR}/MAGCoreDataExample/Models/MachineModel" -H "${PROJECT_DIR}/MAGCoreDataExample/Models/HumanModel" --template-var arc=true
 ```
 
 ## Credits
