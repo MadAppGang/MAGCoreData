@@ -109,6 +109,9 @@ To delete all objects in a specific context:
 
 ### Deleting storage
 
+### Mogenerator
+We recommend you use [mogenerator](https://github.com/rentzsch/mogenerator). Mogenerator generates the model classes from Core Data model (.xcdatamodel) and adds helper functions for your classes to simplify their usage.
+
 To delete all data from first persistent store in persistent store coordinator:
 ```objective-c
 [MAGCoreData deleteAll];
