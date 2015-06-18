@@ -76,6 +76,9 @@ Also you can use any of these calls with specific context.
 You probably should save data after any changes you have made, because if application crashes you're going to loss all the changes.
 ```objective-c
 [MAGCoreData save];
+```
+or
+```objective-c
 [MAGCoreData saveContext:context];
 ```
 
