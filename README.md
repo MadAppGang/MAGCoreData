@@ -1,5 +1,6 @@
 #<center>![MAGCoreData](http://i.imgur.com/c6y95EV.png)</center>
 [![Cocoapods Compatible](https://img.shields.io/cocoapods/v/MAGCoreData.svg)](https://img.shields.io/cocoapods/v/MAGCoreData.svg)
+[![Build Status](https://travis-ci.org/omalovichko/MAGCoreData.svg)](https://travis-ci.org/omalovichko/MAGCoreData)
 
 ## Index
 - [What is MAGCoreData?](#what-is-magcoredata)
