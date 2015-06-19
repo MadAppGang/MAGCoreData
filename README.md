@@ -1,5 +1,28 @@
-#MAGCoreData
+#<center>![MAGCoreData](http://i.imgur.com/c6y95EV.png)</center>
+[![Cocoapods Compatible](https://img.shields.io/cocoapods/v/MAGCoreData.svg)](https://img.shields.io/cocoapods/v/MAGCoreData.svg)
 
+## Index
+- [What is MAGCoreData?](#what-is-magcoredata)
+- [Requirement](#requirement)
+- [Installation with CocoaPods](#installation-with-cocoapods)
+- [Usage](#usage)
+    - [Initialization](#initialization)
+    - [Managed object contexts](#managed-object-contexts)
+    - [Adding objects](#adding-objects)
+    - [Updating objects](#updating-objects)
+    - [Fetching objects](#fetching-objects)
+    - [Saving objects](#saving-objects)
+    - [Deleting objects](#deleting-objects)
+    - [Mapping](#mapping)
+    - [Relation classes](#relation-classes)
+    - [Value transformers](#value-transformers)
+    - [Deleting storage](#deleting-storage)
+    - [Logging](#logging)
+- [Mogenerator](#mogenerator)
+- [Credits](#credits)
+- [License](#license)
+
+## What is MAGCoreData?
 Core Data boilerplate code killer.
 
 ## Requirement
@@ -206,13 +229,15 @@ To drop storage with specific name:
 You can define Preprocessor Macros `MAGCOREDATA_LOGGING_ENABLED` which enable MAGCoreData logging.
 
 
-### Mogenerator
+## Mogenerator
 We recommend you use [mogenerator](https://github.com/rentzsch/mogenerator). Mogenerator generates the model classes from Core Data model (.xcdatamodel) and adds helper functions for your classes to simplify their usage.
 
 Mogenerator script example:
 ```
 mogenerator -m "${PROJECT_DIR}/MAGCoreDataExample/Models/Model.xcdatamodeld/Model.xcdatamodel" -M "${PROJECT_DIR}/MAGCoreDataExample/Models/MachineModel" -H "${PROJECT_DIR}/MAGCoreDataExample/Models/HumanModel" --template-var arc=true
 ```
+
+* * *
 
 ## Credits
 MAGCoreData is owned and maintained by the [MadAppGang](http://madappgang.com/).
