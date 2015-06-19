@@ -140,7 +140,7 @@ static NSString const * kValueTransformersKey = @"NSManagedObjectValueTransforme
     
     if (keyedValue == nil) {
         safeValue = nil;
-    } else if ([valueTransformers objectForKey:attribute]) {
+    } else if (valueTransformers[attribute]) {
         //if we have custom value transformer - apply it
         id(^transformer)(id value) = valueTransformers[attribute];
         safeValue = transformer(keyedValue);
@@ -306,7 +306,7 @@ static NSString const * kValueTransformersKey = @"NSManagedObjectValueTransforme
     
     NSEntityDescription *entityDescription = [NSEntityDescription entityForName:[self entityName] inManagedObjectContext:context];
     NSDictionary *attributes = [entityDescription attributesByName];
-    NSAttributeDescription *primaryKeyAttributeDescription = [attributes objectForKey:primaryKeyName];
+    NSAttributeDescription *primaryKeyAttributeDescription = attributes[primaryKeyName];
     NSAttributeType primaryKeyAttributeType = [primaryKeyAttributeDescription attributeType];
     
     NSString *mappedPrimaryKey = primaryKeyName ? [self keyMapping][primaryKeyName] : nil;

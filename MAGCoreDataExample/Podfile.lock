@@ -1,15 +1,18 @@
 PODS:
   - Expecta (1.0.0)
+  - ISO8601DateFormatter (0.7)
   - MBProgressHUD (0.9.1)
   - OCMock (3.1.2)
 
 DEPENDENCIES:
   - Expecta (~> 1.0.0)
+  - ISO8601DateFormatter (~> 0.7)
   - MBProgressHUD (~> 0.9.1)
   - OCMock (~> 3.1.2)
 
 SPEC CHECKSUMS:
   Expecta: 32604574add2c46a36f8d2f716b6c5736eb75024
+  ISO8601DateFormatter: ab926648eebe497f4d167c0fd083992f959f1274
   MBProgressHUD: c47f2c166c126cf2ce36498d80f33e754d4e93ad
   OCMock: a10ea9f0a6e921651f96f78b6faee95ebc813b92
 

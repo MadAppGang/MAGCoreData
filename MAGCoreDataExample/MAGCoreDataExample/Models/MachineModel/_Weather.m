@@ -5,6 +5,7 @@
 
 const struct WeatherAttributes WeatherAttributes = {
 	.city = @"city",
+	.fog = @"fog",
 	.identifier = @"identifier",
 	.temperature = @"temperature",
 };
@@ -35,6 +36,11 @@ const struct WeatherAttributes WeatherAttributes = {
 + (NSSet*)keyPathsForValuesAffectingValueForKey:(NSString*)key {
 	NSSet *keyPaths = [super keyPathsForValuesAffectingValueForKey:key];
 
+	if ([key isEqualToString:@"fogValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"fog"];
+		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+		return keyPaths;
+	}
 	if ([key isEqualToString:@"identifierValue"]) {
 		NSSet *affectingKey = [NSSet setWithObject:@"identifier"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
@@ -50,6 +56,26 @@ const struct WeatherAttributes WeatherAttributes = {
 }
 
 @dynamic city;
+
+@dynamic fog;
+
+- (BOOL)fogValue {
+	NSNumber *result = [self fog];
+	return [result boolValue];
+}
+
+- (void)setFogValue:(BOOL)value_ {
+	[self setFog:[NSNumber numberWithBool:value_]];
+}
+
+- (BOOL)primitiveFogValue {
+	NSNumber *result = [self primitiveFog];
+	return [result boolValue];
+}
+
+- (void)setPrimitiveFogValue:(BOOL)value_ {
+	[self setPrimitiveFog:[NSNumber numberWithBool:value_]];
+}
 
 @dynamic identifier;
 

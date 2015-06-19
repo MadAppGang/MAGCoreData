@@ -22,7 +22,9 @@ Use one of the following setup calls with the MAGCoreData class:
 + (NSError *)prepareCoreData;
 + (BOOL)prepareCoreDataWithModelName:(NSString *)modelName error:(NSError **)error;
 + (BOOL)prepareCoreDataWithModelName:(NSString *)modelName andStorageName:(NSString *)storageName error:(NSError **)error;
+[MAGCoreData instance].autoMergeFromChildContexts = YES;
 ```
+
 ### Managed object contexts
 To access the default context you can call:
 ```objective-c
@@ -114,9 +116,12 @@ Example of usage:
     [self setKeyMapping:@{
                           @"identifier"  : @"id",
                           @"city"        : @"city",
-                          @"temperature" : @"temperature"
+                          @"temperature" : @"temperature",
+                          @"updatedAt"   : @"updatedAt"
                           }];
     [self setPrimaryKeyName:@"identifier"];
+    [self setUpdateDateKeyName:@"updatedAt"];
+	[self setDateFormats:@{@"updatedAt":@"yyyy'-'MM'-'dd'T'HH':'mm':'ss.SSS'Z'"}];
 }
 
 @end
@@ -128,6 +133,13 @@ Weather *weather = [Weather createFromDictionary:@{@"id": @"1", @"city": @"Glasg
 NSLog(@"%@", weather.identifier); // 1
 NSLog(@"%@", weather.city); // Glasgow
 NSLog(@"%@", weather.temperature); // 17
+```
+
+#### Auto-mapping
+```objective-c
+Student *student = [Student createFromDictionary:@{@"identifier": @"1", @"name": @"Marcus"}];
+NSLog(@"id = %@", student.identifier); // 1
+NSLog(@"name = %@", student.name); // Marcus
 ```
 
 ### Relation classes
@@ -161,8 +173,17 @@ NSLog(@"Second student's name is %@", ((Student *)school.students.allObjects[1])
 ```
 
 ### Value transformers
+```objective-c
++ (void)initialize {
+    [self setKeyMapping:@{@"fog": @"fog"}];
+    [self setValueTransformers:@{@"fog": ^id(id value) { return @(((NSString *)value).boolValue); }}];
+}
+```
 
-### Parsing the date
+```objective-c
+Weather *weather = [Weather createFromDictionary:@{@"fog": @"YES"}];
+NSLog(@"Fog = %@", weather.fog); // Fog = 1
+```
 
 ### Deleting storage
 
@@ -180,8 +201,6 @@ To drop storage with specific name:
 ```objective-c
 [MAGCoreData deleteAllInStorageWithName:storageName];
 ```
-
-### autoMergeFromChildContexts
 
 ### Logging
 You can define Preprocessor Macros `MAGCOREDATA_LOGGING_ENABLED` which enable MAGCoreData logging.

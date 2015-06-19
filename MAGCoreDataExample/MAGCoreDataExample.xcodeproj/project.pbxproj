@@ -45,7 +45,6 @@
 		E3E85F811A03BBBD00CD7F4C /* MAGSimpleFetchedResultsControllerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = FA38F0D918ACC5F700332A34 /* MAGSimpleFetchedResultsControllerManager.m */; };
 		E3E85F821A03BBBD00CD7F4C /* NSManagedObject+MAGCoreData.m in Sources */ = {isa = PBXBuildFile; fileRef = FA38F0DB18ACC5F700332A34 /* NSManagedObject+MAGCoreData.m */; };
 		E3E85F831A03BBBD00CD7F4C /* NSManagedObjectContext+MAGCoreData.m in Sources */ = {isa = PBXBuildFile; fileRef = FA38F0DD18ACC5F700332A34 /* NSManagedObjectContext+MAGCoreData.m */; };
-		E3E85F841A03BBF900CD7F4C /* ISO8601DateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = FAD99EC418ACCB2600896266 /* ISO8601DateFormatter.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		FA38F0DE18ACC5F700332A34 /* MAGCoreData.m in Sources */ = {isa = PBXBuildFile; fileRef = FA38F0D718ACC5F700332A34 /* MAGCoreData.m */; };
 		FA38F0DF18ACC5F700332A34 /* MAGSimpleFetchedResultsControllerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = FA38F0D918ACC5F700332A34 /* MAGSimpleFetchedResultsControllerManager.m */; };
 		FA38F0E018ACC5F700332A34 /* NSManagedObject+MAGCoreData.m in Sources */ = {isa = PBXBuildFile; fileRef = FA38F0DB18ACC5F700332A34 /* NSManagedObject+MAGCoreData.m */; };
@@ -61,7 +60,13 @@
 		FA3D06881B32F48A0007E110 /* Weather.m in Sources */ = {isa = PBXBuildFile; fileRef = FA3D06851B32F48A0007E110 /* Weather.m */; };
 		FA3D068D1B32F49D0007E110 /* _School.m in Sources */ = {isa = PBXBuildFile; fileRef = FA3D068A1B32F49D0007E110 /* _School.m */; };
 		FA3D068E1B32F49D0007E110 /* _Student.m in Sources */ = {isa = PBXBuildFile; fileRef = FA3D068C1B32F49D0007E110 /* _Student.m */; };
-		FAD99EC718ACCB2600896266 /* ISO8601DateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = FAD99EC418ACCB2600896266 /* ISO8601DateFormatter.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		FA3D068F1B33FC230007E110 /* _School.m in Sources */ = {isa = PBXBuildFile; fileRef = FA3D068A1B32F49D0007E110 /* _School.m */; };
+		FA3D06901B33FC250007E110 /* _Student.m in Sources */ = {isa = PBXBuildFile; fileRef = FA3D068C1B32F49D0007E110 /* _Student.m */; };
+		FA3D06911B33FC270007E110 /* _Weather.m in Sources */ = {isa = PBXBuildFile; fileRef = FA3D067D1B32E6030007E110 /* _Weather.m */; };
+		FA3D06921B33FC2A0007E110 /* School.m in Sources */ = {isa = PBXBuildFile; fileRef = FA3D06811B32F48A0007E110 /* School.m */; };
+		FA3D06931B33FC2D0007E110 /* Student.m in Sources */ = {isa = PBXBuildFile; fileRef = FA3D06831B32F48A0007E110 /* Student.m */; };
+		FA3D06941B33FC2F0007E110 /* Weather.m in Sources */ = {isa = PBXBuildFile; fileRef = FA3D06851B32F48A0007E110 /* Weather.m */; };
+		FA3D06951B33FC860007E110 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FA3D06731B32E5360007E110 /* Model.xcdatamodeld */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -133,8 +138,6 @@
 		FA3D068B1B32F49D0007E110 /* _Student.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _Student.h; sourceTree = "<group>"; };
 		FA3D068C1B32F49D0007E110 /* _Student.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _Student.m; sourceTree = "<group>"; };
 		FA9153DE193DEE320043851B /* MAGCoreDataExample-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MAGCoreDataExample-Bridging-Header.h"; sourceTree = "<group>"; };
-		FAD99EC318ACCB2600896266 /* ISO8601DateFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISO8601DateFormatter.h; sourceTree = "<group>"; };
-		FAD99EC418ACCB2600896266 /* ISO8601DateFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISO8601DateFormatter.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -208,10 +211,9 @@
 		BDD82FAC17CE409C00F1CD8D /* MAGCoreDataExample */ = {
 			isa = PBXGroup;
 			children = (
+				BDD82FC317CE40B900F1CD8D /* MagCoreData */,
 				FA3D06721B32E5230007E110 /* Models */,
 				FA3D06691B32E05F0007E110 /* ViewControllers */,
-				FAD99EC118ACCB0F00896266 /* Vendors */,
-				BDD82FC317CE40B900F1CD8D /* MagCoreData */,
 				BDD82FB517CE409C00F1CD8D /* MAGAppDelegate.h */,
 				BDD82FB617CE409C00F1CD8D /* MAGAppDelegate.m */,
 				FA3D06611B32DF860007E110 /* Storyboard.storyboard */,
@@ -328,23 +330,6 @@
 				FA3D067D1B32E6030007E110 /* _Weather.m */,
 			);
 			path = MachineModel;
-			sourceTree = "<group>";
-		};
-		FAD99EC118ACCB0F00896266 /* Vendors */ = {
-			isa = PBXGroup;
-			children = (
-				FAD99EC218ACCB2600896266 /* ISO8601DateFormatter */,
-			);
-			path = Vendors;
-			sourceTree = "<group>";
-		};
-		FAD99EC218ACCB2600896266 /* ISO8601DateFormatter */ = {
-			isa = PBXGroup;
-			children = (
-				FAD99EC318ACCB2600896266 /* ISO8601DateFormatter.h */,
-				FAD99EC418ACCB2600896266 /* ISO8601DateFormatter.m */,
-			);
-			path = ISO8601DateFormatter;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -545,7 +530,6 @@
 				FA3D068D1B32F49D0007E110 /* _School.m in Sources */,
 				FA38F0DE18ACC5F700332A34 /* MAGCoreData.m in Sources */,
 				FA3D06751B32E5360007E110 /* Model.xcdatamodeld in Sources */,
-				FAD99EC718ACCB2600896266 /* ISO8601DateFormatter.m in Sources */,
 				FA3D06861B32F48A0007E110 /* School.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -554,19 +538,25 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FA3D06941B33FC2F0007E110 /* Weather.m in Sources */,
 				E3E85F801A03BBBD00CD7F4C /* MAGCoreData.m in Sources */,
-				E3E85F841A03BBF900CD7F4C /* ISO8601DateFormatter.m in Sources */,
 				E3E85F6C1A03BAD300CD7F4C /* MAGCoreDataTests.m in Sources */,
+				FA3D06931B33FC2D0007E110 /* Student.m in Sources */,
 				E3E85F7D1A03BAFC00CD7F4C /* MAGCoreDataSingletonTests.m in Sources */,
 				E3E85F7B1A03BAFC00CD7F4C /* MAGCoreDataObjectCreationTests.m in Sources */,
 				E3E85F7C1A03BAFC00CD7F4C /* MAGCoreDataPrepareTests.m in Sources */,
 				E3E85F811A03BBBD00CD7F4C /* MAGSimpleFetchedResultsControllerManager.m in Sources */,
 				E3514E561A35E72A00E546DA /* MAGCoreDataTestSafeValue.m in Sources */,
+				FA3D06901B33FC250007E110 /* _Student.m in Sources */,
 				E3E85F7E1A03BAFC00CD7F4C /* MAGCoreDataTest.m in Sources */,
 				E3E85F7A1A03BAFC00CD7F4C /* MAGCoreDataFetchingObjectsTests.m in Sources */,
+				FA3D068F1B33FC230007E110 /* _School.m in Sources */,
+				FA3D06921B33FC2A0007E110 /* School.m in Sources */,
 				E3E85F821A03BBBD00CD7F4C /* NSManagedObject+MAGCoreData.m in Sources */,
 				E3E85F831A03BBBD00CD7F4C /* NSManagedObjectContext+MAGCoreData.m in Sources */,
 				E3E85F7F1A03BAFC00CD7F4C /* MAGCoreDataTestCase.m in Sources */,
+				FA3D06951B33FC860007E110 /* Model.xcdatamodeld in Sources */,
+				FA3D06911B33FC270007E110 /* _Weather.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -803,6 +793,7 @@
 				FA3D06701B32E3F50007E110 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 

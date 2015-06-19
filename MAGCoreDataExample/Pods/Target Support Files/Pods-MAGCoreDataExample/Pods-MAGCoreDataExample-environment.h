@@ -6,6 +6,12 @@
 // project.
 
 
+// ISO8601DateFormatter
+#define COCOAPODS_POD_AVAILABLE_ISO8601DateFormatter
+#define COCOAPODS_VERSION_MAJOR_ISO8601DateFormatter 0
+#define COCOAPODS_VERSION_MINOR_ISO8601DateFormatter 7
+#define COCOAPODS_VERSION_PATCH_ISO8601DateFormatter 0
+
 // MBProgressHUD
 #define COCOAPODS_POD_AVAILABLE_MBProgressHUD
 #define COCOAPODS_VERSION_MAJOR_MBProgressHUD 0

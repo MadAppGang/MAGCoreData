@@ -33,10 +33,23 @@
 //    NSLog(@"%@", weather.city); // Glasgow
 //    NSLog(@"%@", weather.temperature); // 17
     
-//    NSDictionary *dictionary = @{@"id": @"1", @"students": @[@{@"id": @"1", @"name": @"Marcus"}, @{@"id": @"2", @"name": @"Livia"}]};
+//    NSDictionary *dictionary = @{@"identifier": @"1", @"students": @[@{@"id": @"1", @"name": @"Marcus"}, @{@"id": @"2", @"name": @"Livia"}]};
 //    School *school = [School createFromDictionary:dictionary];
 //    NSLog(@"First student's name is %@", ((Student *)school.students.allObjects[0]).name); // Marcus
 //    NSLog(@"Second student's name is %@", ((Student *)school.students.allObjects[1]).name); // Livia
+    
+//    Student *student = [Student createFromDictionary:@{@"identifier": @"1", @"name": @"Marcus"}];
+//    NSLog(@"id = %@", student.identifier); // 1
+//    NSLog(@"name = %@", student.name); // Marcus
+    
+//    NSDictionary *dictionary = @{@"name": @"name"};
+    
+//    Weather *weather = [Weather createFromDictionary:@{@"fog": @"YES"}];
+//    NSLog(@"Fog = %@", weather.fog); // Fog = 1
+//    
+//    NSString *x = @"NO";
+//    NSString *y = @"YES";
+//    NSLog(@"%d = %d", x.boolValue, y.boolValue);
 }
 
 - (void)prepareCoreData {

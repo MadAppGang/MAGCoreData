@@ -5,6 +5,7 @@
 
 extern const struct WeatherAttributes {
 	__unsafe_unretained NSString *city;
+	__unsafe_unretained NSString *fog;
 	__unsafe_unretained NSString *identifier;
 	__unsafe_unretained NSString *temperature;
 } WeatherAttributes;
@@ -21,6 +22,14 @@ extern const struct WeatherAttributes {
 @property (nonatomic, strong) NSString* city;
 
 //- (BOOL)validateCity:(id*)value_ error:(NSError**)error_;
+
+@property (nonatomic, strong) NSNumber* fog;
+
+@property (atomic) BOOL fogValue;
+- (BOOL)fogValue;
+- (void)setFogValue:(BOOL)value_;
+
+//- (BOOL)validateFog:(id*)value_ error:(NSError**)error_;
 
 @property (nonatomic, strong) NSNumber* identifier;
 
@@ -44,6 +53,12 @@ extern const struct WeatherAttributes {
 
 - (NSString*)primitiveCity;
 - (void)setPrimitiveCity:(NSString*)value;
+
+- (NSNumber*)primitiveFog;
+- (void)setPrimitiveFog:(NSNumber*)value;
+
+- (BOOL)primitiveFogValue;
+- (void)setPrimitiveFogValue:(BOOL)value_;
 
 - (NSNumber*)primitiveIdentifier;
 - (void)setPrimitiveIdentifier:(NSNumber*)value;
