@@ -104,7 +104,7 @@ Weather *weather = [Weather first];
 ...
 NSArray *array = [Weather all];
 NSArray *array = [Weather allOrderedBy:@"temperature" ascending:YES];
-NSArray *array = [Weather allForPredicate:preticate orderBy:"temperature" ascending:YES];
+NSArray *array = [Weather allForPredicate:predicate orderBy:@"temperature" ascending:YES];
 ...
 ```
 Also you can use any of these calls with specific context.
