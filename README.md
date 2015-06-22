@@ -100,6 +100,12 @@ To update an object, change the object’s property, primary key value may be up
 ```objective-c
 Weather *weather = [Weather objectForPrimaryKey:primaryKey];
 Weather *weather = [Weather getOrCreateObjectForPrimaryKey:primaryKey];
+Weather *weather = [Weather first];
+...
+NSArray *array = [Weather all];
+NSArray *array = [Weather allOrderedBy:@"temperature" ascending:YES];
+NSArray *array = [Weather allForPredicate:preticate orderBy:"temperature" ascending:YES];
+...
 ```
 Also you can use any of these calls with specific context.
 
