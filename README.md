@@ -1,7 +1,7 @@
-#<center>![MAGCoreData](http://i.imgur.com/c6y95EV.png)</center>
+<center>![MAGCoreData](http://i.imgur.com/anoiYlP.png)</center>
 [![Cocoapods Compatible](https://img.shields.io/cocoapods/v/MAGCoreData.svg)](https://img.shields.io/cocoapods/v/MAGCoreData.svg)
-[![Build Status](https://travis-ci.org/omalovichko/MAGCoreData.svg)](https://travis-ci.org/omalovichko/MAGCoreData)
-
+<b>master branch:</b> [![Build Status](https://travis-ci.org/omalovichko/MAGCoreData.svg?branch=master)](https://travis-ci.org/omalovichko/MAGCoreData)
+<b>develop branch:</b>[![Build Status](https://travis-ci.org/omalovichko/MAGCoreData.svg?branch=develop)](https://travis-ci.org/omalovichko/MAGCoreData)
 ## Index
 - [What is MAGCoreData?](#what-is-magcoredata)
 - [Requirement](#requirement)
@@ -41,12 +41,17 @@ pod 'MAGCoreData', '~> 0.0.4'
 
 ## Usage
 ### Initialization
-Use one of the following setup calls with the MAGCoreData class:
+
+MAGCoreData setup:
 ```objective-c
-+ (NSError *)prepareCoreData;
+[MAGCoreData prepareCoreData];
+[MAGCoreData instance].autoMergeFromChildContexts = YES;
+```
+
+You can also use one of the following setup calls with the MAGCoreData class to initialize:
+```objective-c
 + (BOOL)prepareCoreDataWithModelName:(NSString *)modelName error:(NSError **)error;
 + (BOOL)prepareCoreDataWithModelName:(NSString *)modelName andStorageName:(NSString *)storageName error:(NSError **)error;
-[MAGCoreData instance].autoMergeFromChildContexts = YES;
 ```
 
 ### Managed object contexts
@@ -100,6 +105,8 @@ Also you can use any of these calls with specific context.
 
 ### Saving objects
 You probably should save data after any changes you have made, because if application crashes you're going to loss all the changes.
+
+To save data:
 ```objective-c
 [MAGCoreData save];
 ```
@@ -145,7 +152,7 @@ Example of usage:
                           }];
     [self setPrimaryKeyName:@"identifier"];
     [self setUpdateDateKeyName:@"updatedAt"];
-	[self setDateFormats:@{@"updatedAt":@"yyyy'-'MM'-'dd'T'HH':'mm':'ss.SSS'Z'"}];
+    [self setDateFormats:@{@"updatedAt":@"yyyy'-'MM'-'dd'T'HH':'mm':'ss.SSS'Z'"}];
 }
 
 @end
@@ -160,6 +167,7 @@ NSLog(@"%@", weather.temperature); // 17
 ```
 
 #### Auto-mapping
+Feature allows set properties automatically if key dictionary and object's property name are the same.
 ```objective-c
 Student *student = [Student createFromDictionary:@{@"identifier": @"1", @"name": @"Marcus"}];
 NSLog(@"id = %@", student.identifier); // 1
@@ -197,6 +205,7 @@ NSLog(@"Second student's name is %@", ((Student *)school.students.allObjects[1])
 ```
 
 ### Value transformers
+Example of usage:
 ```objective-c
 + (void)initialize {
     [self setKeyMapping:@{@"fog": @"fog"}];
@@ -206,7 +215,7 @@ NSLog(@"Second student's name is %@", ((Student *)school.students.allObjects[1])
 
 ```objective-c
 Weather *weather = [Weather createFromDictionary:@{@"fog": @"YES"}];
-NSLog(@"Fog = %@", weather.fog); // Fog = 1
+NSLog(@"Fog = %@", weather.fog); // 1
 ```
 
 ### Deleting storage
