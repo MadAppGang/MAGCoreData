@@ -6,16 +6,16 @@
 
 @implementation Weather
 
-//+ (void)initialize {
-//    [self setKeyMapping:@{
-//                          @"identifier"  : @"id",
-//                          @"city"        : @"city",
-//                          @"temperature" : @"temperature",
-//                          @"fog"         : @"fog"
-//                          }];
-//    [self setPrimaryKeyName:@"identifier"];
-//   
-//    [self setValueTransformers:@{@"fog": ^id(id value) { return @(((NSString *)value).boolValue); }}];
-//}
++ (void)initialize {
+    [self setKeyMapping:@{
+                          @"identifier"  : @"id",
+                          @"city"        : @"city",
+                          @"temperature" : @"temperature",
+                          @"fog"         : @"fog"
+                          }];
+    [self setPrimaryKeyName:@"identifier"];
+   
+    [self setValueTransformers:@{@"fog": ^id(id value) { return @(((NSString *)value).boolValue); }}];
+}
 
 @end

@@ -283,19 +283,23 @@ static NSString const * kValueTransformersKey = @"NSManagedObjectValueTransforme
 }
 
 + (instancetype)getOrCreateObjectForPrimaryKey:(id)primaryKeyValue inContext:(NSManagedObjectContext *)context {
-    NSManagedObject *object = nil;
-    if (primaryKeyValue) object = [self firstWithKey:[self primaryKeyName] value:primaryKeyValue inContext:context];
+    NSString *primaryKeyName = [self primaryKeyName];
+    if (!primaryKeyName || !primaryKeyValue) {
+        return nil;
+    }
+    NSManagedObject *object = [self firstWithKey:[self primaryKeyName] value:primaryKeyValue inContext:context];
     if (object) {
         return object;
     } else {
-        return [self createInContext:context];
+        NSManagedObject *newObject = [self createInContext:context];
+        [newObject setValue:primaryKeyValue forKey:primaryKeyName];
+        return newObject;
     }
 }
 
 
 + (instancetype)safeCreateOrUpdateWithDictionary:(NSDictionary *)keyedValues {
     return [self safeCreateOrUpdateWithDictionary:keyedValues inContext:[MAGCoreData context]];
-
 }
 
 

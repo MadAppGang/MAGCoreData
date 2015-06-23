@@ -34,7 +34,6 @@
 		BDD82FCB17CE412100F1CD8D /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDD82FCA17CE412100F1CD8D /* CoreData.framework */; };
 		CAE88AF959EC2DACEAACE8D6 /* libPods-MAGCoreDataTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BE40A8B5C8A775A3878F3B2 /* libPods-MAGCoreDataTests.a */; };
 		E3514E561A35E72A00E546DA /* MAGCoreDataTestSafeValue.m in Sources */ = {isa = PBXBuildFile; fileRef = E3514E551A35E72A00E546DA /* MAGCoreDataTestSafeValue.m */; };
-		E3E85F6C1A03BAD300CD7F4C /* MAGCoreDataTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E3E85F6B1A03BAD300CD7F4C /* MAGCoreDataTests.m */; };
 		E3E85F7A1A03BAFC00CD7F4C /* MAGCoreDataFetchingObjectsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E3E85F721A03BAFC00CD7F4C /* MAGCoreDataFetchingObjectsTests.m */; };
 		E3E85F7B1A03BAFC00CD7F4C /* MAGCoreDataObjectCreationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E3E85F731A03BAFC00CD7F4C /* MAGCoreDataObjectCreationTests.m */; };
 		E3E85F7C1A03BAFC00CD7F4C /* MAGCoreDataPrepareTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E3E85F741A03BAFC00CD7F4C /* MAGCoreDataPrepareTests.m */; };
@@ -102,7 +101,6 @@
 		E3514E551A35E72A00E546DA /* MAGCoreDataTestSafeValue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAGCoreDataTestSafeValue.m; sourceTree = "<group>"; };
 		E3E85F671A03BAD300CD7F4C /* MAGCoreDataTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MAGCoreDataTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E3E85F6A1A03BAD300CD7F4C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		E3E85F6B1A03BAD300CD7F4C /* MAGCoreDataTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MAGCoreDataTests.m; sourceTree = "<group>"; };
 		E3E85F721A03BAFC00CD7F4C /* MAGCoreDataFetchingObjectsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAGCoreDataFetchingObjectsTests.m; sourceTree = "<group>"; };
 		E3E85F731A03BAFC00CD7F4C /* MAGCoreDataObjectCreationTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAGCoreDataObjectCreationTests.m; sourceTree = "<group>"; };
 		E3E85F741A03BAFC00CD7F4C /* MAGCoreDataPrepareTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAGCoreDataPrepareTests.m; sourceTree = "<group>"; };
@@ -257,15 +255,14 @@
 		E3E85F681A03BAD300CD7F4C /* MAGCoreDataTests */ = {
 			isa = PBXGroup;
 			children = (
+				E3E85F771A03BAFC00CD7F4C /* Abstract */,
 				E3E85F721A03BAFC00CD7F4C /* MAGCoreDataFetchingObjectsTests.m */,
 				E3E85F731A03BAFC00CD7F4C /* MAGCoreDataObjectCreationTests.m */,
 				E3E85F741A03BAFC00CD7F4C /* MAGCoreDataPrepareTests.m */,
 				E3E85F751A03BAFC00CD7F4C /* MAGCoreDataSingletonTests.m */,
 				E3E85F761A03BAFC00CD7F4C /* MAGCoreDataTest.m */,
-				E3E85F771A03BAFC00CD7F4C /* Abstract */,
-				E3E85F6B1A03BAD300CD7F4C /* MAGCoreDataTests.m */,
-				E3E85F691A03BAD300CD7F4C /* Supporting Files */,
 				E3514E551A35E72A00E546DA /* MAGCoreDataTestSafeValue.m */,
+				E3E85F691A03BAD300CD7F4C /* Supporting Files */,
 			);
 			path = MAGCoreDataTests;
 			sourceTree = "<group>";
@@ -540,7 +537,6 @@
 			files = (
 				FA3D06941B33FC2F0007E110 /* Weather.m in Sources */,
 				E3E85F801A03BBBD00CD7F4C /* MAGCoreData.m in Sources */,
-				E3E85F6C1A03BAD300CD7F4C /* MAGCoreDataTests.m in Sources */,
 				FA3D06931B33FC2D0007E110 /* Student.m in Sources */,
 				E3E85F7D1A03BAFC00CD7F4C /* MAGCoreDataSingletonTests.m in Sources */,
 				E3E85F7B1A03BAFC00CD7F4C /* MAGCoreDataObjectCreationTests.m in Sources */,

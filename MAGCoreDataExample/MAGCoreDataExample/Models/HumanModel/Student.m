@@ -9,9 +9,9 @@
 
 @implementation Student
 
-//+ (void)initialize {
-//    [self setKeyMapping:@{@"identifier": @"id", @"name": @"name"}];
-//    [self setPrimaryKeyName:@"identifier"];
-//}
++ (void)initialize {
+    [self setKeyMapping:@{@"identifier": @"id", @"name": @"name"}];
+    [self setPrimaryKeyName:@"identifier"];
+}
 
 @end

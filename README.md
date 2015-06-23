@@ -32,7 +32,7 @@ Core Data boilerplate code killer.
 
 ## Installation with CocoaPods
 
-[CocoaPods](http://cocoapods.org) is a dependency manager Cocoa projects, which automates and simplifies the process of using 3rd-party libraries in your projects.
+[CocoaPods](http://cocoapods.org) is a dependency manager of Cocoa projects, which automates and simplifies the process of using 3rd-party libraries in your projects
 
 ### Podfile
 ```ruby
@@ -60,7 +60,7 @@ To access the default context you can call:
 NSManagedObjectContext *defaultContext = MAGCoreData.context;
 ```
 
-If you need to create a new managed object context for use in non-main threads you can use the following method:
+If you need to create a new managed object context for usage in non-main threads you can use the following method:
 ```objective-c
 NSManagedObjectContext *privateContext = MAGCoreData.createPrivateContext;
 ```
@@ -81,12 +81,12 @@ Weather *weather = [Weather createFromDictionary:dictionary inContext:context];
 ### Updating objects
 To update objects you should specify primary key. See ['Mapping'](#mapping) section for additional instructions.
 
-To update or create new object:
+To update or create a new object:
 ```objective-c
 Weather *weather = [Weather safeCreateOrUpdateWithDictionary:dictionary];
 ```
 
-To update or create object in specific context:
+To update or create an object in specific context:
 ```objective-c
 Weather *weather = [Weather safeCreateOrUpdateWithDictionary:dictionary inContext:context];
 ```
@@ -110,7 +110,7 @@ NSArray *array = [Weather allForPredicate:predicate orderBy:@"temperature" ascen
 Also you can use any of these calls with specific context.
 
 ### Saving objects
-You probably should save data after any changes you have made, because if application crashes you're going to loss all the changes.
+You probably should save data after any changes you have made, because if the application crashes you're going to loss all the changes.
 
 To save data:
 ```objective-c
@@ -173,7 +173,7 @@ NSLog(@"%@", weather.temperature); // 17
 ```
 
 #### Auto-mapping
-Feature allows set properties automatically if key dictionary and object's property name are the same.
+The feature allows to set properties automatically if the key dictionary and the object's property name are the same.
 ```objective-c
 Student *student = [Student createFromDictionary:@{@"identifier": @"1", @"name": @"Marcus"}];
 NSLog(@"id = %@", student.identifier); // 1
@@ -226,17 +226,17 @@ NSLog(@"Fog = %@", weather.fog); // 1
 
 ### Deleting storage
 
-To delete all data from first persistent store in persistent store coordinator:
+To delete all the data from the first persistent store in the persistent store coordinator:
 ```objective-c
 [MAGCoreData deleteAll];
 ```
 
-To drop storage with default name:
+To drop the storage with a default name:
 ```objective-c
 [MAGCoreData deleteAllInStorageWithName:nil];
 ```
 
-To drop storage with specific name:
+To drop the storage with a specific name:
 ```objective-c
 [MAGCoreData deleteAllInStorageWithName:storageName];
 ```
@@ -246,7 +246,7 @@ You can define Preprocessor Macros `MAGCOREDATA_LOGGING_ENABLED` which enable MA
 
 
 ## Mogenerator
-We recommend you use [mogenerator](https://github.com/rentzsch/mogenerator). Mogenerator generates the model classes from Core Data model (.xcdatamodel) and adds helper functions for your classes to simplify their usage.
+We recommend you to use [mogenerator](https://github.com/rentzsch/mogenerator). Mogenerator generates the model classes from Core Data model (.xcdatamodel) and adds helper functions for your classes to simplify their usage.
 
 Mogenerator script example:
 ```

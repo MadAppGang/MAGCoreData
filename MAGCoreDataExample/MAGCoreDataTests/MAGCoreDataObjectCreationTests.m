@@ -64,7 +64,7 @@
     expect([MAGCoreData saveContext:privateContext]).to.beTruthy();
     
     NSLog(@"hasChanges");
-    NSLog(@"array %d", [Weather all].count);
+    NSLog(@"array %lu", (unsigned long)[Weather all].count);
     
     [[MAGCoreData instance] close];
     expect([MAGCoreData prepareCoreDataWithModelName:nil andStorageName:NSStringFromClass([self class]) error:nil]).to.beTruthy();
@@ -72,30 +72,29 @@
     Weather *storedWeather = [[Weather all] firstObject];
     expect(storedWeather).toNot.beNil();
     
-    NSLog(@"array %d", [Weather all].count);
+    NSLog(@"array %lu", (unsigned long)[Weather all].count);
     
     BOOL same = [weather.objectID.URIRepresentation isEqual:storedWeather.objectID.URIRepresentation];
     expect(same).to.beTruthy();
 }
 
 - (void)testCreateOrUpdateObject {
-    // create object
-    Weather *obj1 = [Weather getOrCreateObjectForPrimaryKey:@1];
-    expect(obj1).toNot.beNil();
+    NSManagedObjectContext *contect = [MAGCoreData createPrivateContext];
+    // Create an object
+    NSNumber *identifier = @1;
+    Weather *newObject = [Weather getOrCreateObjectForPrimaryKey:identifier inContext:contect];
+    expect(newObject).toNot.beNil();
+    expect(newObject.identifier).equal(identifier);
     
-    // get object
-    NSManagedObjectContext *privateContext = [MAGCoreData createPrivateContext];
-
-    NSNumber *obj2Id = @2;
-    Weather *obj2 = [Weather createFromDictionary:@{@"id": obj2Id} inContext:privateContext];
-    Weather *storedObj2InMainContext = [Weather getOrCreateObjectForPrimaryKey:obj2Id];
-    expect(storedObj2InMainContext).toNot.beNil();
-    Weather *storedObj2InPrivateContext = [Weather getOrCreateObjectForPrimaryKey:obj2Id];
-    expect(storedObj2InPrivateContext).toNot.beNil();
-    BOOL differentURI = ![storedObj2InMainContext.objectID.URIRepresentation isEqual:storedObj2InPrivateContext.objectID.URIRepresentation];
-    expect(differentURI).to.beTruthy();
-    BOOL sameId = obj2.identifier.intValue == storedObj2InMainContext.identifier.intValue == storedObj2InPrivateContext.identifier.intValue;
-    expect(sameId).to.beTruthy();
+    expect([Weather getOrCreateObjectForPrimaryKey:nil]).to.beNil();
+    
+    // Get the object
+    Weather *storedObject = [Weather getOrCreateObjectForPrimaryKey:identifier inContext:contect];
+    expect(storedObject.identifier).equal(newObject.identifier);
+    expect([storedObject.objectID.URIRepresentation isEqual:newObject.objectID.URIRepresentation]).to.beTruthy();
+    
+    expect([Weather objectForPrimaryKey:identifier]).to.beNil();
+    expect([Weather objectForPrimaryKey:identifier inContext:contect]).toNot.beNil();
 }
 
 - (void)testObjectsDeletion {
