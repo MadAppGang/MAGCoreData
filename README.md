@@ -1,7 +1,7 @@
 <center>![MAGCoreData](http://i.imgur.com/anoiYlP.png)</center>
 [![Cocoapods Compatible](https://img.shields.io/cocoapods/v/MAGCoreData.svg)](https://img.shields.io/cocoapods/v/MAGCoreData.svg)
-<b>master branch:</b> [![Build Status](https://travis-ci.org/omalovichko/MAGCoreData.svg?branch=master)](https://travis-ci.org/omalovichko/MAGCoreData)
-<b>develop branch:</b>[![Build Status](https://travis-ci.org/omalovichko/MAGCoreData.svg?branch=develop)](https://travis-ci.org/omalovichko/MAGCoreData)
+<b>master branch:</b> [![Build Status](https://travis-ci.org/MadAppGang/MAGCoreData.svg?branch=master)](https://travis-ci.org/MadAppGang/MAGCoreData)
+<b>develop branch:</b>[![Build Status](https://travis-ci.org/MadAppGang/MAGCoreData.svg?branch=develop)](https://travis-ci.org/MadAppGang/MAGCoreData)
 ## Index
 - [What is MAGCoreData?](#what-is-magcoredata)
 - [Requirement](#requirement)
