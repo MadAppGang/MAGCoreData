@@ -140,7 +140,7 @@ static NSString const * kValueTransformersKey = @"NSManagedObjectValueTransforme
     
     if (keyedValue == nil) {
         safeValue = nil;
-    } else if ([valueTransformers objectForKey:attribute]) {
+    } else if ([valueTransformers valueForKeyPath:attribute]) {
         //if we have custom value transformer - apply it
         id(^transformer)(id value) = valueTransformers[attribute];
         safeValue = transformer(keyedValue);
