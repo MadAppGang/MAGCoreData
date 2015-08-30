@@ -267,6 +267,15 @@ static NSString const * kValueTransformersKey = @"NSManagedObjectValueTransforme
 
 
 #pragma mark - easy object manipulation
+
++ (instancetype)objectWithID:(NSManagedObjectID *)managedObjectID {
+    return [NSManagedObject objectWithID:managedObjectID inContext:[MAGCoreData context]];
+}
+
++ (instancetype)objectWithID:(NSManagedObjectID *)managedObjectID inContext:(NSManagedObjectContext *)context {
+    return [context objectWithID:managedObjectID];
+}
+
 + (instancetype)objectForPrimaryKey:(id)primaryKey inContext:(NSManagedObjectContext *)context {
     if (primaryKey) {
         return [self firstWithKey:[self primaryKeyName] value:primaryKey inContext:context];
