@@ -1,0 +1,4 @@
+language: objective-c
+xcode_workspace: MAGCoreDataExample/MAGCoreDataExample.xcworkspace
+xcode_scheme: MAGCoreDataExample
+xcode_sdk: iphonesimulator

@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "MAGCoreData"
-  s.version      = "0.0.8"
+  s.version      = "0.0.9"
   s.summary      = "CoreData classes helpers from MadAppGang."
 
   s.description  = <<-DESC
@@ -18,7 +18,7 @@ Pod::Spec.new do |s|
   s.author       = { "Ievgen Rudenko" => "i@madappgang.com" }
 
   s.platform     = :ios, "7.0"
-  s.source       = { :git => "https://github.com/MadAppGang/MAGCoreData.git", :tag => "0.0.8" }
+  s.source       = { :git => "https://github.com/MadAppGang/MAGCoreData.git", :tag => "0.0.9" }
   s.source_files = "MagCoreData", "MagCoreData/**/*.{h,m}"
   s.framework    = "CoreData"
   s.requires_arc = true

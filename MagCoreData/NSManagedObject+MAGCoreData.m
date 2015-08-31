@@ -267,6 +267,15 @@ static NSString const * kValueTransformersKey = @"NSManagedObjectValueTransforme
 
 
 #pragma mark - easy object manipulation
+
++ (instancetype)objectWithID:(NSManagedObjectID *)managedObjectID {
+    return [NSManagedObject objectWithID:managedObjectID inContext:[MAGCoreData context]];
+}
+
++ (instancetype)objectWithID:(NSManagedObjectID *)managedObjectID inContext:(NSManagedObjectContext *)context {
+    return [context objectWithID:managedObjectID];
+}
+
 + (instancetype)objectForPrimaryKey:(id)primaryKey inContext:(NSManagedObjectContext *)context {
     if (primaryKey) {
         return [self firstWithKey:[self primaryKeyName] value:primaryKey inContext:context];
@@ -283,19 +292,23 @@ static NSString const * kValueTransformersKey = @"NSManagedObjectValueTransforme
 }
 
 + (instancetype)getOrCreateObjectForPrimaryKey:(id)primaryKeyValue inContext:(NSManagedObjectContext *)context {
-    NSManagedObject *object = nil;
-    if (primaryKeyValue) object = [self firstWithKey:[self primaryKeyName] value:primaryKeyValue inContext:context];
+    NSString *primaryKeyName = [self primaryKeyName];
+    if (!primaryKeyName || !primaryKeyValue) {
+        return nil;
+    }
+    NSManagedObject *object = [self firstWithKey:[self primaryKeyName] value:primaryKeyValue inContext:context];
     if (object) {
         return object;
     } else {
-        return [self createInContext:context];
+        NSManagedObject *newObject = [self createInContext:context];
+        [newObject setValue:primaryKeyValue forKey:primaryKeyName];
+        return newObject;
     }
 }
 
 
 + (instancetype)safeCreateOrUpdateWithDictionary:(NSDictionary *)keyedValues {
     return [self safeCreateOrUpdateWithDictionary:keyedValues inContext:[MAGCoreData context]];
-
 }
 
 
@@ -306,7 +319,7 @@ static NSString const * kValueTransformersKey = @"NSManagedObjectValueTransforme
     
     NSEntityDescription *entityDescription = [NSEntityDescription entityForName:[self entityName] inManagedObjectContext:context];
     NSDictionary *attributes = [entityDescription attributesByName];
-    NSAttributeDescription *primaryKeyAttributeDescription = [attributes objectForKey:primaryKeyName];
+    NSAttributeDescription *primaryKeyAttributeDescription = attributes[primaryKeyName];
     NSAttributeType primaryKeyAttributeType = [primaryKeyAttributeDescription attributeType];
     
     NSString *mappedPrimaryKey = primaryKeyName ? [self keyMapping][primaryKeyName] : nil;
