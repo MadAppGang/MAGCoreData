@@ -46,6 +46,8 @@
 - (void)safeSetValuesForKeysWithDictionary:(NSDictionary *)keyedValues;
 - (void)safeSetValuesForKeysWithDictionary:(NSDictionary *)keyedValues inContext:(NSManagedObjectContext *)context;
 
++ (instancetype)objectWithID:(NSManagedObjectID *)managedObjectID;
++ (instancetype)objectWithID:(NSManagedObjectID *)managedObjectID inContext:(NSManagedObjectContext *)context;
 
 + (instancetype)objectForPrimaryKey:(id)primaryKey inContext:(NSManagedObjectContext *)context;
 + (instancetype)objectForPrimaryKey:(id)primaryKey;
