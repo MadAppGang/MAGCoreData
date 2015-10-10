@@ -17,10 +17,10 @@ Pod::Spec.new do |s|
   s.license      = "MIT"
   s.author       = { "Ievgen Rudenko" => "i@madappgang.com" }
 
-  s.platform     = :ios, "7.0"
+  s.platform     = :ios, "8.0"
   s.source       = { :git => "https://github.com/MadAppGang/MAGCoreData.git", :tag => "0.0.10" }
   s.source_files = "MagCoreData", "MagCoreData/**/*.{h,m}"
   s.framework    = "CoreData"
   s.requires_arc = true
-  s.dependency 'ISO8601DateFormatter', '~> 0.7.0'
+  s.dependency 'ISO8601DateFormatter', '~> 0.7'
 end
