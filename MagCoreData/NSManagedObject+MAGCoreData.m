@@ -7,7 +7,7 @@
 //
 #import "NSManagedObject+MAGCoreData.h"
 #import "MAGCoreData.h"
-#import "ISO8601DateFormatter.h"
+#import <ISO8601DateFormatter/ISO8601DateFormatter.h>
 #import <objc/runtime.h>
 
 static NSString const * kKeyMapKey = @"NSManagedObjectMagCoreDataMappingKey";
