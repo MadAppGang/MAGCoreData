@@ -7,7 +7,6 @@
 //
 #import "NSManagedObject+MAGCoreData.h"
 #import "MAGCoreData.h"
-#import "ISO8601DateFormatter.h"
 #import <objc/runtime.h>
 
 static NSString const * kKeyMapKey = @"NSManagedObjectMagCoreDataMappingKey";
@@ -97,15 +96,9 @@ static NSString const * kValueTransformersKey = @"NSManagedObjectValueTransforme
     NSString *specificDF = [self dateFormats][attribute];
     df = specificDF?specificDF:df;
     if (df) {
-//                ISO8601 timezone +XX:XX not available on iOS<6.x, that is why using ISO8601 date formatter:
-        if ([df rangeOfString:@"ZZZZZ"].location == NSNotFound) {
-            NSDateFormatter *dateFormatter = [NSDateFormatter new];
-            dateFormatter.dateFormat = df;
-            return  [dateFormatter dateFromString:object];
-        } else {
-            ISO8601DateFormatter *dateFormatter = [ISO8601DateFormatter new];
-            return  [dateFormatter dateFromString:object];
-        }
+        NSDateFormatter *dateFormatter = [NSDateFormatter new];
+        dateFormatter.dateFormat = df;
+        return  [dateFormatter dateFromString:object];
     }  else {
         //prevent from crash
         NSLog(@"Unable to parse date (no date format specified):%@",object);
@@ -171,7 +164,7 @@ static NSString const * kValueTransformersKey = @"NSManagedObjectValueTransforme
     if ([self shouldUpdateFromDictionary:keyedValues]) {
         for (NSString *attribute in attributes) {
             NSString *attributeKey = mapping?mapping[attribute]:attribute;
-            id keyedValue = [keyedValues valueForKeyPath:attributeKey];
+            id keyedValue = [keyedValues valueForKeyPath:attributeKey?:@""];
             if (keyedValue == nil) {
                 // Don't attempt to set nil, or you'll overwrite values in self that aren't present in keyedValues
                 //                NSLog(@"MAGCoreData+NSManagedObjectContext: mapping lost for attribute:%@ for class %@",attribute, [self class]);
