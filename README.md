@@ -1,5 +1,5 @@
 <center>![MAGCoreData](http://i.imgur.com/anoiYlP.png)</center>
-[![Cocoapods Compatible](https://img.shields.io/cocoapods/v/MAGCoreData.svg)](https://img.shields.io/cocoapods/v/MAGCoreData.svg)
+[![CocoaPods Compatible](https://img.shields.io/cocoapods/v/MAGCoreData.svg)](https://img.shields.io/cocoapods/v/MAGCoreData.svg)
 <b>master branch:</b> [![Build Status](https://travis-ci.org/MadAppGang/MAGCoreData.svg?branch=master)](https://travis-ci.org/MadAppGang/MAGCoreData)
 <b>develop branch:</b>[![Build Status](https://travis-ci.org/MadAppGang/MAGCoreData.svg?branch=develop)](https://travis-ci.org/MadAppGang/MAGCoreData)
 ## Index
